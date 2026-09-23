@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de Justicia Digital - Prototipo Académico</title>
+  <!-- Tailwind CSS para el diseño -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col justify-between">
+
+  <!-- Cintillo de Transparencia Académica -->
+  <div class="bg-amber-100 border-b border-amber-300 text-amber-900 text-xs py-1 px-4 text-center font-medium">
+    ⚠️ Entorno de Demostración Académica - Curso: Gobierno Digital (No oficial)
+  </div>
+
+  <!-- Cabecera Institucional -->
+  <header class="bg-slate-900 text-white shadow-md">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+      <div class="flex items-center space-x-3">
+        <div class="bg-amber-500 p-2 rounded text-slate-950 font-bold text-lg">⚖️</div>
+        <div>
+          <h1 class="text-lg font-bold tracking-tight">SISTEMA INTEGRADO DE JUSTICIA DIGITAL</h1>
+          <p class="text-xs text-slate-400">Módulo de Consulta Ciudadana y Celeridad Procesal</p>
+        </div>
+      </div>
+      <span class="text-xs bg-slate-800 border border-slate-700 px-3 py-1 rounded-full text-emerald-400 font-mono">
+        ● Sistema Operativo
+      </span>
+    </div>
+  </header>
+
+  <!-- Contenido Central -->
+  <main class="max-w-4xl mx-auto px-4 py-8 w-full flex-grow">
+    
+    <!-- Tarjeta de Búsqueda -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-8">
+      <div class="bg-slate-800 text-white px-6 py-3 border-b border-slate-700 flex justify-between items-center">
+        <h2 class="text-sm font-semibold tracking-wide uppercase">Consulta de Expediente Judicial (CEJ)</h2>
+        <span class="text-xs text-slate-400">Acceso Libre y Gratuito</span>
+      </div>
+
+      <form id="formConsulta" class="p-6 space-y-4" onsubmit="validarYConsultar(event)">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Año Judicial</label>
+            <input type="number" id="inputAnio" value="2026" class="w-full border border-slate-300 rounded p-2 text-sm focus:ring-2 focus:ring-slate-900 outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Nº Expediente</label>
+            <input type="text" id="inputExp" placeholder="Ej. 00145" value="00145" class="w-full border border-slate-300 rounded p-2 text-sm focus:ring-2 focus:ring-slate-900 outline-none" required>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Especialidad</label>
+            <select class="w-full border border-slate-300 rounded p-2 text-sm focus:ring-2 focus:ring-slate-900 outline-none bg-white">
+              <option>Civil</option>
+              <option>Penal</option>
+              <option>Laboral</option>
+              <option>Constitucional</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Módulo de Seguridad CAPTCHA -->
+        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center space-x-3">
+            <canvas id="captchaCanvas" width="130" height="42" class="bg-white border border-slate-300 rounded shadow-inner cursor-pointer" title="Haga clic para regenerar"></canvas>
+            <button type="button" onclick="generarCaptcha()" class="text-xs text-slate-600 hover:text-slate-900 underline flex items-center gap-1">
+              🔄 Refrescar
+            </button>
+            <button type="button" onclick="leerCaptcha()" class="text-xs text-slate-600 hover:text-slate-900 underline flex items-center gap-1" title="Accesibilidad por audio">
+              🔊 Escuchar
+            </button>
+          </div>
+          <div class="w-full sm:w-auto flex-1 max-w-xs">
+            <input type="text" id="inputCaptcha" placeholder="Escriba los 5 caracteres" class="w-full border border-slate-300 rounded p-2 text-sm text-center uppercase tracking-widest font-mono focus:ring-2 focus:ring-slate-900 outline-none" required maxlength="5">
+          </div>
+        </div>
+
+        <!-- Mensaje de Error -->
+        <div id="errorMensaje" class="hidden text-xs bg-red-50 text-red-700 border border-red-200 p-2 rounded text-center"></div>
+
+        <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 rounded-lg text-sm transition shadow-sm">
+          Consultar Estado Procesal
+        </button>
+      </form>
+    </div>
+
+    <!-- Contenedor del Expediente Consultado (Oculto al inicio) -->
+    <div id="resultadoExpediente" class="hidden bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-6">
+      <div class="border-b border-slate-200 pb-4 flex justify-between items-start flex-wrap gap-2">
+        <div>
+          <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">EN TRÁMITE</span>
+          <h3 class="text-base font-bold text-slate-900 mt-1">Expediente: 00145-2026-0-JR-CI-01</h3>
+          <p class="text-xs text-slate-500">Materia: Obligación de Dar Suma de Dinero | Órgano: 1° Juzgado Especializado Civil</p>
+        </div>
+        <button onclick="window.print()" class="text-xs border border-slate-300 hover:bg-slate-50 px-3 py-1.5 rounded text-slate-700">
+          Imprimir Reporte
+        </button>
+      </div>
+
+      <!-- Sujetos Procesales -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        <div class="p-3 bg-slate-50 rounded border border-slate-200">
+          <p class="font-bold text-slate-700">Demandante:</p>
+          <p class="text-slate-900">Banco de Crédito y Fomento S.A.</p>
+        </div>
+        <div class="p-3 bg-slate-50 rounded border border-slate-200">
+          <p class="font-bold text-slate-700">Demandado:</p>
+          <p class="text-slate-900">Inversiones & Logística del Sur S.R.L.</p>
+        </div>
+      </div>
+
+      <!-- Línea de Actos Procesales -->
+      <div>
+        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wide mb-3">Historial de Resoluciones Judiciales</h4>
+        <div class="space-y-3">
+          
+          <div class="flex items-start space-x-3 text-xs border-l-2 border-slate-800 pl-4 py-1">
+            <div>
+              <span class="font-mono text-slate-500">18/09/2026</span>
+              <p class="font-bold text-slate-800">Resolución N° 03 - SENTENCIA DE PRIMERA INSTANCIA</p>
+              <p class="text-slate-600">Declara FUNDADA en parte la demanda interpuesta. Se ordena el requerimiento de pago.</p>
+              <span class="inline-block mt-1 text-[11px] text-blue-700 hover:underline cursor-pointer" onclick="alert('Descargando copia legalizada de la Resolución N° 03 en PDF...')">📄 Descargar Resolución Digital (PDF)</span>
+            </div>
+          </div>
+
+          <div class="flex items-start space-x-3 text-xs border-l-2 border-slate-400 pl-4 py-1">
+            <div>
+              <span class="font-mono text-slate-500">02/06/2026</span>
+              <p class="font-bold text-slate-800">Resolución N° 02 - SANEAMIENTO PROCESAL</p>
+              <p class="text-slate-600">Se declara la existencia de una relación jurídica procesal válida y se fijan puntos controvertidos.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start space-x-3 text-xs border-l-2 border-slate-400 pl-4 py-1">
+            <div>
+              <span class="font-mono text-slate-500">12/03/2026</span>
+              <p class="font-bold text-slate-800">Resolución N° 01 - AUTO ADMISORIO</p>
+              <p class="text-slate-600">Se admite a trámite la demanda en la vía de proceso de conocimiento y se corre traslado.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Pie de Página -->
+  <footer class="bg-slate-900 text-slate-400 text-xs py-4 border-t border-slate-800 text-center">
+    <p>Proyecto para la materia de Gobierno Digital | Arquitectura de Información e Interoperabilidad</p>
+  </footer>
+
+  <!-- Lógica Interactiva y Generador CAPTCHA -->
+  <script>
+    let captchaCodigoActual = "";
+
+    function generarCaptcha() {
+      const caracteres = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      captchaCodigoActual = "";
+      for (let i = 0; i < 5; i++) {
+        captchaCodigoActual += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+      }
+
+      const canvas = document.getElementById("captchaCanvas");
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Fondo con ruido
+      ctx.fillStyle = "#f8fafc";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Líneas de interferencia de seguridad
+      for (let i = 0; i < 4; i++) {
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.beginPath();
+        ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
+        ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
+        ctx.stroke();
+      }
+
+      // Dibujar texto con distorsión
+      ctx.font = "bold 20px monospace";
+      ctx.fillStyle = "#0f172a";
+      for (let i = 0; i < captchaCodigoActual.length; i++) {
+        const x = 16 + i * 22;
+        const y = 28 + (Math.random() * 4 - 2);
+        ctx.fillText(captchaCodigoActual[i], x, y);
+      }
+    }
+
+    function leerCaptcha() {
+      if ('speechSynthesis' in window) {
+        const mensaje = new SpeechSynthesisUtterance(captchaCodigoActual.split('').join(' '));
+        mensaje.lang = 'es-ES';
+        mensaje.rate = 0.8;
+        window.speechSynthesis.speak(mensaje);
+      } else {
+        alert("La síntesis de voz no es compatible con este navegador.");
+      }
+    }
+
+    function validarYConsultar(e) {
+      e.preventDefault();
+      const input = document.getElementById("inputCaptcha").value.trim().toUpperCase();
+      const errorDiv = document.getElementById("errorMensaje");
+      const resultadoDiv = document.getElementById("resultadoExpediente");
+
+      if (input !== captchaCodigoActual) {
+        errorDiv.textContent = "El código de seguridad ingresado es incorrecto. Inténtelo nuevamente.";
+        errorDiv.classList.remove("hidden");
+        resultadoDiv.classList.add("hidden");
+        generarCaptcha();
+        document.getElementById("inputCaptcha").value = "";
+      } else {
+        errorDiv.classList.add("hidden");
+        resultadoDiv.classList.remove("hidden");
+        resultadoDiv.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Inicializar CAPTCHA al cargar la página
+    window.onload = generarCaptcha;
+  </script>
+</body>
+</html>
