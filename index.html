@@ -1,557 +1,1593 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="h-full scroll-smooth antialiased">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rastreador Judicial - Portal de Celeridad y Trazabilidad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Rastreador Judicial — Sistema de Trazabilidad Procesal</title>
+  
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian: {
+              950: '#070a10',
+              900: '#0c121d',
+              850: '#111927',
+              800: '#172235',
+              700: '#22324c'
+            },
+            emeraldtech: {
+              950: '#022419',
+              900: '#043828',
+              800: '#064e38',
+              700: '#0d6f52',
+              500: '#10b981',
+              400: '#34d399'
+            },
+            goldtech: {
+              600: '#b78628',
+              500: '#d4af37',
+              400: '#e5c158',
+              300: '#f3d987',
+              100: '#fef7dc'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+            legal: ['Cinzel', 'serif'],
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          boxShadow: {
+            'glow-gold': '0 0 25px -4px rgba(212, 175, 55, 0.25)',
+            'glow-emerald': '0 0 30px -5px rgba(16, 185, 129, 0.2)',
+            'card-glass': '0 8px 32px 0 rgba(0, 0, 0, 0.45)'
+          }
+        }
+      }
+    };
+  </script>
 
   <style>
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #f7f6f2;
-      color: #1c1917;
+    .mesh-bg {
+      background-color: #070a10;
+      background-image: 
+        radial-gradient(at 15% 15%, rgba(6, 78, 56, 0.28) 0px, transparent 50%),
+        radial-gradient(at 85% 85%, rgba(212, 175, 55, 0.14) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(12, 18, 29, 0.85) 0px, transparent 100%);
     }
-    .font-serif-legal {
-      font-family: 'Newsreader', Georgia, serif;
+    .glass-card {
+      background: rgba(17, 25, 39, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
-    .font-title-legal {
-      font-family: 'Cinzel', serif;
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
     }
-    .font-code-legal {
-      font-family: 'JetBrains Mono', monospace;
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0c121d;
     }
-    .bg-emerald-deep {
-      background-color: #063c2e;
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #22324c;
+      border-radius: 9999px;
     }
-    .border-gold {
-      border-color: #c5a059;
-    }
-    .text-gold {
-      color: #c5a059;
-    }
-    .badge-gold {
-      background-color: #fbf5e8;
-      border: 1px solid #dfc38a;
-      color: #7c5816;
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #d4af37;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between antialiased">
+<body class="min-h-full flex flex-col mesh-bg text-slate-200 font-sans selection:bg-goldtech-500 selection:text-obsidian-950 custom-scrollbar relative">
 
-  <!-- AVISO DE ENTORNO ACADÉMICO -->
-  <div class="bg-stone-900 border-b border-stone-800 text-stone-300 text-xs py-1.5 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2">
-    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-    <span>PROTOTIPO ACADÉMICO PARA GOBIERNO DIGITAL &bull; PODER JUDICIAL DEL PERÚ (SIMULADOR SIJE)</span>
-  </div>
+  <!-- ======================================================================= -->
+  <!-- FRANJA SUPERIOR DE ADVERTENCIA ACADÉMICA (PANTALLAS 0, 2, 4, 5)        -->
+  <!-- ======================================================================= -->
+  <aside id="franja-advertencia-academica" class="bg-gradient-to-r from-amber-950 via-obsidian-950 to-amber-950 border-b border-amber-500/40 text-amber-200/90 py-1.5 px-4 text-center text-[10px] sm:text-[11px] font-mono tracking-wide z-50 flex items-center justify-center gap-2 shadow-sm">
+    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse shrink-0"></span>
+    <span id="txt-advertencia-banner">
+      <strong>AVISO ACADÉMICO:</strong> Página no oficial elaborada con fines estrictamente formativos para el curso de Gobierno Digital y Derecho Informático. No constituye el portal oficial del Poder Judicial.
+    </span>
+  </aside>
 
-  <!-- CABECERA INSTITUCIONAL -->
-  <header class="bg-emerald-deep text-white shadow-lg border-b border-emerald-950/60 sticky top-0 z-40">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
-      <div class="flex items-center space-x-3 cursor-pointer" onclick="reiniciarFlujo()">
-        <div class="w-10 h-10 rounded-lg bg-emerald-900/80 border border-gold flex items-center justify-center shadow-inner">
-          <span class="text-xl text-gold font-title-legal">⚖</span>
+  <!-- CABECERA INSTITUCIONAL CON LOGO Y PALANQUITA BILINGÜE -->
+  <header class="bg-obsidian-900/85 border-b border-white/10 sticky top-0 z-40 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center gap-3">
+      <!-- Logotipo e Identidad Principal -->
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="reiniciarFlujoCompleto()">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-emeraldtech-900 to-obsidian-950 border border-goldtech-500/40 flex items-center justify-center shadow-inner shrink-0 group">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6 text-goldtech-400 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M6 6l6-3 6 3M4 12l2-6 2 6a2 2 0 0 1-4 0zM16 12l2-6 2 6a2 2 0 0 1-4 0zM2 20h20"/>
+          </svg>
         </div>
         <div>
-          <h1 class="text-lg font-title-legal tracking-wider text-stone-100 font-bold">RASTREADOR JUDICIAL</h1>
-          <p class="text-[10px] text-stone-300 tracking-widest uppercase font-mono">Trazabilidad Procesal Ciudadana & Celeridad</p>
+          <div class="flex items-center gap-1.5 sm:gap-2">
+            <h1 class="font-display font-bold tracking-wider text-sm sm:text-base md:text-lg text-white">RASTREADOR JUDICIAL</h1>
+            <span class="px-1.5 py-0.2 sm:px-2 sm:py-0.5 rounded text-[9px] sm:text-[10px] font-mono font-bold bg-goldtech-500/10 text-goldtech-300 border border-goldtech-500/30">
+              v5.0
+            </span>
+          </div>
+          <p data-i18n="header_subtitle" class="text-[10px] sm:text-[11px] text-slate-400 truncate max-w-[200px] sm:max-w-none">Trazabilidad Procesal y Celeridad Jurisdiccional</p>
         </div>
       </div>
 
-      <div class="flex items-center gap-2">
-        <span class="hidden sm:inline-block px-3 py-1 rounded text-xs font-mono bg-emerald-950/60 border border-emerald-800/80 text-emerald-300">
-          D.J. Puno &bull; Instancia Activa
-        </span>
-        <button onclick="reiniciarFlujo()" class="text-xs bg-stone-900/80 hover:bg-stone-900 text-stone-200 border border-stone-700 px-3 py-1.5 rounded transition">
-          ↺ Nueva Consulta
-        </button>
+      <!-- Estatus de Jurisdicción y Palanquita Bilingüe -->
+      <div class="flex items-center space-x-2 sm:space-x-4 text-xs">
+        <div class="text-right hidden lg:block">
+          <p data-i18n="header_court_title" class="font-mono text-slate-400 text-[11px]">Distrito Judicial de Puno</p>
+          <p data-i18n="header_court_sub" class="text-goldtech-400 text-[11px] font-medium">Juzgado Penal Unipersonal - Sede Central</p>
+        </div>
+
+        <!-- Palanquita de Idioma (Toggle Switch ES / EN) -->
+        <div class="flex items-center bg-obsidian-950 p-1 rounded-xl border border-white/15 shadow-inner" role="group" aria-label="Selector de idioma">
+          <button id="lang-btn-es" onclick="cambiarIdioma('es')" class="px-2.5 py-1 rounded-lg font-mono text-[10px] sm:text-[11px] font-bold transition-all bg-goldtech-500 text-obsidian-950 shadow cursor-pointer">
+            ES
+          </button>
+          <button id="lang-btn-en" onclick="cambiarIdioma('en')" class="px-2.5 py-1 rounded-lg font-mono text-[10px] sm:text-[11px] font-bold text-slate-400 hover:text-white transition-all cursor-pointer">
+            EN
+          </button>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- CONTENEDOR PRINCIPAL INTERACTIVO -->
-  <main class="max-w-5xl mx-auto px-4 py-8 w-full flex-grow">
+  <!-- ======================================================================= -->
+  <!-- CONTENEDOR PRINCIPAL: PANTALLAS DEL SISTEMA                             -->
+  <!-- ======================================================================= -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7 flex flex-col justify-center relative">
 
-    <!-- ==================== PANTALLA 1: FILTRO DE SEGURIDAD CAPTCHA ==================== -->
-    <div id="vistaCaptcha" class="max-w-md mx-auto bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden transition-all duration-300">
-      <div class="bg-stone-900 text-white p-6 text-center border-b border-stone-800">
-        <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-emerald-950 border border-gold flex items-center justify-center text-gold text-xl">
-          🔒
+    <!-- ======================================================================= -->
+    <!-- PANTALLA 0: BIENVENIDA CON DIOSA TEMIS Y FICHA DE AUTORÍA               -->
+    <!-- ======================================================================= -->
+    <section id="pantalla-0-bienvenida" class="max-w-3xl mx-auto w-full my-auto py-6 sm:py-10 text-center space-y-6 sm:space-y-8">
+      
+      <!-- Ilustración Detallada de Temis (Diosa de la Justicia: Venda, Balanza y Espada) -->
+      <div class="relative w-44 h-44 sm:w-56 sm:h-56 mx-auto group">
+        <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-emeraldtech-900/40 via-goldtech-500/25 to-emeraldtech-500/30 blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
+        <div class="relative w-44 h-44 sm:w-56 sm:h-56 rounded-full bg-obsidian-900/90 border-2 border-goldtech-500/60 flex items-center justify-center shadow-2xl p-4 overflow-hidden">
+          
+          <svg class="w-36 h-36 sm:w-48 sm:h-48 text-goldtech-400 drop-shadow-[0_4px_16px_rgba(212,175,55,0.45)]" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="54" stroke="currentColor" stroke-width="1" stroke-dasharray="2 3" opacity="0.35"/>
+            <circle cx="60" cy="60" r="48" stroke="currentColor" stroke-width="1.2" opacity="0.2"/>
+            
+            <path d="M60 22C52 22 47 28 47 36C47 44 52 48 60 48C68 48 73 44 73 36C73 28 68 22 60 22Z" fill="#0c121d" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M50 26C54 23 66 23 70 26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M46 33H74V39H46V33Z" fill="#d4af37" fill-opacity="0.9" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M43 35L46 36M77 35L74 36" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M60 40V43M57 45C58.5 46 61.5 46 63 45" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+
+            <path d="M54 48L46 62H74L66 48" stroke="currentColor" stroke-width="1.4" fill="#070a10"/>
+            <path d="M42 62C42 62 36 78 35 106H85C84 78 78 62 78 62L60 67L42 62Z" fill="#0c121d" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M48 64L50 106M72 64L70 106M60 67V106" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+
+            <path d="M45 64L28 48" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M14 48H42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="28" cy="48" r="2" fill="currentColor"/>
+            <path d="M14 48L8 62M14 48L20 62" stroke="currentColor" stroke-width="1" opacity="0.8"/>
+            <path d="M6 62C6 62 10 68 14 68C18 68 22 62 22 62H6Z" fill="currentColor" fill-opacity="0.3" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M42 48L36 62M42 48L48 62" stroke="currentColor" stroke-width="1" opacity="0.8"/>
+            <path d="M34 62C34 62 38 68 42 68C46 68 50 62 50 62H34Z" fill="currentColor" fill-opacity="0.3" stroke="currentColor" stroke-width="1.2"/>
+
+            <path d="M75 64L92 58" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M92 20V86" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M84 40H100" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="92" cy="88" r="2.5" fill="currentColor"/>
+            <path d="M92 16L95 22H89L92 16Z" fill="currentColor"/>
+          </svg>
         </div>
-        <h2 class="text-lg font-title-legal tracking-wide font-bold">Control de Seguridad Perimétrico</h2>
-        <p class="text-xs text-stone-400 mt-1">Verificación automatizada para consulta de actuaciones procesales</p>
       </div>
 
-      <form class="p-6 space-y-5" onsubmit="validarCaptchaSeguro(event)">
-        <p class="text-xs text-stone-600 leading-relaxed text-center">
-          Para garantizar la integridad y confidencialidad del servicio digital, ingrese los 5 caracteres alfanuméricos dibujados a continuación:
+      <div class="space-y-3">
+        <p data-i18n="welcome_greeting" class="font-mono text-xs sm:text-sm tracking-widest text-goldtech-400 uppercase font-semibold">
+          Bienvenido a la plataforma
         </p>
+        <h2 class="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight">
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-goldtech-400 via-goldtech-300 to-emeraldtech-400">
+            RASTREADOR JUDICIAL
+          </span>
+        </h2>
+        <p data-i18n="welcome_subphrase" class="text-xs sm:text-sm text-slate-400 font-sans max-w-md mx-auto">
+          Trazabilidad procesal ciudadana y consulta de expedientes en tiempo real.
+        </p>
+      </div>
 
-        <!-- Canvas CAPTCHA -->
-        <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 flex flex-col items-center gap-3">
-          <canvas id="captchaCanvas" width="180" height="52" class="bg-white border border-stone-300 rounded-lg shadow-inner cursor-pointer" onclick="generarRetoCaptcha()" title="Clic para generar nuevo código"></canvas>
-
-          <div class="flex gap-4 text-xs">
-            <button type="button" onclick="generarRetoCaptcha()" class="text-stone-600 hover:text-emerald-800 font-medium flex items-center gap-1">
-              🔄 Cambiar imagen
-            </button>
-            <button type="button" onclick="leerAudioCaptcha()" class="text-stone-600 hover:text-emerald-800 font-medium flex items-center gap-1">
-              🔊 Escuchar audio
-            </button>
-          </div>
+      <!-- Ficha de Autoría Académica y Propiedad -->
+      <div class="max-w-md mx-auto p-4 rounded-2xl bg-obsidian-950/85 border border-goldtech-500/40 text-left font-mono space-y-1.5 shadow-xl backdrop-blur-md">
+        <div class="flex items-center justify-between border-b border-white/10 pb-1.5 mb-1.5">
+          <span class="text-[10px] text-goldtech-400 uppercase tracking-widest font-bold flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-goldtech-400"></span>
+            Acreditación Académica
+          </span>
+          <span class="px-2 py-0.5 rounded text-[9px] bg-emeraldtech-950 border border-emeraldtech-700 text-emeraldtech-300 font-bold">
+            PROYECTO FORMATIVO
+          </span>
         </div>
+        <p class="text-slate-300 text-xs">
+          <span class="text-slate-400">Propietario / Autor:</span> 
+          <strong class="text-white font-bold">Negreiros Alvarez, Jersson Manuel</strong>
+        </p>
+        <p class="text-slate-300 text-xs">
+          <span class="text-slate-400">Curso:</span> 
+          <strong class="text-goldtech-300 font-semibold">GOBIERNO DIGITAL Y DERECHO INFORMÁTICO</strong>
+        </p>
+        <p class="text-slate-300 text-xs">
+          <span class="text-slate-400">Docente:</span> 
+          <strong class="text-slate-200">Espinoza Coila, Michael</strong>
+        </p>
+      </div>
 
-        <div>
-          <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1 text-center">Código de Verificación</label>
-          <input type="text" id="inputCaptcha" maxlength="5" placeholder="EJ: K9M2P" class="w-full text-center uppercase font-code-legal text-lg tracking-widest border border-stone-300 rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-700 outline-none" required autocomplete="off">
-        </div>
-
-        <div id="alertaCaptcha" class="hidden text-xs bg-rose-50 border border-rose-200 text-rose-800 p-2.5 rounded-lg text-center font-medium"></div>
-
-        <button type="submit" class="w-full bg-emerald-deep hover:bg-emerald-900 text-white font-medium py-3 rounded-lg text-sm shadow transition flex items-center justify-center gap-2">
-          <span>Validar e Ingresar al Sistema</span>
-          <span>&rarr;</span>
+      <div class="pt-2">
+        <button onclick="avanzarDesdeBienvenida()" class="w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-emeraldtech-700 via-emeraldtech-600 to-goldtech-600 hover:brightness-110 text-white font-display font-bold text-xs sm:text-sm uppercase tracking-wider shadow-glow-emerald transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-3 mx-auto cursor-pointer">
+          <span data-i18n="welcome_btn_start">Iniciar Acceso Seguro</span>
+          <svg class="w-4 h-4 text-goldtech-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </button>
-      </form>
-    </div>
-
-    <!-- ==================== PANTALLA 2: PANTALLA DE CARGA / SINCRONIZACIÓN ==================== -->
-    <div id="vistaCarga" class="hidden max-w-md mx-auto text-center py-16 space-y-4">
-      <div class="relative w-16 h-16 mx-auto">
-        <div class="w-16 h-16 border-4 border-stone-200 border-t-emerald-800 rounded-full animate-spin"></div>
-        <div class="absolute inset-0 flex items-center justify-center text-xs font-code-legal font-bold text-emerald-900">
-          SIJE
-        </div>
-      </div>
-      <h3 class="text-base font-title-legal font-bold text-stone-900" id="textoCargaTitulo">Autenticando Sesión Digital</h3>
-      <p class="text-xs text-stone-500 font-mono" id="textoCargaSub">Conectando con la base de datos de la Corte Superior de Justicia de Puno...</p>
-      <div class="w-48 mx-auto bg-stone-200 h-1.5 rounded-full overflow-hidden">
-        <div id="barraProgreso" class="bg-emerald-800 h-full w-0 transition-all duration-500"></div>
-      </div>
-    </div>
-
-    <!-- ==================== PANTALLA 3: BUSCADOR DE EXPEDIENTES (2 PESTAÑAS) ==================== -->
-    <div id="vistaBuscador" class="hidden space-y-6">
-
-      <!-- Pestañas de modalidad de búsqueda -->
-      <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
-        <div class="flex border-b border-stone-200 mb-6">
-          <button id="tabBtn1" onclick="cambiarModoBusqueda(1)" class="pb-3 px-4 text-xs sm:text-sm font-semibold border-b-2 border-emerald-800 text-emerald-900 flex items-center gap-2">
-            <span>🏛️</span> Búsqueda por Órgano Jurisdiccional
-          </button>
-          <button id="tabBtn2" onclick="cambiarModoBusqueda(2)" class="pb-3 px-4 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-stone-500 hover:text-stone-800 flex items-center gap-2">
-            <span>🔢</span> Búsqueda Directa por Número Único
-          </button>
-        </div>
-
-        <!-- MODO 1: Por Jurisdicción / Juez / Materia -->
-        <div id="modoFiltros" class="space-y-4">
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            <div>
-              <label class="block text-xs font-semibold text-stone-600 mb-1">Distrito Judicial</label>
-              <select id="filtroDistrito" class="w-full border border-stone-300 rounded-lg p-2 text-xs bg-white text-stone-800">
-                <option value="Puno" selected>Puno</option>
-                <option value="Lima">Lima</option>
-                <option value="Arequipa">Arequipa</option>
-                <option value="Cusco">Cusco</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-stone-600 mb-1">Provincia</label>
-              <select id="filtroProvincia" class="w-full border border-stone-300 rounded-lg p-2 text-xs bg-white text-stone-800">
-                <option value="Puno" selected>Puno</option>
-                <option value="San Roman">San Román (Juliaca)</option>
-                <option value="Chucuito">Chucuito</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-stone-600 mb-1">Materia / Especialidad</label>
-              <select id="filtroMateria" class="w-full border border-stone-300 rounded-lg p-2 text-xs bg-white text-stone-800">
-                <option value="Penal" selected>Penal (NCPP)</option>
-                <option value="Civil">Civil</option>
-                <option value="Laboral">Laboral (NLPT)</option>
-                <option value="Constitucional">Constitucional</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-stone-600 mb-1">Órgano / Magistrado</label>
-              <select id="filtroJuez" class="w-full border border-stone-300 rounded-lg p-2 text-xs bg-white text-stone-800">
-                <option value="Gladis Huanca" selected>Juz. Unipersonal - Gladis Huanca Quispe</option>
-                <option value="Todos">Todos los juzgados</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="flex justify-end pt-2">
-            <button onclick="ejecutarBusquedaFiltros()" class="bg-emerald-deep hover:bg-emerald-900 text-white px-6 py-2 rounded-lg text-xs font-semibold shadow transition">
-              🔍 Filtrar Expedientes
-            </button>
-          </div>
-        </div>
-
-        <!-- MODO 2: Búsqueda Directa por Código -->
-        <div id="modoCodigo" class="hidden space-y-4">
-          <div>
-            <label class="block text-xs font-semibold text-stone-700 mb-1">Número de Formato Único Oficial</label>
-            <input type="text" id="inputCodigoDirecto" value="02766-2018-82-2101-JP-PE-02" placeholder="00000-0000-0-0000-JR-XX-00" class="w-full border border-stone-300 rounded-lg p-2.5 text-sm font-code-legal uppercase focus:ring-2 focus:ring-emerald-700 outline-none">
-          </div>
-          <div class="flex justify-between items-center pt-2">
-            <span class="text-xs text-stone-500 font-mono">Ejemplo cargado: Homicidio Culposo (D.J. Puno)</span>
-            <button onclick="ejecutarBusquedaCodigo()" class="bg-emerald-deep hover:bg-emerald-900 text-white px-6 py-2 rounded-lg text-xs font-semibold shadow transition">
-              Consultar Código
-            </button>
-          </div>
-        </div>
-
       </div>
 
-      <!-- RESULTADOS DE LA BÚSQUEDA -->
-      <div id="seccionResultados" class="space-y-4">
-        <div class="flex justify-between items-center">
-          <h3 class="text-sm font-bold text-stone-800 uppercase tracking-wider">Expedientes Coincidentes Registrados</h3>
-          <span class="text-xs text-stone-500 font-mono">1 Registro hallado</span>
-        </div>
+    </section>
 
-        <!-- Tarjeta de Expediente Puno -->
-        <div class="bg-white rounded-xl border border-stone-300 p-5 hover:border-gold hover:shadow-md transition cursor-pointer" onclick="abrirExpedientePuno()">
-          <div class="flex flex-wrap justify-between items-start gap-2 mb-3">
-            <div>
-              <span class="badge-gold text-[10px] font-mono font-bold px-2 py-0.5 rounded">ETAPA DE JUZGAMIENTO / SENTENCIA</span>
-              <h4 class="text-base font-bold text-stone-900 font-code-legal mt-1">02766-2018-82-2101-JP-PE-02</h4>
-            </div>
-            <span class="text-xs text-emerald-800 font-semibold bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
-              Poder Judicial &bull; Corte de Puno
-            </span>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs text-stone-600 bg-stone-50 p-3 rounded-lg border border-stone-200 mb-3">
-            <div>
-              <span class="block text-[10px] font-bold text-stone-400 uppercase">Delito / Materia:</span>
-              <span class="font-semibold text-rose-900">Homicidio Culposo (Art. 111 CP)</span>
-            </div>
-            <div>
-              <span class="block text-[10px] font-bold text-stone-400 uppercase">Juzgado:</span>
-              <span>Juz. Unipersonal - Sede Central</span>
-            </div>
-            <div>
-              <span class="block text-[10px] font-bold text-stone-400 uppercase">Jueza Titular:</span>
-              <span class="font-medium text-stone-900">Dra. Gladis Huanca Quispe</span>
-            </div>
-            <div>
-              <span class="block text-[10px] font-bold text-stone-400 uppercase">Fecha Ingreso:</span>
-              <span class="font-mono">23/05/2019</span>
-            </div>
-          </div>
-
-          <div class="flex justify-between items-center text-xs">
-            <span class="text-stone-500 text-[11px]">Procedencia: 1° Fiscalía Provincial Penal Corporativa de Puno</span>
-            <span class="text-emerald-800 font-bold hover:underline flex items-center gap-1">
-              Ver Trazabilidad y Cuadernos &rarr;
-            </span>
-          </div>
+    <!-- ======================================================================= -->
+    <!-- PANTALLA 1: PRIMER SPLASH SCREEN CINEMÁTICO                             -->
+    <!-- ======================================================================= -->
+    <section id="pantalla-1-splash" class="hidden max-w-xl mx-auto w-full my-auto py-8 sm:py-12 text-center space-y-6 sm:space-y-8">
+      
+      <div class="relative w-24 h-24 sm:w-28 sm:h-28 mx-auto">
+        <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-emeraldtech-900/60 to-goldtech-500/20 blur-xl animate-pulse"></div>
+        <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-obsidian-900 border-2 border-goldtech-500/40 flex items-center justify-center shadow-2xl">
+          <svg class="w-12 h-12 sm:w-14 sm:h-14 text-goldtech-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M6 6l6-3 6 3M4 12l2-6 2 6a2 2 0 0 1-4 0zM16 12l2-6 2 6a2 2 0 0 1-4 0zM2 20h20"/>
+          </svg>
         </div>
       </div>
 
-    </div>
+      <div class="space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-goldtech-300 text-[11px] font-mono">
+          <span class="w-1.5 h-1.5 rounded-full bg-emeraldtech-400 animate-ping"></span>
+          <span data-i18n="splash1_badge">Plataforma de Innovación Jurisdiccional</span>
+        </div>
+        <h2 class="font-display font-bold text-2xl sm:text-4xl text-white tracking-wide">
+          RASTREADOR JUDICIAL
+        </h2>
+        <p data-i18n="splash1_desc" class="text-xs sm:text-sm text-slate-400 font-sans max-w-md mx-auto leading-relaxed px-4">
+          Iniciando protocolo perimétrico y validación de seguridad de la red.
+        </p>
+      </div>
 
-    <!-- ==================== PANTALLA 4: VISTA INTEGRAL DEL EXPEDIENTE ==================== -->
-    <div id="vistaExpediente" class="hidden space-y-6">
+      <!-- Barra de Telemetría Dinámica -->
+      <div class="glass-card rounded-2xl p-5 sm:p-6 border border-white/10 max-w-md mx-auto space-y-4 shadow-card-glass">
+        <div class="flex justify-between items-center text-xs font-mono">
+          <span id="splash-status-text" class="text-slate-300 truncate">Iniciando protocolo seguro...</span>
+          <span id="splash-status-pct" class="text-goldtech-400 font-bold">0%</span>
+        </div>
 
-      <!-- Botón de regreso -->
+        <div class="w-full bg-obsidian-950 h-2 rounded-full overflow-hidden border border-white/5">
+          <div id="splash-progress-bar" class="h-full bg-gradient-to-r from-emeraldtech-500 via-goldtech-500 to-emeraldtech-400 w-0 transition-all duration-300 ease-out"></div>
+        </div>
+
+        <div class="flex justify-between items-center text-[10px] font-mono text-slate-500">
+          <span data-i18n="splash_node">Nodo: CSJ PUNO - SEDE CENTRAL</span>
+          <span>PKI SHA-256</span>
+        </div>
+      </div>
+
       <div>
-        <button onclick="volverAlBuscador()" class="text-xs text-stone-600 hover:text-stone-900 flex items-center gap-1 font-medium">
-          &larr; Volver a resultados de búsqueda
+        <button onclick="saltarAIntroduccionCaptcha()" class="px-5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 text-xs font-mono transition flex items-center gap-2 mx-auto cursor-pointer">
+          <span data-i18n="splash_skip_btn">Saltar Introducción</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- PANTALLA 2: SEGURIDAD (SOLO CAPTCHA + BARRA HORIZONTAL INSTITUCIONAL)   -->
+    <!-- ======================================================================= -->
+    <section id="pantalla-2-captcha" class="hidden max-w-4xl mx-auto w-full my-auto py-4 sm:py-6 space-y-6">
+      
+      <!-- Barra Horizontal Institucional (en Pantalla 2) -->
+      <nav aria-label="Menú institucional" class="glass-card rounded-2xl border border-white/10 p-2 sm:p-2.5 shadow-xl flex items-center justify-between overflow-x-auto custom-scrollbar gap-2">
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <button onclick="reiniciarFlujoCompleto()" data-i18n="nav_bar_home" class="px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer">
+            Inicio
+          </button>
+          <button onclick="abrirModalInstitucional('mision')" data-i18n="nav_bar_mission" class="px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer">
+            Misión
+          </button>
+          <button onclick="abrirModalInstitucional('vision')" data-i18n="nav_bar_vision" class="px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer">
+            Visión
+          </button>
+          <button onclick="abrirModalInstitucional('transparencia')" data-i18n="nav_bar_transparency" class="px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer">
+            Transparencia
+          </button>
+          <button onclick="abrirModalInstitucional('contacto')" data-i18n="nav_bar_contact" class="px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer">
+            Contáctanos
+          </button>
+        </div>
+
+        <span class="text-[11px] font-mono text-goldtech-400 bg-goldtech-500/10 px-3 py-1 rounded-xl border border-goldtech-500/20 shrink-0">
+          Filtro Perimétrico
+        </span>
+      </nav>
+
+      <!-- Tarjeta del Reto CAPTCHA -->
+      <div class="glass-card max-w-md mx-auto rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl space-y-6">
+        
+        <div class="text-center space-y-2">
+          <div class="w-12 h-12 rounded-2xl bg-emeraldtech-950/80 border border-emeraldtech-700/60 flex items-center justify-center text-emeraldtech-400 mx-auto shadow-inner">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <span data-i18n="captcha_tag" class="text-[10px] font-mono uppercase tracking-widest text-goldtech-400 font-semibold">Módulo de Integridad Perimétrica</span>
+          <h3 data-i18n="captcha_title" class="font-display font-bold text-lg sm:text-xl text-white">Reto de Seguridad CAPTCHA</h3>
+          <p data-i18n="captcha_desc" class="text-xs text-slate-400 leading-relaxed">
+            Para prevenir rastreos automatizados masivos y garantizar la disponibilidad, ingrese los 5 caracteres distorsionados.
+          </p>
+        </div>
+
+        <form onsubmit="procesarValidacionCaptcha(event)" class="space-y-5">
+          <div class="bg-obsidian-950/90 p-4 rounded-2xl border border-white/10 flex flex-col items-center gap-3">
+            <canvas id="captchaCanvas" width="180" height="54" class="bg-obsidian-900 border border-white/20 rounded-xl shadow-inner cursor-pointer" onclick="generarRetoCaptcha()" title="Clic para generar nuevo código"></canvas>
+            
+            <div class="flex gap-4 text-xs">
+              <button type="button" onclick="generarRetoCaptcha()" class="text-slate-400 hover:text-goldtech-300 font-mono text-[11px] flex items-center gap-1 transition cursor-pointer">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                <span data-i18n="captcha_btn_refresh">Nuevo Reto</span>
+              </button>
+              <button type="button" onclick="leerAudioCaptcha()" class="text-slate-400 hover:text-emeraldtech-400 font-mono text-[11px] flex items-center gap-1 transition cursor-pointer">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+                <span data-i18n="captcha_btn_audio">Audio (WCAG)</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="space-y-1 text-center">
+            <label for="input-captcha-code" data-i18n="captcha_label_input" class="block text-[11px] font-mono text-slate-400 uppercase tracking-wider">
+              Escriba los 5 caracteres
+            </label>
+            <input type="text" id="input-captcha-code" maxlength="5" autocomplete="off" required placeholder="•••••" class="w-52 sm:w-56 mx-auto text-center font-mono font-bold text-2xl tracking-[0.3em] uppercase p-2.5 bg-obsidian-900 border border-white/20 rounded-xl focus:ring-2 focus:ring-goldtech-500 focus:border-goldtech-500 outline-none text-goldtech-300">
+          </div>
+
+          <div id="error-captcha-msg" data-i18n="captcha_error_msg" class="hidden text-xs bg-rose-950/80 border border-rose-800 text-rose-300 p-2.5 rounded-xl text-center font-mono">
+            Código incorrecto. Se ha regenerado una nueva clave.
+          </div>
+
+          <button type="submit" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-emeraldtech-800 to-emeraldtech-700 hover:from-emeraldtech-700 hover:to-emeraldtech-600 text-white font-display font-semibold text-xs tracking-wider uppercase shadow-lg shadow-emeraldtech-950/50 transition flex items-center justify-center gap-2 border border-emeraldtech-500/30 cursor-pointer">
+            <span data-i18n="captcha_btn_validate">Validar e Ingresar</span>
+            <svg class="w-4 h-4 text-goldtech-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+        </form>
+
+        <p data-i18n="captcha_compliance_note" class="text-[10px] text-slate-500 text-center font-mono">
+          Certificado de navegación segura conforme a los estándares de interoperabilidad del Estado.
+        </p>
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- PANTALLA 3: SEGUNDO SPLASH SCREEN CINEMÁTICO                           -->
+    <!-- ======================================================================= -->
+    <section id="pantalla-3-splash-sync" class="hidden max-w-xl mx-auto w-full my-auto py-8 sm:py-12 text-center space-y-6 sm:space-y-8">
+      
+      <div class="relative w-24 h-24 mx-auto">
+        <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-goldtech-500/20 to-emeraldtech-500/30 blur-xl animate-pulse"></div>
+        <div class="relative w-24 h-24 rounded-3xl bg-obsidian-900 border-2 border-emeraldtech-500/50 flex items-center justify-center shadow-2xl">
+          <svg class="w-12 h-12 text-emeraldtech-400 animate-spin" style="animation-duration: 4s;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emeraldtech-950/80 border border-emeraldtech-700/60 text-emeraldtech-300 text-[11px] font-mono">
+          <span class="w-1.5 h-1.5 rounded-full bg-emeraldtech-400 animate-ping"></span>
+          <span data-i18n="sync_badge">Autenticación Exitosa</span>
+        </div>
+        <h2 data-i18n="sync_title" class="font-display font-bold text-xl sm:text-3xl text-white tracking-wide px-2">
+          Sincronizando con Nodos Jurisdiccionales
+        </h2>
+        <p data-i18n="sync_desc" class="text-xs sm:text-sm text-slate-400 font-sans max-w-md mx-auto leading-relaxed px-4">
+          Conectando de forma segura con la base de datos de la Corte Superior de Justicia de Puno.
+        </p>
+      </div>
+
+      <div class="glass-card rounded-2xl p-5 sm:p-6 border border-white/10 max-w-md mx-auto space-y-4 shadow-card-glass">
+        <div class="flex justify-between items-center text-xs font-mono">
+          <span id="sync-status-text" class="text-slate-300 truncate">Verificando firma de seguridad criptográfica...</span>
+          <span id="sync-status-pct" class="text-emeraldtech-400 font-bold">0%</span>
+        </div>
+
+        <div class="w-full bg-obsidian-950 h-2 rounded-full overflow-hidden border border-white/5">
+          <div id="sync-progress-bar" class="h-full bg-gradient-to-r from-goldtech-500 via-emeraldtech-400 to-emeraldtech-500 w-0 transition-all duration-300 ease-out"></div>
+        </div>
+
+        <div class="flex justify-between items-center text-[10px] font-mono text-slate-500">
+          <span data-i18n="sync_server">Servidor: CSJ-PUNO-SRV01</span>
+          <span>Interoperabilidad PIDE</span>
+        </div>
+      </div>
+
+      <div>
+        <button onclick="saltarABusqueda()" class="px-5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 text-xs font-mono transition flex items-center gap-2 mx-auto cursor-pointer">
+          <span data-i18n="sync_skip_btn">Saltar a Terminal Institucional</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
         </button>
       </div>
 
-      <!-- Ficha de Carátula Institucional -->
-      <div class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
-        <div class="bg-stone-900 text-white p-5 border-b border-stone-800 flex flex-wrap justify-between items-center gap-3">
-          <div>
-            <span class="text-[10px] font-mono text-gold tracking-widest uppercase">EXPEDIENTE PENAL PRINCIPAL (NCPP)</span>
-            <h2 class="text-lg sm:text-xl font-code-legal font-bold text-white tracking-wide">02766-2018-82-2101-JP-PE-02</h2>
-            <p class="text-xs text-stone-400 mt-0.5">Distrito Judicial de Puno &bull; Provincia de Puno &bull; Delito: Homicidio Culposo</p>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- PANTALLA 4: BARRA HORIZONTAL CON BOTÓN DE BÚSQUEDA Y FRASE MÍTICA       -->
+    <!-- ======================================================================= -->
+    <section id="pantalla-4-busqueda" class="hidden max-w-5xl mx-auto w-full my-auto py-4 sm:py-6 space-y-6">
+      
+      <!-- Barra Horizontal Institucional (con botón de búsqueda integrado) -->
+      <nav aria-label="Menú institucional" class="glass-card rounded-2xl border border-white/10 p-2 sm:p-2.5 shadow-xl flex items-center justify-between overflow-x-auto custom-scrollbar gap-2">
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <button onclick="reiniciarFlujoCompleto()" data-i18n="nav_bar_home" class="px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer">
+            Inicio
+          </button>
+          <button onclick="abrirModalInstitucional('mision')" data-i18n="nav_bar_mission" class="px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer">
+            Misión
+          </button>
+          <button onclick="abrirModalInstitucional('vision')" data-i18n="nav_bar_vision" class="px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer">
+            Visión
+          </button>
+          <button onclick="abrirModalInstitucional('transparencia')" data-i18n="nav_bar_transparency" class="px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer">
+            Transparencia
+          </button>
+          <button onclick="abrirModalInstitucional('contacto')" data-i18n="nav_bar_contact" class="px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer">
+            Contáctanos
+          </button>
+        </div>
+
+        <!-- Botón dentro de la barra horizontal: Búsqueda de Expediente Judicial -->
+        <div class="flex items-center space-x-2 shrink-0">
+          <button id="btn-bar-busqueda-p4" onclick="desplegarFormularioBusqueda()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-goldtech-600 to-goldtech-500 hover:brightness-110 text-obsidian-950 font-display font-bold text-xs uppercase tracking-wider shadow-glow-gold transition flex items-center gap-1.5 cursor-pointer">
+            <svg class="w-3.5 h-3.5 text-obsidian-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <span data-i18n="btn_trigger_search_form">Búsqueda de Expediente Judicial</span>
+          </button>
+
+          <button onclick="volverACaptcha()" class="text-xs font-mono text-slate-400 hover:text-goldtech-300 px-2.5 py-1.5 rounded-xl hover:bg-white/5 transition flex items-center gap-1 cursor-pointer">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            <span data-i18n="search_btn_reset_val">Seguridad</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Sección inicial de Pantalla 4: Frase mítica de Derecho + imagen de Temis -->
+      <div id="p4-frase-mitica-temis" class="glass-card rounded-3xl border border-goldtech-500/30 p-8 sm:p-14 text-center space-y-6 shadow-2xl relative overflow-hidden transition-all duration-300">
+        
+        <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-80 h-80 bg-goldtech-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative w-28 h-28 sm:w-36 sm:h-36 mx-auto">
+          <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-obsidian-950 border border-goldtech-500/40 flex items-center justify-center p-3 shadow-inner">
+            <svg class="w-20 h-20 sm:w-28 sm:h-28 text-goldtech-400 drop-shadow-[0_2px_12px_rgba(212,175,55,0.4)]" viewBox="0 0 100 100" fill="none">
+              <circle cx="50" cy="50" r="44" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.4"/>
+              <circle cx="50" cy="30" r="11" stroke="currentColor" stroke-width="1.6" fill="#070a10"/>
+              <path d="M40 28H60V33H40V28Z" fill="#d4af37" stroke="currentColor" stroke-width="1"/>
+              <path d="M50 16V84" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M26 28H74" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M26 28L18 42M26 28L34 42" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M14 42C14 42 18 48 26 48C34 48 38 42 38 42H14Z" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M74 28L66 42M74 28L82 42" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M62 42C62 42 66 48 74 48C82 48 86 42 86 42H62Z" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M50 12L53 18H47L50 12Z" fill="currentColor"/>
+              <path d="M40 84H60" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </svg>
           </div>
-          <div class="text-right">
-            <span class="text-xs bg-emerald-950 border border-emerald-500 text-emerald-400 px-3 py-1 rounded-full font-mono">
-              ● Estado: Sentenciado / Ejecución
+        </div>
+
+        <div class="space-y-4 max-w-2xl mx-auto">
+          <span class="text-[11px] font-mono tracking-widest text-goldtech-400 uppercase font-bold px-3 py-1 rounded-full bg-goldtech-500/10 border border-goldtech-500/20">
+            Axioma Fundamental del Derecho Romano &bull; Ulpiano
+          </span>
+          
+          <blockquote class="font-serif italic text-lg sm:text-2xl text-stone-100 leading-relaxed drop-shadow-sm">
+            “Iustitia est constans et perpetua voluntas ius suum cuique tribuendi.”
+          </blockquote>
+          
+          <p data-i18n="legal_quote_trans" class="font-serif text-sm sm:text-base text-goldtech-300 font-semibold max-w-xl mx-auto">
+            &laquo;La justicia es la constante y perpetua voluntad de dar a cada uno su derecho.&raquo;
+          </p>
+
+          <p data-i18n="legal_quote_instruction" class="text-xs text-slate-400 font-mono pt-2">
+            Haga clic en el botón <strong class="text-goldtech-300 uppercase">&quot;Búsqueda de Expediente Judicial&quot;</strong> de la barra superior para consultar los autos y expedientes.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Formulario de búsqueda (se revela tras hacer clic en el botón de la barra) -->
+      <div id="p4-contenedor-busqueda" class="hidden glass-card rounded-3xl border border-goldtech-500/40 overflow-hidden shadow-2xl transition-all duration-300">
+        
+        <div class="flex flex-col sm:flex-row border-b border-white/10 bg-obsidian-950/60 p-2 gap-2">
+          <button id="btn-tab-filtros" onclick="cambiarModoBusqueda('filtros')" class="flex-1 py-3 px-3 sm:px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 bg-obsidian-800 text-goldtech-300 border border-goldtech-500/30 transition shadow-sm cursor-pointer">
+            <svg class="w-4 h-4 text-goldtech-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+            <span data-i18n="tab_by_filters" class="truncate">Por Órgano, Juez y Materia</span>
+          </button>
+
+          <button id="btn-tab-codigo" onclick="cambiarModoBusqueda('codigo')" class="flex-1 py-3 px-3 sm:px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-obsidian-900 border border-transparent transition cursor-pointer">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/></svg>
+            <span data-i18n="tab_by_code" class="truncate">Por Código Único Directo</span>
+          </button>
+        </div>
+
+        <!-- Pestaña A: Filtros Jurisdiccionales -->
+        <div id="tab-contenido-filtros" class="p-5 sm:p-8 space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 text-xs">
+            <div>
+              <label data-i18n="filter_district_lbl" class="block font-mono text-[11px] text-slate-400 mb-1.5 uppercase">Distrito Judicial</label>
+              <div class="p-3 bg-obsidian-950 rounded-xl border border-white/10 text-white font-semibold flex items-center justify-between">
+                <span>Puno (Corte Superior)</span>
+                <span class="text-[10px] font-mono text-emeraldtech-400">D.J. 2101</span>
+              </div>
+            </div>
+
+            <div>
+              <label data-i18n="filter_province_lbl" class="block font-mono text-[11px] text-slate-400 mb-1.5 uppercase">Provincia Sede</label>
+              <div class="p-3 bg-obsidian-950 rounded-xl border border-white/10 text-white font-semibold">
+                Puno (Cercado)
+              </div>
+            </div>
+
+            <div>
+              <label data-i18n="filter_matter_lbl" class="block font-mono text-[11px] text-slate-400 mb-1.5 uppercase">Materia / Especialidad</label>
+              <div class="p-3 bg-obsidian-950 rounded-xl border border-white/10 text-rose-300 font-semibold flex items-center justify-between">
+                <span>Penal (NCPP)</span>
+                <span class="text-[10px] font-mono text-rose-400">Homicidio Culposo</span>
+              </div>
+            </div>
+
+            <div class="sm:col-span-2">
+              <label data-i18n="filter_court_lbl" class="block font-mono text-[11px] text-slate-400 mb-1.5 uppercase">Instancia / Despacho</label>
+              <div class="p-3 bg-obsidian-950 rounded-xl border border-white/10 text-white font-semibold">
+                Juzgado Penal Unipersonal - Sede Central de Puno
+              </div>
+            </div>
+
+            <div>
+              <label data-i18n="filter_judge_lbl" class="block font-mono text-[11px] text-slate-400 mb-1.5 uppercase">Jueza Titular a Cargo</label>
+              <div class="p-3 bg-obsidian-950 rounded-xl border border-white/10 text-goldtech-300 font-semibold">
+                Dra. Gladis Huanca Quispe
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <span data-i18n="filter_clerk_note" class="text-xs text-slate-400 font-mono text-center sm:text-left">
+              Especialista Legal: Abg. Carlos M. Mamani Condori • Año 2019
+            </span>
+            <button onclick="ejecutarAperturaExpediente()" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-emeraldtech-700 to-emeraldtech-600 hover:from-emeraldtech-600 hover:to-emeraldtech-500 text-white font-display font-bold text-xs uppercase tracking-wider shadow-lg transition flex items-center justify-center gap-2 cursor-pointer">
+              <svg class="w-4 h-4 text-emeraldtech-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <span data-i18n="btn_search_case">BUSCAR EXPEDIENTE</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Pestaña B: Búsqueda Directa por Código -->
+        <div id="tab-contenido-codigo" class="hidden p-5 sm:p-8 space-y-6">
+          <div class="space-y-3">
+            <label for="input-codigo-directo" data-i18n="code_label" class="block font-mono text-xs text-slate-300 uppercase tracking-wide">
+              Código Único de Formato Judicial Oficial (27 caracteres)
+            </label>
+            <div class="relative">
+              <input type="text" id="input-codigo-directo" value="02766-2018-82-2101-JP-PE-02" readonly class="w-full p-3.5 sm:p-4 bg-obsidian-950 border border-goldtech-500/40 rounded-xl font-mono text-sm sm:text-base font-bold text-goldtech-300 tracking-wider focus:outline-none">
+              <span data-i18n="code_verified_badge" class="hidden sm:inline-block absolute right-4 top-3.5 text-xs font-mono text-emeraldtech-400 bg-emeraldtech-950 px-2.5 py-0.5 rounded border border-emeraldtech-700">
+                Puno • Caso Verificado
+              </span>
+            </div>
+            <p data-i18n="code_desc" class="text-xs text-slate-400">
+              Expediente oficial asignado al Juzgado Penal Unipersonal de Puno por delito de Homicidio Culposo.
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-white/10 flex justify-end">
+            <button onclick="ejecutarAperturaExpediente()" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-emeraldtech-700 to-emeraldtech-600 hover:from-emeraldtech-600 hover:to-emeraldtech-500 text-white font-display font-bold text-xs uppercase tracking-wider shadow-lg transition flex items-center justify-center gap-2 cursor-pointer">
+              <svg class="w-4 h-4 text-emeraldtech-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <span data-i18n="btn_search_case">BUSCAR EXPEDIENTE</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- PANTALLA 5: VISTA INTEGRAL DEL EXPEDIENTE PENAL DE PUNO                 -->
+    <!-- ======================================================================= -->
+    <section id="pantalla-5-expediente" class="hidden max-w-6xl mx-auto w-full space-y-6">
+      
+      <!-- Barra Horizontal Institucional (en Pantalla 5) -->
+      <nav aria-label="Menú institucional" class="glass-card rounded-2xl border border-white/10 p-2 sm:p-2.5 shadow-xl flex items-center justify-between overflow-x-auto custom-scrollbar gap-2">
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <button onclick="reiniciarFlujoCompleto()" data-i18n="nav_bar_home" class="px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer">
+            Inicio
+          </button>
+          <button onclick="abrirModalInstitucional('mision')" data-i18n="nav_bar_mission" class="px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer">
+            Misión
+          </button>
+          <button onclick="abrirModalInstitucional('vision')" data-i18n="nav_bar_vision" class="px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer">
+            Visión
+          </button>
+          <button onclick="abrirModalInstitucional('transparencia')" data-i18n="nav_bar_transparency" class="px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer">
+            Transparencia
+          </button>
+          <button onclick="abrirModalInstitucional('contacto')" data-i18n="nav_bar_contact" class="px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer">
+            Contáctanos
+          </button>
+        </div>
+
+        <button onclick="volverABusqueda()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-goldtech-600 to-goldtech-500 hover:brightness-110 text-obsidian-950 font-display font-bold text-xs uppercase tracking-wider shadow-glow-gold transition flex items-center gap-1.5 shrink-0 cursor-pointer">
+          <svg class="w-3.5 h-3.5 text-obsidian-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <span data-i18n="btn_trigger_search_form">Búsqueda de Expediente Judicial</span>
+        </button>
+      </nav>
+
+      <!-- Barra secundaria de navegación y acciones -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <button onclick="volverABusqueda()" class="px-4 py-2 rounded-xl bg-obsidian-900 hover:bg-obsidian-800 border border-white/10 text-xs font-semibold text-slate-300 transition flex items-center gap-2 self-start cursor-pointer">
+          <svg class="w-4 h-4 text-goldtech-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          <span data-i18n="dossier_btn_back">Volver a la Búsqueda</span>
+        </button>
+
+        <div class="flex items-center space-x-2">
+          <button onclick="abrirModalSubirEscrito()" class="flex-1 sm:flex-none px-3.5 sm:px-4 py-2 rounded-xl bg-emeraldtech-800 hover:bg-emeraldtech-700 text-white border border-emeraldtech-500/40 text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-sm cursor-pointer">
+            <svg class="w-4 h-4 text-emeraldtech-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            <span data-i18n="dossier_btn_add_filing" class="truncate">+ Ingresar Escrito (MPE)</span>
+          </button>
+
+          <button onclick="window.print()" data-i18n="dossier_btn_print" class="px-3.5 py-2 rounded-xl bg-obsidian-900 hover:bg-obsidian-800 border border-white/10 text-xs font-mono text-slate-300 transition cursor-pointer" title="Imprimir reporte">
+            🖨 Imprimir
+          </button>
+        </div>
+      </div>
+
+      <!-- Carátula del caso penal -->
+      <div class="glass-card rounded-3xl border border-white/10 overflow-hidden shadow-2xl">
+        <div class="bg-gradient-to-r from-obsidian-950 via-obsidian-900 to-obsidian-950 p-5 sm:p-8 border-b-2 border-goldtech-500/50">
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+              <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs font-mono">
+                <span data-i18n="dossier_type_badge" class="px-2 py-0.5 rounded bg-goldtech-500/10 text-goldtech-300 border border-goldtech-500/30 font-bold text-[10px] sm:text-xs">
+                  EXPEDIENTE PENAL PRINCIPAL (NCPP)
+                </span>
+                <span class="text-slate-500">•</span>
+                <span data-i18n="dossier_district_badge" class="text-slate-400 text-[11px]">D.J. Puno • Provincia Puno</span>
+                <span class="text-slate-500 hidden sm:inline">•</span>
+                <span data-i18n="dossier_filing_date_badge" class="text-emeraldtech-400 font-bold text-[11px]">Ingreso: 23/05/2019</span>
+              </div>
+              <h2 class="font-mono text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-wider mt-2 break-all sm:break-normal">
+                02766-2018-82-2101-JP-PE-02
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-300 font-sans mt-1">
+                Juzgado Penal Unipersonal - Sede Central de Puno &bull; Delito: <strong class="text-rose-400 font-bold">Homicidio Culposo (Art. 111 del Código Penal)</strong>
+              </p>
+            </div>
+
+            <div class="text-left md:text-right">
+              <span data-i18n="dossier_stage_badge" class="inline-block px-3 py-1 rounded-full bg-emeraldtech-950 border border-emeraldtech-500 text-emeraldtech-400 text-xs font-mono font-bold">
+                ● ETAPA 4: SENTENCIADO / EN EJECUCIÓN
+              </span>
+              <p data-i18n="dossier_origin_note" class="text-[11px] text-slate-400 font-mono mt-1.5">
+                Procedencia: 1° Fiscalía Provincial Penal Corporativa de Puno
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metadatos de Autoridades -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 p-4 sm:p-5 bg-obsidian-950/60 border-b border-white/10 text-xs font-mono">
+          <div>
+            <span data-i18n="meta_judge_lbl" class="block text-[10px] text-slate-500 uppercase">Jueza Titular</span>
+            <span class="text-goldtech-300 font-bold">Dra. Gladis Huanca Quispe</span>
+          </div>
+          <div>
+            <span data-i18n="meta_clerk_lbl" class="block text-[10px] text-slate-500 uppercase">Especialista Legal</span>
+            <span class="text-slate-200 font-semibold truncate block">Abg. Carlos M. Mamani Condori</span>
+          </div>
+          <div>
+            <span data-i18n="meta_prosecutor_lbl" class="block text-[10px] text-slate-500 uppercase">Fiscal del Caso</span>
+            <span class="text-slate-200 truncate block">Dr. Roberto Valdivia Cari</span>
+          </div>
+          <div>
+            <span data-i18n="meta_status_lbl" class="block text-[10px] text-slate-500 uppercase">Estado Celeridad</span>
+            <span data-i18n="meta_status_val" class="text-emeraldtech-400 font-bold">80% Proceso Concluido</span>
+          </div>
+        </div>
+
+        <!-- Stepper de Progreso Procesal NCPP -->
+        <div class="p-5 sm:p-8 bg-obsidian-900/40 border-b border-white/10 space-y-4">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+            <div>
+              <span data-i18n="stepper_header_tag" class="text-[10px] font-mono uppercase tracking-widest text-goldtech-400 font-semibold">Trazabilidad Procesal (Código Procesal Penal)</span>
+              <h3 class="font-display font-bold text-base sm:text-lg text-white flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emeraldtech-400 animate-ping"></span>
+                <span data-i18n="stepper_question">¿En qué etapa del proceso se encuentra este expediente?</span>
+              </h3>
+            </div>
+            <div class="text-left sm:text-right font-mono text-xs">
+              <span data-i18n="stepper_summary" class="text-goldtech-300 font-bold">Fase 4 de 5 (80% Concluido)</span>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto pb-2 -mx-2 px-2 custom-scrollbar">
+            <div class="grid grid-cols-5 gap-2 sm:gap-3 min-w-[620px] sm:min-w-0 pt-2">
+              <div class="p-3 rounded-2xl bg-emeraldtech-950/40 border border-emeraldtech-800/60 text-center space-y-1">
+                <div class="w-6 h-6 sm:w-7 sm:h-7 mx-auto rounded-full bg-emeraldtech-900 text-emeraldtech-300 flex items-center justify-center text-xs font-mono font-bold">✓</div>
+                <p data-i18n="step1_title" class="font-bold text-[11px] sm:text-xs text-white">Inv. Preparatoria</p>
+                <p data-i18n="step1_desc" class="text-[9px] sm:text-[10px] text-slate-400">Formalización fiscal</p>
+                <span data-i18n="step1_status" class="inline-block text-[9px] sm:text-[10px] font-mono text-emeraldtech-400">Concluida</span>
+              </div>
+
+              <div class="p-3 rounded-2xl bg-emeraldtech-950/40 border border-emeraldtech-800/60 text-center space-y-1">
+                <div class="w-6 h-6 sm:w-7 sm:h-7 mx-auto rounded-full bg-emeraldtech-900 text-emeraldtech-300 flex items-center justify-center text-xs font-mono font-bold">✓</div>
+                <p data-i18n="step2_title" class="font-bold text-[11px] sm:text-xs text-white">Etapa Intermedia</p>
+                <p data-i18n="step2_desc" class="text-[9px] sm:text-[10px] text-slate-400">Control acusatorio</p>
+                <span data-i18n="step2_status" class="inline-block text-[9px] sm:text-[10px] font-mono text-emeraldtech-400">Auto Enjuiciamiento</span>
+              </div>
+
+              <div class="p-3 rounded-2xl bg-emeraldtech-950/40 border border-emeraldtech-800/60 text-center space-y-1">
+                <div class="w-6 h-6 sm:w-7 sm:h-7 mx-auto rounded-full bg-emeraldtech-900 text-emeraldtech-300 flex items-center justify-center text-xs font-mono font-bold">✓</div>
+                <p data-i18n="step3_title" class="font-bold text-[11px] sm:text-xs text-white">Juicio Oral</p>
+                <p data-i18n="step3_desc" class="text-[9px] sm:text-[10px] text-slate-400">Actuación probatoria</p>
+                <span data-i18n="step3_status" class="inline-block text-[9px] sm:text-[10px] font-mono text-emeraldtech-400">Debate Finalizado</span>
+              </div>
+
+              <div class="p-3 rounded-2xl bg-gradient-to-b from-obsidian-850 to-obsidian-950 border-2 border-goldtech-500 text-center space-y-1 shadow-glow-gold relative overflow-hidden">
+                <div class="absolute top-1 right-1 w-2 h-2 rounded-full bg-goldtech-400 animate-ping"></div>
+                <div class="w-6 h-6 sm:w-7 sm:h-7 mx-auto rounded-full bg-goldtech-500 text-obsidian-950 flex items-center justify-center text-xs font-mono font-bold">4</div>
+                <p data-i18n="step4_title" class="font-bold text-[11px] sm:text-xs text-goldtech-300">Sentencia</p>
+                <p data-i18n="step4_desc" class="text-[9px] sm:text-[10px] text-slate-300">Fallo Condenatorio</p>
+                <span data-i18n="step4_status" class="inline-block px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-goldtech-500/20 text-goldtech-300 border border-goldtech-500/40 uppercase">● Dictada</span>
+              </div>
+
+              <div class="p-3 rounded-2xl bg-obsidian-950/60 border border-white/5 text-center space-y-1 opacity-75">
+                <div class="w-6 h-6 sm:w-7 sm:h-7 mx-auto rounded-full bg-obsidian-800 text-slate-500 flex items-center justify-center text-xs font-mono font-bold">5</div>
+                <p data-i18n="step5_title" class="font-bold text-[11px] sm:text-xs text-slate-400">Ejecución</p>
+                <p data-i18n="step5_desc" class="text-[9px] sm:text-[10px] text-slate-500">Reglas de conducta</p>
+                <span data-i18n="step5_status" class="inline-block text-[9px] sm:text-[10px] font-mono text-slate-500">En Trámite</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sujetos Procesales y Destinatarios Notificables -->
+        <div class="p-5 sm:p-8 bg-obsidian-900/80 border-b border-white/10 space-y-5">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+            <div>
+              <span data-i18n="parties_header_tag" class="text-[10px] font-mono uppercase tracking-widest text-goldtech-400 font-semibold">Padrón de Sujetos Procesales</span>
+              <h3 data-i18n="parties_header_title" class="font-display font-bold text-base sm:text-lg text-white">Destinatarios Acreditados para Notificación</h3>
+              <p data-i18n="parties_header_desc" class="text-xs text-slate-400">Datos validados mediante la Plataforma de Interoperabilidad del Estado (PIDE).</p>
+            </div>
+            <span data-i18n="parties_sinoe_badge" class="text-xs font-mono bg-emeraldtech-950 border border-emeraldtech-800 text-emeraldtech-400 px-3 py-1 rounded-full">
+              SINOE Operativo
             </span>
           </div>
-        </div>
 
-        <!-- Metadatos de la Sede y Magistrados -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 bg-stone-50 border-b border-stone-200 text-xs">
-          <div>
-            <span class="block text-[10px] font-bold text-stone-400 uppercase">Instancia</span>
-            <span class="font-semibold text-stone-800">Juzgado Unipersonal - Sede Central</span>
-          </div>
-          <div>
-            <span class="block text-[10px] font-bold text-stone-400 uppercase">Jueza a Cargo</span>
-            <span class="font-bold text-emerald-950">Dra. Gladis Huanca Quispe</span>
-          </div>
-          <div>
-            <span class="block text-[10px] font-bold text-stone-400 uppercase">Especialista Legal</span>
-            <span class="font-semibold text-stone-800">Abg. Carlos M. Mamani Condori</span>
-          </div>
-          <div>
-            <span class="block text-[10px] font-bold text-stone-400 uppercase">Ingreso a Mesa</span>
-            <span class="font-mono text-stone-700">23/05/2019 - 10:45 hrs</span>
-          </div>
-        </div>
-
-        <!-- STEPPER DE PROGRESO PROCESAL -->
-        <div class="p-6">
-          <div class="flex justify-between items-center mb-4">
-            <h3 class="text-xs font-bold text-stone-800 uppercase tracking-wider">Iter Procesal (Código Procesal Penal)</h3>
-            <span class="text-xs font-mono font-bold text-emerald-800">Fase 4 de 5 (80% Concluido)</span>
-          </div>
-
-          <!-- Línea visual de 5 etapas -->
-          <div class="grid grid-cols-5 gap-2 text-center text-[11px]">
-            <div class="p-2 rounded-lg bg-emerald-100 border border-emerald-300 text-emerald-900 font-semibold">
-              <span class="block text-[9px] text-emerald-700 font-mono">ETAPA 1</span>
-              <span>Inv. Preparatoria</span>
-              <span class="block text-[10px] text-emerald-600">✓ Concluida</span>
-            </div>
-            <div class="p-2 rounded-lg bg-emerald-100 border border-emerald-300 text-emerald-900 font-semibold">
-              <span class="block text-[9px] text-emerald-700 font-mono">ETAPA 2</span>
-              <span>Etapa Intermedia</span>
-              <span class="block text-[10px] text-emerald-600">✓ Auto Enjuiciamiento</span>
-            </div>
-            <div class="p-2 rounded-lg bg-emerald-100 border border-emerald-300 text-emerald-900 font-semibold">
-              <span class="block text-[9px] text-emerald-700 font-mono">ETAPA 3</span>
-              <span>Juicio Oral</span>
-              <span class="block text-[10px] text-emerald-600">✓ Actuación Probatoria</span>
-            </div>
-            <div class="p-2 rounded-lg bg-emerald-deep text-white shadow font-bold border border-gold">
-              <span class="block text-[9px] text-gold font-mono">ETAPA 4</span>
-              <span>Sentencia</span>
-              <span class="block text-[10px] text-emerald-200">● Dictada</span>
-            </div>
-            <div class="p-2 rounded-lg bg-stone-100 border border-stone-200 text-stone-500">
-              <span class="block text-[9px] font-mono">ETAPA 5</span>
-              <span>Ejecución Penal</span>
-              <span class="block text-[10px] text-stone-400">En Trámite</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SUJETOS PROCESALES Y DESTINATARIOS NOTIFICABLES -->
-      <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 space-y-4">
-        <div class="border-b border-stone-200 pb-3 flex justify-between items-center">
-          <div>
-            <h3 class="text-sm font-bold text-stone-900 uppercase tracking-wide">Sujetos Procesales y Destinatarios de Notificación</h3>
-            <p class="text-xs text-stone-500">Padrón de acreditación de partes con casilla electrónica SINOE</p>
-          </div>
-          <span class="text-xs text-stone-400 font-mono">Válido para efectos de notificación procesal</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-          <!-- Procedencia Fiscal -->
-          <div class="p-4 bg-stone-50 rounded-xl border border-stone-200 space-y-1.5">
-            <span class="badge-gold text-[10px] font-bold px-2 py-0.5 rounded">PARTE ACUSADORA</span>
-            <p class="font-bold text-stone-900 text-sm">Ministerio Público</p>
-            <p class="text-stone-600">1° Fiscalía Provincial Penal Corporativa de Puno</p>
-            <p class="text-stone-500"><span class="font-semibold text-stone-700">Fiscal Responsable:</span> Dr. Roberto Valdivia Cari</p>
-            <p class="text-stone-500 font-mono"><span class="font-semibold text-stone-700">Casilla SINOE:</span> 48102-MP-PUNO</p>
-          </div>
-
-          <!-- Imputado -->
-          <div class="p-4 bg-stone-50 rounded-xl border border-stone-200 space-y-1.5">
-            <span class="bg-rose-100 text-rose-800 border border-rose-200 text-[10px] font-bold px-2 py-0.5 rounded">IMPUTADO</span>
-            <p class="font-bold text-stone-900 text-sm">Edgar Raúl Ramos Chambi</p>
-            <p class="text-stone-600 font-mono">DNI N° 41982341 &bull; Condición: Libre con reglas</p>
-            <p class="text-stone-500"><span class="font-semibold text-stone-700">Abg. Defensor:</span> Dr. Néstor Pari Alanoca (ICAP 2419)</p>
-            <p class="text-stone-500 font-mono"><span class="font-semibold text-stone-700">Casilla SINOE:</span> 61922-PUNO</p>
-          </div>
-
-          <!-- Agraviado -->
-          <div class="p-4 bg-stone-50 rounded-xl border border-stone-200 space-y-1.5">
-            <span class="bg-blue-100 text-blue-800 border border-blue-200 text-[10px] font-bold px-2 py-0.5 rounded">AGRAVIADO / ACTOR CIVIL</span>
-            <p class="font-bold text-stone-900 text-sm">Q.E.F.D. Víctor Alfonso Quispe Mamani</p>
-            <p class="text-stone-600">Representado por su cónyuge: Elena Flores Ticona</p>
-            <p class="text-stone-500"><span class="font-semibold text-stone-700">Abogada:</span> Dra. Maritza Choque Cruz (ICAP 3108)</p>
-            <p class="text-stone-500 font-mono"><span class="font-semibold text-stone-700">Casilla SINOE:</span> 73041-PUNO</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- CUADERNO JUDICIAL (RESOLUCIONES, ESCRITOS Y NOTIFICACIONES) -->
-      <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 space-y-4">
-        <!-- Subpestañas del Cuaderno -->
-        <div class="flex border-b border-stone-200 gap-4">
-          <button id="btnSubTab1" onclick="cambiarSubTab(1)" class="pb-2 text-xs font-bold border-b-2 border-emerald-800 text-emerald-900">
-            Resoluciones Judiciales (03)
-          </button>
-          <button id="btnSubTab2" onclick="cambiarSubTab(2)" class="pb-2 text-xs font-bold border-b-2 border-transparent text-stone-400 hover:text-stone-700">
-            Escritos y Dictámenes (02)
-          </button>
-          <button id="btnSubTab3" onclick="cambiarSubTab(3)" class="pb-2 text-xs font-bold border-b-2 border-transparent text-stone-400 hover:text-stone-700">
-            Cédulas de Notificación SINOE (03)
-          </button>
-        </div>
-
-        <!-- SUBTAB 1: RESOLUCIONES -->
-        <div id="subTabResoluciones" class="space-y-3">
-          <!-- Sentencia -->
-          <div class="border border-stone-200 rounded-xl p-4 hover:border-emerald-700 transition flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-stone-50">
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="badge-gold font-bold text-[10px] px-2 py-0.5 rounded">RESOLUCIÓN N° 14</span>
-                <span class="text-stone-400 text-xs font-mono">14/12/2020</span>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            <!-- Fiscalía -->
+            <div class="p-4 sm:p-5 rounded-2xl bg-obsidian-950 border border-white/10 space-y-3">
+              <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                <span data-i18n="prosecution_badge" class="px-2 py-0.5 rounded font-mono text-[10px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/30">
+                  MINISTERIO PÚBLICO
+                </span>
+                <span class="font-mono text-[10px] text-slate-400">Puno - Central</span>
               </div>
-              <p class="text-sm font-bold text-stone-900 mt-1">SENTENCIA CONDENATORIA N° 088-2020-JPU</p>
-              <p class="text-xs text-stone-600">Falla condenando a Edgar Raúl Ramos Chambi como autor del delito de Homicidio Culposo. Fija 4 años de pena privativa de libertad suspendida y S/ 65,000.00 de reparación civil.</p>
+              <div>
+                <h4 class="font-bold text-sm text-white">1° Fiscalía Provincial Penal Corporativa</h4>
+                <p class="text-slate-400 text-xs mt-0.5">Fiscal: Dr. Roberto Valdivia Cari</p>
+              </div>
+              <div class="pt-2 border-t border-white/10 space-y-1 text-slate-300 font-mono text-[11px]">
+                <p><span class="text-slate-500">Casilla SINOE:</span> 48102-MP-PUNO</p>
+                <p><span class="text-slate-500">Ubicación:</span> Jr. Teodoro Valcárcel N° 115, Puno</p>
+              </div>
             </div>
-            <button onclick="abrirModalResolucion()" class="bg-stone-900 hover:bg-stone-800 text-white text-xs font-medium px-4 py-2 rounded-lg whitespace-nowrap shadow flex items-center gap-1.5">
-              <span>📄 Ver Sentencia Foliada</span>
+
+            <!-- Imputado -->
+            <div class="p-4 sm:p-5 rounded-2xl bg-obsidian-950 border border-rose-900/40 space-y-3 relative group">
+              <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                <span data-i18n="defendant_badge" class="px-2 py-0.5 rounded font-mono text-[10px] font-bold bg-rose-500/10 text-rose-300 border border-rose-500/30">
+                  IMPUTADO / SENTENCIADO
+                </span>
+                <span class="font-mono text-[10px] text-slate-400">DNI 41982341</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-sm text-white">Edgar Raúl Ramos Chambi</h4>
+                <p class="text-slate-400 text-xs mt-0.5">Abg. Defensor: Dr. Néstor Pari Alanoca (ICAP 2419)</p>
+              </div>
+              <div class="pt-2 border-t border-white/10 space-y-1.5 text-slate-300 font-mono text-[11px]">
+                <p><span class="text-slate-500">Casilla SINOE:</span> 61922-PUNO</p>
+                <p data-i18n="defendant_condition_note"><span class="text-slate-500">Condición:</span> Libertad con reglas de conducta</p>
+                <button onclick="abrirModalReniec()" class="w-full mt-2 py-2 px-3 rounded-xl bg-goldtech-500/10 hover:bg-goldtech-500/20 border border-goldtech-500/40 text-goldtech-300 font-sans font-semibold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer">
+                  <span data-i18n="btn_view_reniec">🪪 Ver Ficha RENIEC (Biometría PIDE)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Agraviado -->
+            <div class="p-4 sm:p-5 rounded-2xl bg-obsidian-950 border border-blue-900/40 space-y-3">
+              <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                <span data-i18n="victim_badge" class="px-2 py-0.5 rounded font-mono text-[10px] font-bold bg-blue-500/10 text-blue-300 border border-blue-500/30">
+                  AGRAVIADO / ACTOR CIVIL
+                </span>
+                <span data-i18n="victim_heirs_tag" class="font-mono text-[10px] text-slate-400">Deudos</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-sm text-white">Q.E.F.D. Víctor Alfonso Quispe Mamani</h4>
+                <p class="text-slate-400 text-xs mt-0.5">Rep: Elena Flores Ticona (Cónyuge Supérstite)</p>
+              </div>
+              <div class="pt-2 border-t border-white/10 space-y-1 text-slate-300 font-mono text-[11px]">
+                <p><span class="text-slate-500">Letrada:</span> Dra. Maritza Choque Cruz (ICAP 3108)</p>
+                <p><span class="text-slate-500">Casilla SINOE:</span> 73041-PUNO</p>
+                <p><span class="text-slate-500">Reparación Civil:</span> S/ 65,000.00 ordenada</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cuaderno Judicial en 3 Subpestañas -->
+        <div>
+          <div class="bg-obsidian-950/90 px-4 sm:px-8 pt-3 sm:pt-4 border-b border-white/10 flex gap-2 overflow-x-auto custom-scrollbar">
+            <button id="cuaderno-subtab-btn-resoluciones" onclick="cambiarSubpestanaCuaderno('resoluciones')" class="px-4 sm:px-5 py-2.5 sm:py-3 text-xs font-bold rounded-t-2xl bg-obsidian-900 text-goldtech-300 border-t-2 border-goldtech-500 shadow-sm flex items-center space-x-2 shrink-0 transition cursor-pointer">
+              <svg class="w-4 h-4 text-goldtech-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span data-i18n="tab_binder_resolutions">Resoluciones (03)</span>
+            </button>
+
+            <button id="cuaderno-subtab-btn-escritos" onclick="cambiarSubpestanaCuaderno('escritos')" class="px-4 sm:px-5 py-2.5 sm:py-3 text-xs font-bold rounded-t-2xl text-slate-400 hover:text-white hover:bg-obsidian-900 flex items-center space-x-2 shrink-0 transition cursor-pointer">
+              <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+              <span><span data-i18n="tab_binder_filings">Escritos</span> (<span id="contador-escritos-badge">02</span>)</span>
+            </button>
+
+            <button id="cuaderno-subtab-btn-cedulas" onclick="cambiarSubpestanaCuaderno('cedulas')" class="px-4 sm:px-5 py-2.5 sm:py-3 text-xs font-bold rounded-t-2xl text-slate-400 hover:text-white hover:bg-obsidian-900 flex items-center space-x-2 shrink-0 transition cursor-pointer">
+              <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <span data-i18n="tab_binder_notifications">Cédulas SINOE (02)</span>
             </button>
           </div>
 
-          <!-- Auto Enjuiciamiento -->
-          <div class="border border-stone-200 rounded-xl p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="bg-stone-200 text-stone-700 font-bold text-[10px] px-2 py-0.5 rounded">RESOLUCIÓN N° 08</span>
-                <span class="text-stone-400 text-xs font-mono">10/11/2019</span>
+          <!-- Subtab 1: Resoluciones (Español Oficial) -->
+          <div id="cuaderno-vista-resoluciones" class="p-5 sm:p-8 space-y-4">
+            <div class="p-4 sm:p-5 rounded-2xl bg-obsidian-950 border border-goldtech-500/40 hover:border-goldtech-500 transition space-y-3 shadow-lg">
+              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded font-mono text-xs font-bold bg-goldtech-500/20 text-goldtech-300 border border-goldtech-500/40">
+                    RESOLUCIÓN N° 14
+                  </span>
+                  <h4 class="font-bold text-xs sm:text-sm text-white">SENTENCIA CONDENATORIA N° 088-2020-JPU</h4>
+                  <span class="text-xs text-slate-400 font-mono">(18 fojas)</span>
+                </div>
+                <div class="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-end">
+                  <span class="text-xs font-mono text-slate-400">14/12/2020</span>
+                  <button onclick="abrirModalSentencia()" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-goldtech-600 to-goldtech-500 text-obsidian-950 font-bold text-xs shadow transition flex items-center gap-1.5 hover:brightness-110 cursor-pointer">
+                    <svg class="w-4 h-4 text-obsidian-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    <span data-i18n="btn_view_sentence">Ver Sentencia</span>
+                  </button>
+                </div>
               </div>
-              <p class="text-sm font-bold text-stone-900 mt-1">AUTO DE ENJUICIAMIENTO Y CITACIÓN A JUICIO</p>
-              <p class="text-xs text-stone-600">Se declara la validez formal y sustancial de la acusación fiscal presentada por el Ministerio Público.</p>
+              <p class="text-xs text-slate-300 font-serif leading-relaxed bg-obsidian-900/60 p-3.5 rounded-xl border border-white/5">
+                <strong>Sumilla Oficial:</strong> Falla condenando a Edgar Raúl Ramos Chambi como autor penalmente responsable del delito contra la Vida, el Cuerpo y la Salud, en la modalidad de Homicidio Culposo (Art. 111 del Código Penal) en agravio de Víctor Alfonso Quispe Mamani. Impone 4 años de pena privativa de libertad suspendida por 3 años de prueba, inhabilitación vehicular y fija S/ 65,000.00 de reparación civil.
+              </p>
             </div>
-            <button onclick="alert('Descargando Auto de Enjuiciamiento en formato oficial PDF...')" class="border border-stone-300 hover:bg-stone-50 text-stone-700 text-xs font-medium px-4 py-2 rounded-lg whitespace-nowrap">
-              Descargar PDF
-            </button>
-          </div>
 
-          <!-- Auto Admisorio -->
-          <div class="border border-stone-200 rounded-xl p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="bg-stone-200 text-stone-700 font-bold text-[10px] px-2 py-0.5 rounded">RESOLUCIÓN N° 01</span>
-                <span class="text-stone-400 text-xs font-mono">28/05/2019</span>
+            <div class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2">
+              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <div class="flex items-center space-x-2">
+                  <span class="px-2 py-0.5 rounded font-mono text-xs font-bold bg-white/10 text-slate-300">RESOLUCIÓN N° 08</span>
+                  <span class="font-bold text-xs text-white">AUTO DE ENJUICIAMIENTO Y CITACIÓN</span>
+                </div>
+                <div class="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-end">
+                  <span class="text-xs font-mono text-slate-400">10/11/2019</span>
+                  <button onclick="abrirModalSentencia()" data-i18n="btn_visualize" class="text-xs text-goldtech-400 hover:underline font-mono cursor-pointer">Visualizar</button>
+                </div>
               </div>
-              <p class="text-sm font-bold text-stone-900 mt-1">RECEPCIÓN DE EXPEDIENTE FISCAL</p>
-              <p class="text-xs text-stone-600">Se tiene por recibido el requerimiento fiscal procedente de la 1° Fiscalía Provincial Penal de Puno.</p>
+              <p class="text-xs text-slate-400 font-serif">
+                Declara la validez sustancial de la acusación fiscal formulada por la 1° Fiscalía Provincial Penal Corporativa de Puno y dispone el enjuiciamiento.
+              </p>
             </div>
-            <button onclick="alert('Descargando Resolución N° 01 en formato oficial PDF...')" class="border border-stone-300 hover:bg-stone-50 text-stone-700 text-xs font-medium px-4 py-2 rounded-lg whitespace-nowrap">
-              Descargar PDF
-            </button>
-          </div>
-        </div>
 
-        <!-- SUBTAB 2: ESCRITOS -->
-        <div id="subTabEscritos" class="hidden space-y-3">
-          <div class="border border-stone-200 rounded-xl p-4 bg-stone-50 text-xs space-y-1">
-            <div class="flex justify-between items-center">
-              <span class="font-bold text-stone-800">REQUERIMIENTO DE ACUSACIÓN PENAL</span>
-              <span class="font-mono text-stone-500">23/05/2019 &bull; Cargo Nº 11204-2019</span>
+            <div class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2">
+              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <div class="flex items-center space-x-2">
+                  <span class="px-2 py-0.5 rounded font-mono text-xs font-bold bg-white/10 text-slate-300">RESOLUCIÓN N° 01</span>
+                  <span class="font-bold text-xs text-white">RECEPCIÓN DE EXPEDIENTE PENAL</span>
+                </div>
+                <div class="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-end">
+                  <span class="text-xs font-mono text-slate-400">28/05/2019</span>
+                  <button onclick="abrirModalSentencia()" data-i18n="btn_visualize" class="text-xs text-goldtech-400 hover:underline font-mono cursor-pointer">Visualizar</button>
+                </div>
+              </div>
+              <p class="text-xs text-slate-400 font-serif">
+                Tiene por recibido el expediente con requerimiento acusatorio y avoca conocimiento la Dra. Gladis Huanca Quispe.
+              </p>
             </div>
-            <p class="text-stone-600">Presentado por: 1° Fiscalía Provincial Penal Corporativa de Puno (42 fojas).</p>
           </div>
-          <div class="border border-stone-200 rounded-xl p-4 bg-stone-50 text-xs space-y-1">
-            <div class="flex justify-between items-center">
-              <span class="font-bold text-stone-800">CONSTITUCIÓN EN ACTOR CIVIL</span>
-              <span class="font-mono text-stone-500">14/06/2019 &bull; Cargo Nº 13982-2019</span>
-            </div>
-            <p class="text-stone-600">Presentado por: Elena Flores Ticona en representación del occiso.</p>
-          </div>
-        </div>
 
-        <!-- SUBTAB 3: CÉDULAS DE NOTIFICACIÓN -->
-        <div id="subTabCedulas" class="hidden space-y-3">
-          <div class="border border-stone-200 rounded-xl p-4 text-xs space-y-2">
-            <div class="flex justify-between items-center">
-              <span class="font-bold text-emerald-950 font-mono">CÉDULA ELECTRÓNICA Nº 2020-00892-JR-PE</span>
-              <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-mono text-[10px]">DEPOSITADA EN CASILLA</span>
+          <!-- Subtab 2: Escritos (Español Oficial) -->
+          <div id="cuaderno-vista-escritos" class="hidden p-5 sm:p-8 space-y-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2">
+              <span data-i18n="filings_header_note" class="text-xs text-slate-400 font-mono">Presentaciones procesales recibidas por Mesa de Partes (MPE)</span>
+              <button onclick="abrirModalSubirEscrito()" data-i18n="btn_new_filing" class="px-3 py-1.5 rounded-xl bg-emeraldtech-900 hover:bg-emeraldtech-800 text-emeraldtech-300 border border-emeraldtech-600/40 text-xs font-semibold transition cursor-pointer">
+                + Nuevo Escrito
+              </button>
             </div>
-            <p class="text-stone-700"><span class="font-semibold">Destinatario:</span> Edgar Raúl Ramos Chambi (Casilla SINOE 61922-PUNO)</p>
-            <p class="text-stone-500 font-mono text-[11px]">Acto Notificado: Sentencia Condenatoria N° 088-2020-JPU &bull; Plazo de impugnación: 5 días hábiles (Vencido sin apelación / Consentida)</p>
-          </div>
-        </div>
 
+            <div id="lista-escritos-dinamica" class="space-y-3">
+              <div class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-1.5 text-xs">
+                <div class="flex justify-between items-center">
+                  <span class="font-bold text-white">REQUERIMIENTO DE ACUSACIÓN PENAL</span>
+                  <span class="font-mono text-slate-400">23/05/2019 • 10:45 hrs</span>
+                </div>
+                <p class="text-slate-300">Presentante: 1° Fiscalía Provincial Penal Corporativa de Puno (Dr. Roberto Valdivia Cari)</p>
+                <div class="flex justify-between items-center text-[11px] font-mono text-slate-500 pt-1 border-t border-white/5">
+                  <span>Cargo Oficial: REC-PUNO-2019-11204</span>
+                  <span class="text-emeraldtech-400">Firma Digital Verificada</span>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-1.5 text-xs">
+                <div class="flex justify-between items-center">
+                  <span class="font-bold text-white">CONSTITUCIÓN FORMAL EN ACTOR CIVIL</span>
+                  <span class="font-mono text-slate-400">14/06/2019 • 16:20 hrs</span>
+                </div>
+                <p class="text-slate-300">Presentante: Elena Flores Ticona en representación del agraviado Víctor Alfonso Quispe</p>
+                <div class="flex justify-between items-center text-[11px] font-mono text-slate-500 pt-1 border-t border-white/5">
+                  <span>Cargo Oficial: REC-PUNO-2019-13982</span>
+                  <span class="text-emeraldtech-400">Firma Digital Verificada</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subtab 3: Cédulas SINOE (Español Oficial) -->
+          <div id="cuaderno-vista-cedulas" class="hidden p-5 sm:p-8 space-y-4">
+            <p data-i18n="notifications_header_note" class="text-xs text-slate-400 font-mono">Notificaciones depositadas en casilla judicial con cómputo de términos legales.</p>
+            
+            <div class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 cursor-pointer hover:border-goldtech-500/50 transition" onclick="abrirModalCedula('Edgar Raúl Ramos Chambi', '61922-PUNO', 'Sentencia N° 088-2020-JPU', '15/12/2020 08:30 hrs')">
+              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <div class="flex items-center space-x-2">
+                  <span class="px-2 py-0.5 rounded font-mono text-xs font-bold bg-emeraldtech-950 text-emeraldtech-400 border border-emeraldtech-700">
+                    CÉDULA Nº 2020-00892-JR-PE
+                  </span>
+                  <span class="font-bold text-xs text-white">Notificación de Sentencia Condenatoria N° 088-2020-JPU</span>
+                </div>
+                <span class="text-xs font-mono text-slate-400">Depósito: 15/12/2020</span>
+              </div>
+              <div class="text-xs text-slate-400 font-mono space-y-0.5 pt-1">
+                <p>Destinatario: Edgar Raúl Ramos Chambi (Casilla SINOE 61922-PUNO)</p>
+                <p class="text-goldtech-400">Plazo de impugnación: 5 días hábiles (Vencido sin apelación / Causa Consentida)</p>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 cursor-pointer hover:border-goldtech-500/50 transition" onclick="abrirModalCedula('Elena Flores Ticona (Actor Civil)', '73041-PUNO', 'Sentencia N° 088-2020-JPU', '15/12/2020 08:31 hrs')">
+              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <div class="flex items-center space-x-2">
+                  <span class="px-2 py-0.5 rounded font-mono text-xs font-bold bg-emeraldtech-950 text-emeraldtech-400 border border-emeraldtech-700">
+                    CÉDULA Nº 2020-00893-JR-PE
+                  </span>
+                  <span class="font-bold text-xs text-white">Notificación de Sentencia Condenatoria a Actor Civil</span>
+                </div>
+                <span class="text-xs font-mono text-slate-400">Depósito: 15/12/2020</span>
+              </div>
+              <div class="text-xs text-slate-400 font-mono space-y-0.5 pt-1">
+                <p>Destinatario: Elena Flores Ticona (Casilla SINOE 73041-PUNO)</p>
+                <p class="text-emeraldtech-400">Recepción conforme de fallo judicial</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
-
-    </div>
+    </section>
 
   </main>
 
-  <!-- ==================== MODAL VISOR DE SENTENCIA JUDICIAL ==================== -->
-  <div id="modalResolucion" class="hidden fixed inset-0 z-50 bg-stone-900/70 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-stone-200 overflow-hidden">
-      <!-- Barra superior del modal -->
-      <div class="bg-emerald-deep text-white p-4 flex justify-between items-center border-b border-emerald-950">
-        <div class="flex items-center space-x-2">
-          <span class="text-gold text-lg">⚖</span>
-          <div>
-            <h4 class="font-title-legal text-sm font-bold tracking-wide">Visor Oficial de Resoluciones Firmadas Digitalmente</h4>
-            <p class="text-[10px] text-stone-300 font-mono">Exp. 02766-2018-82-2101-JP-PE-02 &bull; Corte Superior de Justicia de Puno</p>
-          </div>
-        </div>
-        <button onclick="cerrarModalResolucion()" class="text-stone-300 hover:text-white text-xl font-bold p-1">
-          ✕
-        </button>
+  <!-- ======================================================================= -->
+  <!-- MODALES DE APOYO Y CONSULTA                                             -->
+  <!-- ======================================================================= -->
+
+  <!-- Modal Institucional (Misión, Visión, Transparencia, Contáctanos) -->
+  <div id="modal-institucional" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div class="glass-card rounded-3xl max-w-lg w-full border border-goldtech-500/40 shadow-2xl overflow-hidden my-auto max-h-[90vh] flex flex-col">
+      <div class="bg-obsidian-950 p-4 border-b border-white/10 flex justify-between items-center">
+        <h4 id="modal-inst-titulo" class="font-display font-bold text-sm sm:text-base text-goldtech-300"></h4>
+        <button onclick="cerrarModalInstitucional()" class="text-slate-400 hover:text-white text-xl font-bold leading-none cursor-pointer">&times;</button>
       </div>
-
-      <!-- Cuerpo del documento foliado -->
-      <div class="p-6 overflow-y-auto space-y-4 font-serif-legal text-stone-800 text-sm leading-relaxed bg-[#fcfbf9]">
-        <div class="text-center space-y-1 pb-4 border-b border-stone-300">
-          <p class="text-xs uppercase tracking-widest font-title-legal font-bold text-stone-900">PODER JUDICIAL DEL PERÚ</p>
-          <p class="text-xs font-mono text-stone-600">CORTE SUPERIOR DE JUSTICIA DE PUNO &bull; JUZGADO PENAL UNIPERSONAL</p>
-          <p class="text-sm font-bold text-stone-950 pt-2 font-mono">SENTENCIA CONDENATORIA N° 088-2020-JPU</p>
-        </div>
-
-        <p><strong class="font-sans text-xs uppercase text-stone-700">VISTOS:</strong> En audiencia pública, la causa penal seguida contra <strong class="font-sans">EDGAR RAÚL RAMOS CHAMBI</strong> por la presunta comisión del delito contra la Vida, el Cuerpo y la Salud, en la modalidad de <strong class="font-sans text-rose-900">HOMICIDIO CULPOSO (Artículo 111 del Código Penal)</strong>, en agravio de quien en vida fue <strong class="font-sans">Víctor Alfonso Quispe Mamani</strong>.</p>
-
-        <p><strong class="font-sans text-xs uppercase text-stone-700">CONSIDERANDO:</strong> Que habiéndose valorado las pruebas periciales de dosaje etílico, inspección técnico-policial y declaraciones testimoniales actuadas en juzgamiento, se arriba a la certeza jurídica de la inobservancia de las reglas técnicas de tránsito por parte del imputado, existiendo nexo de causalidad directo con el deceso de la víctima.</p>
-
-        <div class="p-4 bg-stone-100 rounded-xl border border-stone-300 my-4 space-y-2">
-          <p class="font-sans font-bold text-xs text-stone-900 uppercase">FALLO JUDICIAL:</p>
-          <ol class="list-decimal pl-5 space-y-1 text-xs font-sans text-stone-800">
-            <li><strong>CONDENAR</strong> a Edgar Raúl Ramos Chambi a <strong>CUATRO AÑOS</strong> de pena privativa de libertad, suspendida en su ejecución por el periodo de prueba de tres años, sujeto a reglas de conducta.</li>
-            <li><strong>IMPONER</strong> la pena de inhabilitación por el lapso de tres años para la conducción de vehículos motorizados.</li>
-            <li><strong>FIJAR</strong> la suma de <strong>S/ 65,000.00 (Sesenta y Cinco Mil con 00/100 Soles)</strong> por concepto de reparación civil que deberá abonar el sentenciado en favor de los deudos del occiso.</li>
-          </ol>
-        </div>
-
-        <!-- Firma digital simulada -->
-        <div class="pt-4 border-t border-stone-200 flex justify-between items-center text-xs font-sans">
-          <div>
-            <p class="font-bold text-stone-900">Dra. Gladis Huanca Quispe</p>
-            <p class="text-stone-500">Jueza del Juzgado Penal Unipersonal de Puno</p>
-            <p class="text-[10px] text-emerald-800 font-mono">Firma Digital Certificada &bull; Sello de Tiempo PJ-PUNO</p>
-          </div>
-          <div class="w-16 h-16 bg-white border border-stone-300 flex items-center justify-center font-mono text-[9px] text-stone-400 text-center p-1 rounded shadow-inner">
-            [SELLO QR OFICIAL]
-          </div>
-        </div>
-      </div>
-
-      <!-- Pie del modal -->
-      <div class="bg-stone-100 p-3 flex justify-end gap-2 border-t border-stone-200">
-        <button onclick="window.print()" class="text-xs bg-stone-200 hover:bg-stone-300 text-stone-800 px-4 py-2 rounded-lg font-medium">
-          🖨 Imprimir Copia
-        </button>
-        <button onclick="cerrarModalResolucion()" class="text-xs bg-emerald-deep text-white hover:bg-emerald-900 px-4 py-2 rounded-lg font-medium">
-          Cerrar Visor
+      <div id="modal-inst-cuerpo" class="p-5 sm:p-6 text-xs sm:text-sm text-slate-300 leading-relaxed space-y-3 bg-obsidian-900/90 overflow-y-auto custom-scrollbar"></div>
+      <div class="bg-obsidian-950 p-3.5 border-t border-white/10 flex justify-end">
+        <button onclick="cerrarModalInstitucional()" data-i18n="btn_close" class="px-4 py-1.5 bg-obsidian-800 hover:bg-obsidian-700 text-white rounded-lg text-xs transition cursor-pointer">
+          Cerrar
         </button>
       </div>
     </div>
   </div>
 
-  <!-- PIE DE PÁGINA INSTITUCIONAL -->
-  <footer class="bg-stone-900 text-stone-400 text-xs py-4 border-t border-stone-800 text-center">
-    <p>Rastreador Judicial &bull; Sistema Integrado de Celeridad y Trazabilidad Jurisdiccional &bull; Puno, Perú</p>
+  <!-- Modal 1: Ficha RENIEC Biométrica (Interoperabilidad PIDE) -->
+  <div id="modal-reniec" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div class="glass-card rounded-3xl max-w-xl w-full border border-goldtech-500/40 shadow-2xl overflow-hidden my-auto max-h-[95vh] flex flex-col">
+      <div class="bg-obsidian-950 p-4 border-b border-white/10 flex justify-between items-center">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-base text-goldtech-400">🪪</span>
+          <span data-i18n="modal_reniec_header" class="font-display font-bold text-xs sm:text-sm text-white">RENIEC • Consulta de Identidad Biometría PIDE</span>
+        </div>
+        <button onclick="cerrarModalReniec()" class="text-slate-400 hover:text-white text-xl font-bold leading-none cursor-pointer">&times;</button>
+      </div>
+
+      <div class="p-5 sm:p-6 space-y-4 sm:space-y-5 bg-obsidian-900/90 text-xs overflow-y-auto custom-scrollbar">
+        <div class="flex flex-col sm:flex-row gap-4 sm:gap-5 items-center">
+          <div class="w-28 h-32 sm:w-32 sm:h-36 bg-obsidian-950 rounded-2xl border-2 border-goldtech-500/50 flex flex-col items-center justify-center p-2 text-center shrink-0 shadow-inner">
+            <svg class="w-14 h-14 sm:w-16 sm:h-16 text-slate-500 mb-1" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <span class="text-[9px] font-mono text-slate-400">FOTO DIGITAL RENIEC</span>
+          </div>
+
+          <div class="space-y-2 flex-1 w-full font-mono">
+            <div class="border-b border-white/10 pb-1.5 flex justify-between">
+              <span class="text-slate-500">DNI:</span>
+              <span class="font-bold text-goldtech-300 text-sm">41982341 (Dígito: 8)</span>
+            </div>
+            <div class="border-b border-white/10 pb-1.5 flex justify-between">
+              <span class="text-slate-500">Apellidos:</span>
+              <span class="text-white font-bold">RAMOS CHAMBI</span>
+            </div>
+            <div class="border-b border-white/10 pb-1.5 flex justify-between">
+              <span class="text-slate-500">Nombres:</span>
+              <span class="text-white font-bold">EDGAR RAÚL</span>
+            </div>
+            <div class="border-b border-white/10 pb-1.5 flex justify-between">
+              <span class="text-slate-500">F. Nacimiento:</span>
+              <span class="text-slate-300">14/08/1983 (Puno, Puno)</span>
+            </div>
+            <div class="border-b border-white/10 pb-1.5 flex justify-between">
+              <span class="text-slate-500">Estado Civil:</span>
+              <span class="text-slate-300">Soltero</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-500">Grado Instrucción:</span>
+              <span class="text-slate-300">Superior Completa</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 pt-3 border-t border-white/10 text-center font-mono">
+          <div class="p-3 bg-obsidian-950 rounded-xl border border-white/5 space-y-1">
+            <span class="text-[10px] text-slate-500 uppercase block">Huella Dactilar</span>
+            <div class="text-base sm:text-lg">🧬 [Dactilar]</div>
+            <span class="text-[9px] text-emeraldtech-400 block truncate">Índice Derecho Verificado</span>
+          </div>
+          <div class="p-3 bg-obsidian-950 rounded-xl border border-white/5 space-y-1">
+            <span class="text-[10px] text-slate-500 uppercase block">Firma Digitalizada</span>
+            <div class="text-xs font-serif italic text-slate-300 py-1 font-bold truncate">E. Ramos Ch.</div>
+            <span class="text-[9px] text-emeraldtech-400 block truncate">Firma PKI Validada</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-obsidian-950 p-3.5 border-t border-white/10 flex justify-between items-center text-xs">
+        <span class="text-slate-500 font-mono text-[10px] truncate max-w-[240px]">Interoperabilidad autorizada según D.L. 1412</span>
+        <button onclick="cerrarModalReniec()" data-i18n="btn_close" class="px-4 py-1.5 bg-obsidian-800 hover:bg-obsidian-700 text-white rounded-lg text-xs transition cursor-pointer">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Mesa de Partes Electrónica (Subir Escrito en Vivo) -->
+  <div id="modal-subir-escrito" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div class="glass-card rounded-3xl max-w-lg w-full border border-emeraldtech-500/40 shadow-2xl overflow-hidden my-auto max-h-[95vh] flex flex-col">
+      <div class="bg-obsidian-950 p-4 border-b border-white/10 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <span class="text-emeraldtech-400 text-lg font-bold">✍</span>
+          <span data-i18n="modal_filing_header" class="font-display font-bold text-xs sm:text-sm text-white">Mesa de Partes Electrónica (MPE)</span>
+        </div>
+        <button onclick="cerrarModalSubirEscrito()" class="text-slate-400 hover:text-white text-xl font-bold leading-none cursor-pointer">&times;</button>
+      </div>
+
+      <form onsubmit="procesarSubidaEscrito(event)" class="p-5 sm:p-6 space-y-4 bg-obsidian-900/90 text-xs overflow-y-auto custom-scrollbar">
+        <div>
+          <label data-i18n="filing_dest_lbl" class="block font-mono text-slate-400 text-[11px] mb-1">Expediente Destino</label>
+          <input type="text" value="02766-2018-82-2101-JP-PE-02" readonly class="w-full p-2.5 bg-obsidian-950 border border-white/10 rounded-xl font-mono text-goldtech-300 font-bold">
+        </div>
+
+        <div>
+          <label data-i18n="filing_sender_lbl" class="block font-mono text-slate-400 text-[11px] mb-1">Parte Procesal Remitente</label>
+          <select id="select-remitente-escrito" class="w-full p-2.5 bg-obsidian-950 border border-white/10 rounded-xl text-white outline-none">
+            <option>Defensa Técnica de Edgar Raúl Ramos Chambi (Imputado)</option>
+            <option>Actor Civil (Elena Flores Ticona - Deudos)</option>
+            <option>1° Fiscalía Provincial Penal Corporativa de Puno</option>
+          </select>
+        </div>
+
+        <div>
+          <label data-i18n="filing_summary_lbl" class="block font-mono text-slate-400 text-[11px] mb-1">Sumilla del Escrito</label>
+          <input type="text" id="input-sumilla-escrito" required placeholder="Ej: SOLICITA COPIAS CERTIFICADAS DE SENTENCIA..." class="w-full p-2.5 bg-obsidian-950 border border-white/10 rounded-xl text-white outline-none">
+        </div>
+
+        <div>
+          <label data-i18n="filing_pdf_lbl" class="block font-mono text-slate-400 text-[11px] mb-1">Archivo Digital en PDF (Con Firma Digital)</label>
+          <div class="p-3.5 border-2 border-dashed border-white/20 rounded-xl text-center space-y-1 bg-obsidian-950/60">
+            <span class="text-xl">📄</span>
+            <p class="text-[11px] text-slate-300 truncate">escrito_procesal_firmado_pki.pdf</p>
+            <span data-i18n="filing_token_detected" class="text-[10px] text-emeraldtech-400 font-mono">Firma Digital con Token DNIe detectada</span>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-emeraldtech-700 to-emeraldtech-600 hover:from-emeraldtech-600 hover:to-emeraldtech-500 text-white font-display font-bold text-xs uppercase tracking-wider shadow-lg transition cursor-pointer">
+          <span data-i18n="btn_submit_filing">Ingresar y Generar Cargo Oficial</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Cargo Oficial de Mesa de Partes Generado -->
+  <div id="modal-cargo-oficial" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div class="glass-card rounded-3xl max-w-md w-full border border-goldtech-500/50 shadow-2xl overflow-hidden my-auto p-5 sm:p-6 space-y-4 text-center">
+      <div class="w-12 h-12 mx-auto rounded-full bg-emeraldtech-950 border border-emeraldtech-500 flex items-center justify-center text-emeraldtech-400 text-xl font-bold">
+        ✓
+      </div>
+      <h3 data-i18n="cargo_modal_title" class="font-display font-bold text-base sm:text-lg text-white">Cargo Oficial de Recepción Emitido</h3>
+      <p data-i18n="cargo_modal_desc" class="text-xs text-slate-400">El documento ha sido ingresado exitosamente a la Mesa de Partes del Juzgado Penal Unipersonal de Puno.</p>
+
+      <div class="bg-obsidian-950 p-4 rounded-2xl border border-white/10 text-left font-mono text-xs space-y-2 text-slate-300">
+        <p><strong class="text-slate-400">Registro:</strong> <span id="cargo-cod-reg" class="text-goldtech-300 font-bold"></span></p>
+        <p><strong class="text-slate-400">Fecha y Hora:</strong> <span id="cargo-fecha-reg"></span></p>
+        <p><strong class="text-slate-400">Sumilla:</strong> <span id="cargo-sumilla-reg" class="text-white break-words"></span></p>
+        <p><strong class="text-slate-400">Huella SHA-256:</strong> <span class="text-[9px] text-emeraldtech-400 block break-all">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</span></p>
+      </div>
+
+      <button onclick="cerrarModalCargo()" data-i18n="btn_accept_view_binder" class="w-full py-2.5 bg-goldtech-500 hover:bg-goldtech-400 text-obsidian-950 font-bold rounded-xl text-xs transition cursor-pointer">
+        Aceptar y Ver en Cuaderno
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal 4: Visor de Sentencia Condenatoria Foliada -->
+  <div id="modal-sentencia" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-obsidian-950 rounded-3xl max-w-3xl w-full max-h-[92vh] flex flex-col border border-goldtech-500/40 shadow-2xl overflow-hidden my-auto">
+      <div class="bg-obsidian-900 px-4 sm:px-6 py-3.5 border-b border-white/10 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <span class="text-goldtech-400 font-bold">⚖</span>
+          <span data-i18n="modal_sentence_header" class="font-display font-bold text-xs sm:text-sm text-white">Sentencia Foliada con Firma Digital</span>
+        </div>
+        <button onclick="cerrarModalSentencia()" class="text-slate-400 hover:text-white text-2xl font-light leading-none cursor-pointer">&times;</button>
+      </div>
+
+      <div class="p-5 sm:p-8 overflow-y-auto font-serif text-slate-200 text-xs sm:text-sm leading-relaxed space-y-4 bg-obsidian-950/80 custom-scrollbar">
+        <div class="text-center pb-4 border-b border-white/10 space-y-1">
+          <p class="font-display font-bold text-xs uppercase tracking-widest text-goldtech-400">PODER JUDICIAL DEL PERÚ</p>
+          <p class="font-mono text-xs text-slate-400">CORTE SUPERIOR DE JUSTICIA DE PUNO • JUZGADO PENAL UNIPERSONAL</p>
+          <h4 class="font-mono font-bold text-xs sm:text-sm text-white pt-2">SENTENCIA CONDENATORIA N° 088-2020-JPU</h4>
+          <p class="text-[11px] font-mono text-slate-400">Expediente N° 02766-2018-82-2101-JP-PE-02</p>
+        </div>
+
+        <p><strong class="font-mono text-goldtech-400">VISTOS:</strong> En audiencia oral de juzgamiento, la causa penal seguida contra <strong class="text-white font-sans">EDGAR RAÚL RAMOS CHAMBI</strong> por la comisión del delito contra la Vida, el Cuerpo y la Salud, en su modalidad de <strong class="text-rose-400 font-sans">HOMICIDIO CULPOSO (Artículo 111 del Código Penal)</strong>, en agravio de quien en vida fue <strong class="text-white font-sans">Víctor Alfonso Quispe Mamani</strong>.</p>
+
+        <p><strong class="font-mono text-goldtech-400">CONSIDERANDO:</strong> Que habiéndose actuado las pruebas periciales de dosaje etílico, informe técnico de accidente de tránsito e inspección judicial, se ha acreditado la infracción al deber objetivo de cuidado en la conducción automotriz, generándose el deceso de la víctima.</p>
+
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-900 border border-goldtech-500/30 space-y-2 my-3 font-sans">
+          <p class="font-bold text-goldtech-300 text-xs uppercase tracking-wider">FALLO JUDICIAL:</p>
+          <ol class="list-decimal pl-5 space-y-1.5 text-xs text-slate-200">
+            <li><strong>CONDENAR</strong> a <strong class="text-white">EDGAR RAÚL RAMOS CHAMBI</strong> como autor del delito de Homicidio Culposo a <strong>CUATRO AÑOS DE PENA PRIVATIVA DE LIBERTAD SUSPENDIDA</strong> en su ejecución por el periodo de prueba de tres años, sujeto a reglas de conducta.</li>
+            <li><strong>IMPONER</strong> la pena accesoria de <strong>INHABILITACIÓN POR TRES AÑOS</strong> para la conducción de cualquier vehículo automotor.</li>
+            <li><strong>FIJAR</strong> por concepto de Reparación Civil la suma de <strong>S/ 65,000.00 (SESENTA Y CINCO MIL CON 00/100 SOLES)</strong> que deberá pagar el sentenciado a favor de los deudos representados por Elena Flores Ticona.</li>
+          </ol>
+        </div>
+
+        <div class="pt-4 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 font-mono text-[11px]">
+          <div>
+            <p class="font-bold text-white font-sans">Dra. Gladis Huanca Quispe</p>
+            <p class="text-slate-400">Jueza Titular del Juzgado Penal Unipersonal de Puno</p>
+            <p class="text-emeraldtech-400 text-[10px]">Certificado de Firma Digital PKI-PIDE Vigente</p>
+          </div>
+          <div class="w-16 h-16 bg-obsidian-900 border border-goldtech-500/40 rounded-xl flex items-center justify-center text-[10px] text-goldtech-400 text-center p-1">
+            [SELLO QR]
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-obsidian-900 px-4 sm:px-6 py-3 border-t border-white/10 flex justify-between items-center">
+        <span class="text-[11px] font-mono text-slate-400">Fojas 1 al 18 certificadas</span>
+        <button onclick="cerrarModalSentencia()" data-i18n="btn_close" class="px-4 py-1.5 rounded-xl bg-goldtech-500 text-obsidian-950 font-bold text-xs transition cursor-pointer">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5: Constancia Cédula Electrónica SINOE -->
+  <div id="modal-cedula" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div class="glass-card rounded-3xl max-w-md w-full border border-white/20 shadow-2xl overflow-hidden my-auto p-5 sm:p-6 space-y-4">
+      <div class="flex justify-between items-center border-b border-white/10 pb-3">
+        <h4 data-i18n="modal_cedula_header" class="font-display font-bold text-xs sm:text-sm text-white">Constancia de Notificación SINOE</h4>
+        <button onclick="cerrarModalCedula()" class="text-slate-400 hover:text-white text-xl font-bold leading-none cursor-pointer">&times;</button>
+      </div>
+
+      <div class="bg-obsidian-950 p-4 rounded-2xl border border-white/10 space-y-2 text-xs font-mono text-slate-300">
+        <p><strong class="text-slate-500">Destinatario:</strong> <span id="cedula-destinatario-txt" class="text-white"></span></p>
+        <p><strong class="text-slate-500">Casilla Electrónica:</strong> <span id="cedula-casilla-txt" class="text-goldtech-300"></span></p>
+        <p><strong class="text-slate-500">Acto Notificado:</strong> <span id="cedula-acto-txt"></span></p>
+        <p><strong class="text-slate-500">Depósito en Buzón:</strong> <span id="cedula-fecha-txt" class="text-emeraldtech-400"></span></p>
+        <p><strong class="text-slate-500">Efecto Procesal:</strong> Notificación válida con amparo en la Ley de Notificación Electrónica.</p>
+      </div>
+
+      <button onclick="cerrarModalCedula()" data-i18n="btn_understood" class="w-full py-2.5 bg-obsidian-800 hover:bg-obsidian-700 text-white rounded-xl text-xs font-semibold transition cursor-pointer">
+        Entendido
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Flotante Seguro en lugar de alert() -->
+  <div id="toast-notificacion-segura" class="hidden fixed top-5 right-5 z-50 max-w-xs bg-obsidian-900 border border-goldtech-500/60 text-slate-200 text-xs p-3.5 rounded-2xl shadow-2xl flex items-center space-x-2.5">
+    <span class="text-base text-goldtech-400">ℹ️</span>
+    <span id="toast-mensaje-texto" class="flex-1 font-mono text-[11px] leading-tight"></span>
+  </div>
+
+  <!-- Pie de página Institucional -->
+  <footer class="bg-obsidian-950 border-t border-white/10 text-slate-500 text-xs py-4 sm:py-5 mt-auto text-center px-4">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+      <p data-i18n="footer_legal">Rastreador Judicial &bull; Sistema de Trazabilidad Procesal Digital &bull; Corte Superior de Justicia de Puno</p>
+      <p data-i18n="footer_academic" class="font-mono text-[11px] text-goldtech-400">Entorno Académico Seguro &bull; Puno, Perú</p>
+    </div>
   </footer>
 
-  <!-- ==================== LÓGICA JAVASCRIPT ==================== -->
+  <!-- ========================================================================= -->
+  <!-- CONTROLADOR JAVASCRIPT DE FLUJO, I18N BILINGÜE Y MODALES                  -->
+  <!-- ========================================================================= -->
   <script>
     let codigoCaptchaActual = "";
+    let temporizadorSplashInicial = null;
+    let temporizadorSplashSincronizacion = null;
+    let idiomaActual = 'es';
 
-    // 1. Generador de Reto CAPTCHA en Canvas
+    const traducciones = {
+      es: {
+        banner_disclaimer: "<strong>AVISO ACADÉMICO:</strong> Página no oficial elaborada con fines estrictamente formativos para el curso de Gobierno Digital y Derecho Informático. No constituye el portal oficial del Poder Judicial.",
+        header_subtitle: "Trazabilidad Procesal y Celeridad Jurisdiccional",
+        header_court_title: "Distrito Judicial de Puno",
+        header_court_sub: "Juzgado Penal Unipersonal - Sede Central",
+        
+        welcome_greeting: "Bienvenido a la plataforma",
+        welcome_subphrase: "Trazabilidad procesal ciudadana y consulta de expedientes en tiempo real.",
+        welcome_btn_start: "Iniciar Acceso Seguro",
+
+        splash1_badge: "Plataforma de Innovación Jurisdiccional",
+        splash1_desc: "Iniciando protocolo perimétrico y validación de seguridad de la red.",
+        splash_node: "Nodo: CSJ PUNO - SEDE CENTRAL",
+        splash_skip_btn: "Saltar Introducción",
+
+        captcha_tag: "Módulo de Integridad Perimétrica",
+        captcha_title: "Reto de Seguridad CAPTCHA",
+        captcha_desc: "Para prevenir rastreos automatizados masivos y garantizar la disponibilidad, ingrese los 5 caracteres distorsionados.",
+        captcha_btn_refresh: "Nuevo Reto",
+        captcha_btn_audio: "Audio (WCAG)",
+        captcha_label_input: "Escriba los 5 caracteres",
+        captcha_error_msg: "Código incorrecto. Se ha regenerado una nueva clave.",
+        captcha_btn_validate: "Validar e Ingresar",
+        captcha_compliance_note: "Certificado de navegación segura conforme a los estándares de interoperabilidad del Estado.",
+
+        sync_badge: "Autenticación Exitosa",
+        sync_title: "Sincronizando con Nodos Jurisdiccionales",
+        sync_desc: "Conectando de forma segura con la base de datos de la Corte Superior de Justicia de Puno.",
+        sync_server: "Servidor: CSJ-PUNO-SRV01",
+        sync_skip_btn: "Saltar a Terminal Institucional",
+
+        nav_bar_home: "Inicio",
+        nav_bar_mission: "Misión",
+        nav_bar_vision: "Visión",
+        nav_bar_transparency: "Transparencia",
+        nav_bar_contact: "Contáctanos",
+        btn_trigger_search_form: "Búsqueda de Expediente Judicial",
+        legal_quote_trans: "&laquo;La justicia es la constante y perpetua voluntad de dar a cada uno su derecho.&raquo;",
+        legal_quote_instruction: "Haga clic en el botón <strong class=\"text-goldtech-300 uppercase\">&quot;Búsqueda de Expediente Judicial&quot;</strong> de la barra superior para consultar los autos y expedientes.",
+        search_btn_reset_val: "Seguridad",
+        tab_by_filters: "Por Órgano, Juez y Materia",
+        tab_by_code: "Por Código Único Directo",
+        filter_district_lbl: "Distrito Judicial",
+        filter_province_lbl: "Provincia Sede",
+        filter_matter_lbl: "Materia / Especialidad",
+        filter_court_lbl: "Instancia / Despacho",
+        filter_judge_lbl: "Jueza Titular a Cargo",
+        filter_clerk_note: "Especialista Legal: Abg. Carlos M. Mamani Condori • Año 2019",
+        btn_search_case: "BUSCAR EXPEDIENTE",
+        code_label: "Código Único de Formato Judicial Oficial (27 caracteres)",
+        code_verified_badge: "Puno • Caso Verificado",
+        code_desc: "Expediente oficial asignado al Juzgado Penal Unipersonal de Puno por delito de Homicidio Culposo.",
+
+        dossier_btn_back: "Volver a la Búsqueda",
+        dossier_btn_add_filing: "+ Ingresar Escrito (MPE)",
+        dossier_btn_print: "🖨 Imprimir",
+        dossier_type_badge: "EXPEDIENTE PENAL PRINCIPAL (NCPP)",
+        dossier_district_badge: "D.J. Puno • Provincia Puno",
+        dossier_filing_date_badge: "Ingreso: 23/05/2019",
+        dossier_stage_badge: "● ETAPA 4: SENTENCIADO / EN EJECUCIÓN",
+        dossier_origin_note: "Procedencia: 1° Fiscalía Provincial Penal Corporativa de Puno",
+        meta_judge_lbl: "Jueza Titular",
+        meta_clerk_lbl: "Especialista Legal",
+        meta_prosecutor_lbl: "Fiscal del Caso",
+        meta_status_lbl: "Estado Celeridad",
+        meta_status_val: "80% Proceso Concluido",
+        stepper_header_tag: "Trazabilidad Procesal (Código Procesal Penal)",
+        stepper_question: "¿En qué etapa del proceso se encuentra este expediente?",
+        stepper_summary: "Fase 4 de 5 (80% Concluido)",
+        step1_title: "Inv. Preparatoria",
+        step1_desc: "Formalización fiscal",
+        step1_status: "Concluida",
+        step2_title: "Etapa Intermedia",
+        step2_desc: "Control acusatorio",
+        step2_status: "Auto Enjuiciamiento",
+        step3_title: "Juicio Oral",
+        step3_desc: "Actuación probatoria",
+        step3_status: "Debate Finalizado",
+        step4_title: "Sentencia",
+        step4_desc: "Fallo Condenatorio",
+        step4_status: "● Dictada",
+        step5_title: "Ejecución",
+        step5_desc: "Reglas de conducta",
+        step5_status: "En Trámite",
+        parties_header_tag: "Padrón de Sujetos Procesales",
+        parties_header_title: "Destinatarios Acreditados para Notificación",
+        parties_header_desc: "Datos validados mediante la Plataforma de Interoperabilidad del Estado (PIDE).",
+        parties_sinoe_badge: "SINOE Operativo",
+        prosecution_badge: "MINISTERIO PÚBLICO",
+        defendant_badge: "IMPUTADO / SENTENCIADO",
+        defendant_condition_note: "<span class=\"text-slate-500\">Condición:</span> Libertad con reglas de conducta",
+        btn_view_reniec: "🪪 Ver Ficha RENIEC (Biometría PIDE)",
+        victim_badge: "AGRAVIADO / ACTOR CIVIL",
+        victim_heirs_tag: "Deudos",
+        tab_binder_resolutions: "Resoluciones (03)",
+        tab_binder_filings: "Escritos",
+        tab_binder_notifications: "Cédulas SINOE (02)",
+        btn_view_sentence: "Ver Sentencia",
+        btn_visualize: "Visualizar",
+        filings_header_note: "Presentaciones procesales recibidas por Mesa de Partes (MPE)",
+        btn_new_filing: "+ Nuevo Escrito",
+        notifications_header_note: "Notificaciones depositadas en casilla judicial con cómputo de términos legales.",
+
+        modal_reniec_header: "RENIEC • Consulta de Identidad Biometría PIDE",
+        btn_close: "Cerrar",
+        modal_filing_header: "Mesa de Partes Electrónica (MPE)",
+        filing_dest_lbl: "Expediente Destino",
+        filing_sender_lbl: "Parte Procesal Remitente",
+        filing_summary_lbl: "Sumilla del Escrito",
+        filing_pdf_lbl: "Archivo Digital en PDF (Con Firma Digital)",
+        filing_token_detected: "Firma Digital con Token DNIe detectada",
+        btn_submit_filing: "Ingresar y Generar Cargo Oficial",
+        cargo_modal_title: "Cargo Oficial de Recepción Emitido",
+        cargo_modal_desc: "El documento ha sido ingresado exitosamente a la Mesa de Partes del Juzgado Penal Unipersonal de Puno.",
+        btn_accept_view_binder: "Aceptar y Ver en Cuaderno",
+        modal_sentence_header: "Sentencia Foliada con Firma Digital",
+        modal_cedula_header: "Constancia de Notificación SINOE",
+        btn_understood: "Entendido",
+        footer_legal: "Rastreador Judicial • Sistema de Trazabilidad Procesal Digital • Corte Superior de Justicia de Puno",
+        footer_academic: "Entorno Académico Seguro • Puno, Perú"
+      },
+      en: {
+        banner_disclaimer: "<strong>ACADEMIC NOTICE:</strong> Unofficial website developed strictly for educational purposes for the Digital Government and Computer Law course. Not the official portal of the Judiciary.",
+        header_subtitle: "Case Traceability and Procedural Promptness",
+        header_court_title: "Judicial District of Puno",
+        header_court_sub: "Unipersonal Criminal Court - Central Headquarters",
+
+        welcome_greeting: "Welcome to the platform",
+        welcome_subphrase: "Citizen procedural traceability and real-time case inquiry.",
+        welcome_btn_start: "Start Secure Access",
+
+        splash1_badge: "Judicial Innovation Platform",
+        splash1_desc: "Initializing perimeter security protocol and cryptographic network handshake.",
+        splash_node: "Node: CSJ PUNO - CENTRAL HEADQUARTERS",
+        splash_skip_btn: "Skip Intro",
+
+        captcha_tag: "Perimeter Integrity Module",
+        captcha_title: "CAPTCHA Security Challenge",
+        captcha_desc: "To prevent automated scraping and preserve public server bandwidth, please enter the 5 distorted characters below.",
+        captcha_btn_refresh: "New Code",
+        captcha_btn_audio: "Audio (WCAG)",
+        captcha_label_input: "Enter the 5 characters",
+        captcha_error_msg: "Incorrect code. A new verification key has been regenerated.",
+        captcha_btn_validate: "Validate & Enter",
+        captcha_compliance_note: "Secure government connection certified according to Peruvian State interoperability regulations.",
+
+        sync_badge: "Authentication Successful",
+        sync_title: "Synchronizing with Court Data Nodes",
+        sync_desc: "Securing live cryptographic connection with the database of the Superior Court of Justice of Puno.",
+        sync_server: "Server: CSJ-PUNO-SRV01",
+        sync_skip_btn: "Skip to Institutional Terminal",
+
+        nav_bar_home: "Home",
+        nav_bar_mission: "Mission",
+        nav_bar_vision: "Vision",
+        nav_bar_transparency: "Transparency",
+        nav_bar_contact: "Contact Us",
+        btn_trigger_search_form: "Search Judicial Case File",
+        legal_quote_trans: "&laquo;Justice is the constant and perpetual will to render to each his due right.&raquo;",
+        legal_quote_instruction: "Click the <strong class=\"text-goldtech-300 uppercase\">&quot;Search Judicial Case File&quot;</strong> button in the top navigation bar to query judicial records.",
+        search_btn_reset_val: "Security",
+        tab_by_filters: "By Court, Judge & Matter",
+        tab_by_code: "By Direct Unique Code",
+        filter_district_lbl: "Judicial District",
+        filter_province_lbl: "Province Seat",
+        filter_matter_lbl: "Specialty / Legal Subject",
+        filter_court_lbl: "Court Chamber",
+        filter_judge_lbl: "Presiding Magistrate",
+        filter_clerk_note: "Legal Specialist: Atty. Carlos M. Mamani Condori • Year 2019",
+        btn_search_case: "SEARCH CASE FILE",
+        code_label: "Official Judicial Standard Number (27 characters)",
+        code_verified_badge: "Puno • Verified Record",
+        code_desc: "Official criminal case file assigned to the Unipersonal Criminal Court of Puno for Involuntary Manslaughter.",
+
+        dossier_btn_back: "Return to Search",
+        dossier_btn_add_filing: "+ Submit Court Filing (MPE)",
+        dossier_btn_print: "🖨 Print Dossier",
+        dossier_type_badge: "PRIMARY CRIMINAL CASE (NCPP)",
+        dossier_district_badge: "J.D. Puno • Puno Province",
+        dossier_filing_date_badge: "Filed: 23/05/2019",
+        dossier_stage_badge: "● STAGE 4: SENTENCED / IN EXECUTION",
+        dossier_origin_note: "Origin: 1st Corporate Provincial Criminal Prosecutor's Office of Puno",
+        meta_judge_lbl: "Presiding Judge",
+        meta_clerk_lbl: "Legal Specialist",
+        meta_prosecutor_lbl: "Case Prosecutor",
+        meta_status_lbl: "Progress Metric",
+        meta_status_val: "80% Procedural Advance",
+        stepper_header_tag: "Procedural Traceability (Criminal Procedure Code)",
+        stepper_question: "At which stage of the proceedings is this case file?",
+        stepper_summary: "Stage 4 of 5 (80% Completed)",
+        step1_title: "Prelim. Investigation",
+        step1_desc: "Formal prosecution",
+        step1_status: "Completed",
+        step2_title: "Intermediate Stage",
+        step2_desc: "Indictment control",
+        step2_status: "Trial Order Issued",
+        step3_title: "Oral Trial",
+        step3_desc: "Evidentiary hearing",
+        step3_status: "Debate Closed",
+        step4_title: "Judgment",
+        step4_desc: "Conviction Ruling",
+        step4_status: "● Rendered",
+        step5_title: "Execution",
+        step5_desc: "Conduct rules",
+        step5_status: "In Progress",
+        parties_header_tag: "Accredited Legal Parties",
+        parties_header_title: "Verified Recipients for Formal Service",
+        parties_header_desc: "Records verified in real time through the State Interoperability Platform (PIDE).",
+        parties_sinoe_badge: "SINOE Online",
+        prosecution_badge: "PUBLIC PROSECUTOR",
+        defendant_badge: "DEFENDANT / CONVICTED",
+        defendant_condition_note: "<span class=\"text-slate-500\">Status:</span> Conditional release on conduct rules",
+        btn_view_reniec: "🪪 View RENIEC ID (PIDE Biometrics)",
+        victim_badge: "VICTIM / CIVIL PARTY",
+        victim_heirs_tag: "Survivors",
+        tab_binder_resolutions: "Resolutions (03)",
+        tab_binder_filings: "Court Filings",
+        tab_binder_notifications: "SINOE Notices (02)",
+        btn_view_sentence: "View Judgment",
+        btn_visualize: "Open File",
+        filings_header_note: "Procedural briefs formally submitted through the Electronic Filing Window (MPE)",
+        btn_new_filing: "+ New Filing",
+        notifications_header_note: "Formal notifications deposited into court electronic mailboxes with statutory deadline tracking.",
+
+        modal_reniec_header: "RENIEC • Civil Registry & PIDE Biometric Identity Record",
+        btn_close: "Close",
+        modal_filing_header: "Electronic Filing Window (MPE)",
+        filing_dest_lbl: "Target Case File",
+        filing_sender_lbl: "Filing Party / Counsel",
+        filing_summary_lbl: "Brief Summary / Subject",
+        filing_pdf_lbl: "Digital PDF File (Digitally Signed)",
+        filing_token_detected: "Digital Signature verified with electronic DNIe Token",
+        btn_submit_filing: "Submit & Generate Official Receipt",
+        cargo_modal_title: "Official Proof of Filing Issued",
+        cargo_modal_desc: "The document has been securely registered into the Unipersonal Criminal Court of Puno filing registry.",
+        btn_accept_view_binder: "Confirm & View in Case Binder",
+        modal_sentence_header: "Certified Judgment with Official Digital Signature",
+        modal_cedula_header: "SINOE Proof of Electronic Service",
+        btn_understood: "Understood",
+        footer_legal: "Judicial Tracker • Digital Case Traceability System • Superior Court of Justice of Puno",
+        footer_academic: "Secure Academic Environment • Puno, Peru"
+      }
+    };
+
+    function mostrarNotificacionToast(mensaje) {
+      const toast = document.getElementById("toast-notificacion-segura");
+      const texto = document.getElementById("toast-mensaje-texto");
+      if (!toast || !texto) return;
+      texto.textContent = mensaje;
+      toast.classList.remove("hidden");
+      setTimeout(() => {
+        toast.classList.add("hidden");
+      }, 4000);
+    }
+
+    function cambiarIdioma(nuevoIdioma) {
+      idiomaActual = nuevoIdioma;
+      document.documentElement.lang = nuevoIdioma;
+
+      const btnEs = document.getElementById("lang-btn-es");
+      const btnEn = document.getElementById("lang-btn-en");
+
+      if (nuevoIdioma === 'es') {
+        btnEs.className = "px-2.5 py-1 rounded-lg font-mono text-[10px] sm:text-[11px] font-bold transition-all bg-goldtech-500 text-obsidian-950 shadow cursor-pointer";
+        btnEn.className = "px-2.5 py-1 rounded-lg font-mono text-[10px] sm:text-[11px] font-bold text-slate-400 hover:text-white transition-all cursor-pointer";
+      } else {
+        btnEn.className = "px-2.5 py-1 rounded-lg font-mono text-[10px] sm:text-[11px] font-bold transition-all bg-goldtech-500 text-obsidian-950 shadow cursor-pointer";
+        btnEs.className = "px-2.5 py-1 rounded-lg font-mono text-[10px] sm:text-[11px] font-bold text-slate-400 hover:text-white transition-all cursor-pointer";
+      }
+
+      const txtBanner = document.getElementById("txt-advertencia-banner");
+      if (txtBanner && traducciones[nuevoIdioma]?.banner_disclaimer) {
+        txtBanner.innerHTML = traducciones[nuevoIdioma].banner_disclaimer;
+      }
+
+      document.querySelectorAll("[data-i18n]").forEach(elemento => {
+        const clave = elemento.getAttribute("data-i18n");
+        if (traducciones[nuevoIdioma] && traducciones[nuevoIdioma][clave]) {
+          elemento.innerHTML = traducciones[nuevoIdioma][clave];
+        }
+      });
+    }
+
+    function actualizarVisibilidadBanner(numeroPantalla) {
+      const banner = document.getElementById("franja-advertencia-academica");
+      if (!banner) return;
+      // Mostrar solo en las pantallas 0, 2, 4 y 5. Ocultar en splash screens 1 y 3.
+      if (numeroPantalla === 0 || numeroPantalla === 2 || numeroPantalla === 4 || numeroPantalla === 5) {
+        banner.classList.remove("hidden");
+      } else {
+        banner.classList.add("hidden");
+      }
+    }
+
+    function avanzarDesdeBienvenida() {
+      document.getElementById("pantalla-0-bienvenida").classList.add("hidden");
+      document.getElementById("pantalla-1-splash").classList.remove("hidden");
+      actualizarVisibilidadBanner(1);
+      iniciarFlujoSplashInicial();
+    }
+
+    function iniciarFlujoSplashInicial() {
+      let progreso = 0;
+      const barra = document.getElementById("splash-progress-bar");
+      const texto = document.getElementById("splash-status-text");
+      const pct = document.getElementById("splash-status-pct");
+
+      const mensajesEs = [
+        "Iniciando protocolo seguro...",
+        "Cargando llaves criptográficas PIDE...",
+        "Sincronizando Corte de Puno (D.J. 2101)...",
+        "Conexión concedida."
+      ];
+      const mensajesEn = [
+        "Initiating secure protocol...",
+        "Loading PIDE cryptographic certificates...",
+        "Synchronizing Court of Puno (J.D. 2101)...",
+        "Secure handshake granted."
+      ];
+
+      temporizadorSplashInicial = setInterval(() => {
+        progreso += 25;
+        if (barra) barra.style.width = progreso + "%";
+        if (pct) pct.textContent = progreso + "%";
+
+        const mensajes = (idiomaActual === 'en') ? mensajesEn : mensajesEs;
+        const idx = Math.min(Math.floor(progreso / 26), mensajes.length - 1);
+        if (texto) texto.textContent = mensajes[idx];
+
+        if (progreso >= 100) {
+          clearInterval(temporizadorSplashInicial);
+          setTimeout(() => {
+            saltarAIntroduccionCaptcha();
+          }, 350);
+        }
+      }, 250);
+    }
+
+    function saltarAIntroduccionCaptcha() {
+      if (temporizadorSplashInicial) clearInterval(temporizadorSplashInicial);
+      document.getElementById("pantalla-0-bienvenida").classList.add("hidden");
+      document.getElementById("pantalla-1-splash").classList.add("hidden");
+      document.getElementById("pantalla-2-captcha").classList.remove("hidden");
+      actualizarVisibilidadBanner(2);
+      generarRetoCaptcha();
+    }
+
     function generarRetoCaptcha() {
       const caracteres = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
       codigoCaptchaActual = "";
@@ -560,170 +1596,364 @@
       }
 
       const canvas = document.getElementById("captchaCanvas");
+      if (!canvas) return;
       const ctx = canvas.getContext("2d");
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Fondo
-      ctx.fillStyle = "#fafaf9";
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#0c121d";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Líneas de interferencia de seguridad
       for (let i = 0; i < 5; i++) {
-        ctx.strokeStyle = "#d6d3d1";
-        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = (i % 2 === 0) ? "#0d6f52" : "#d4af37";
+        ctx.lineWidth = 1.2;
         ctx.beginPath();
         ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
         ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
         ctx.stroke();
       }
 
-      // Dibujar texto aleatorio
+      for (let i = 0; i < 35; i++) {
+        ctx.fillStyle = "#334155";
+        ctx.beginPath();
+        ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, 0.9, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
       ctx.font = "bold 24px 'JetBrains Mono', monospace";
-      ctx.fillStyle = "#063c2e";
       for (let i = 0; i < codigoCaptchaActual.length; i++) {
         const x = 20 + i * 30;
-        const y = 35 + (Math.random() * 6 - 3);
-        ctx.fillText(codigoCaptchaActual[i], x, y);
+        const y = 37 + (Math.random() * 6 - 3);
+        const angulo = (Math.random() * 0.25) - 0.125;
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(angulo);
+        ctx.fillStyle = (i % 2 === 0) ? "#d4af37" : "#34d399";
+        ctx.fillText(codigoCaptchaActual[i], 0, 0);
+        ctx.restore();
       }
+
+      const input = document.getElementById("input-captcha-code");
+      if (input) input.value = "";
+      const errorDiv = document.getElementById("error-captcha-msg");
+      if (errorDiv) errorDiv.classList.add("hidden");
     }
 
-    // 2. Lectura por voz del CAPTCHA (Accesibilidad WCAG)
     function leerAudioCaptcha() {
       if ('speechSynthesis' in window) {
-        const lectura = new SpeechSynthesisUtterance(codigoCaptchaActual.split('').join(' '));
-        lectura.lang = 'es-PE';
-        lectura.rate = 0.8;
-        window.speechSynthesis.speak(lectura);
+        window.speechSynthesis.cancel();
+        const fonetica = codigoCaptchaActual.split('').join('. ');
+        const prefijo = (idiomaActual === 'en') ? "Security code: " : "Reto de seguridad: ";
+        const utter = new SpeechSynthesisUtterance(prefijo + fonetica);
+        utter.lang = (idiomaActual === 'en') ? 'en-US' : 'es-PE';
+        utter.rate = 0.85;
+        window.speechSynthesis.speak(utter);
       } else {
-        alert("La síntesis de voz no está habilitada en este navegador.");
+        mostrarNotificacionToast(idiomaActual === 'en' ? "Voice synthesis is not supported on this browser." : "La síntesis de voz no está habilitada en este navegador.");
       }
     }
 
-    // 3. Validación y transición de pantallas
-    function validarCaptchaSeguro(e) {
+    function procesarValidacionCaptcha(e) {
       e.preventDefault();
-      const input = document.getElementById("inputCaptcha").value.trim().toUpperCase();
-      const alerta = document.getElementById("alertaCaptcha");
+      const input = document.getElementById("input-captcha-code");
+      const errorDiv = document.getElementById("error-captcha-msg");
 
-      if (input !== codigoCaptchaActual) {
-        alerta.textContent = "Código de seguridad incorrecto. Inténtelo nuevamente.";
-        alerta.classList.remove("hidden");
+      if (input.value.trim().toUpperCase() !== codigoCaptchaActual) {
+        errorDiv.classList.remove("hidden");
         generarRetoCaptcha();
-        document.getElementById("inputCaptcha").value = "";
         return;
       }
 
-      alerta.classList.add("hidden");
+      document.getElementById("pantalla-2-captcha").classList.add("hidden");
+      document.getElementById("pantalla-3-splash-sync").classList.remove("hidden");
+      actualizarVisibilidadBanner(3);
+      iniciarFlujoSplashSincronizacion();
+    }
 
-      // Ocultar CAPTCHA y mostrar Screen Loader
-      document.getElementById("vistaCaptcha").classList.add("hidden");
-      document.getElementById("vistaCarga").classList.remove("hidden");
-
-      // Simular progreso de sincronización
+    function iniciarFlujoSplashSincronizacion() {
       let progreso = 0;
-      const barra = document.getElementById("barraProgreso");
-      const intervalo = setInterval(() => {
-        progreso += 35;
-        barra.style.width = progreso + "%";
+      const barra = document.getElementById("sync-progress-bar");
+      const texto = document.getElementById("sync-status-text");
+      const pct = document.getElementById("sync-status-pct");
+
+      const estadosEs = [
+        "Verificando firma de seguridad...",
+        "Consultando base de datos CSJ Puno...",
+        "Extrayendo expediente 02766-2018-82...",
+        "Sesión judicial inicializada."
+      ];
+      const estadosEn = [
+        "Verifying security signature...",
+        "Querying CSJ Puno database records...",
+        "Fetching case file 02766-2018-82...",
+        "Judicial session initialized."
+      ];
+
+      temporizadorSplashSincronizacion = setInterval(() => {
+        progreso += 30;
+        if (barra) barra.style.width = progreso + "%";
+        if (pct) pct.textContent = progreso + "%";
+
+        const estados = (idiomaActual === 'en') ? estadosEn : estadosEs;
+        const idx = Math.min(Math.floor(progreso / 31), estados.length - 1);
+        if (texto) texto.textContent = estados[idx];
 
         if (progreso >= 100) {
-          clearInterval(intervalo);
+          clearInterval(temporizadorSplashSincronizacion);
           setTimeout(() => {
-            document.getElementById("vistaCarga").classList.add("hidden");
-            document.getElementById("vistaBuscador").classList.remove("hidden");
-          }, 300);
+            saltarABusqueda();
+          }, 350);
         }
       }, 250);
     }
 
-    // 4. Modos de Búsqueda
-    function cambiarModoBusqueda(modo) {
-      const btn1 = document.getElementById("tabBtn1");
-      const btn2 = document.getElementById("tabBtn2");
-      const modoFiltros = document.getElementById("modoFiltros");
-      const modoCodigo = document.getElementById("modoCodigo");
-
-      if (modo === 1) {
-        btn1.className = "pb-3 px-4 text-xs sm:text-sm font-semibold border-b-2 border-emerald-800 text-emerald-900 flex items-center gap-2";
-        btn2.className = "pb-3 px-4 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-stone-500 hover:text-stone-800 flex items-center gap-2";
-        modoFiltros.classList.remove("hidden");
-        modoCodigo.classList.add("hidden");
-      } else {
-        btn2.className = "pb-3 px-4 text-xs sm:text-sm font-semibold border-b-2 border-emerald-800 text-emerald-900 flex items-center gap-2";
-        btn1.className = "pb-3 px-4 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-stone-500 hover:text-stone-800 flex items-center gap-2";
-        modoCodigo.classList.remove("hidden");
-        modoFiltros.classList.add("hidden");
-      }
+    function saltarABusqueda() {
+      if (temporizadorSplashSincronizacion) clearInterval(temporizadorSplashSincronizacion);
+      document.getElementById("pantalla-3-splash-sync").classList.add("hidden");
+      document.getElementById("pantalla-4-busqueda").classList.remove("hidden");
+      actualizarVisibilidadBanner(4);
+      
+      const seccionFrase = document.getElementById("p4-frase-mitica-temis");
+      const seccionBusqueda = document.getElementById("p4-contenedor-busqueda");
+      if (seccionFrase) seccionFrase.classList.remove("hidden");
+      if (seccionBusqueda) seccionBusqueda.classList.add("hidden");
     }
 
-    function ejecutarBusquedaFiltros() {
-      document.getElementById("seccionResultados").classList.remove("hidden");
-    }
-
-    function ejecutarBusquedaCodigo() {
-      document.getElementById("seccionResultados").classList.remove("hidden");
-    }
-
-    // 5. Navegación al Expediente de Puno
-    function abrirExpedientePuno() {
-      document.getElementById("vistaBuscador").classList.add("hidden");
-      document.getElementById("vistaExpediente").classList.remove("hidden");
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function volverAlBuscador() {
-      document.getElementById("vistaExpediente").classList.add("hidden");
-      document.getElementById("vistaBuscador").classList.remove("hidden");
-    }
-
-    function reiniciarFlujo() {
-      document.getElementById("vistaExpediente").classList.add("hidden");
-      document.getElementById("vistaBuscador").classList.add("hidden");
-      document.getElementById("vistaCarga").classList.add("hidden");
-      document.getElementById("vistaCaptcha").classList.remove("hidden");
-      document.getElementById("inputCaptcha").value = "";
+    function volverACaptcha() {
+      document.getElementById("pantalla-4-busqueda").classList.add("hidden");
+      document.getElementById("pantalla-2-captcha").classList.remove("hidden");
+      actualizarVisibilidadBanner(2);
       generarRetoCaptcha();
     }
 
-    // 6. Subpestañas del Cuaderno Judicial
-    function cambiarSubTab(num) {
-      const b1 = document.getElementById("btnSubTab1");
-      const b2 = document.getElementById("btnSubTab2");
-      const b3 = document.getElementById("btnSubTab3");
-      const t1 = document.getElementById("subTabResoluciones");
-      const t2 = document.getElementById("subTabEscritos");
-      const t3 = document.getElementById("subTabCedulas");
-
-      b1.className = "pb-2 text-xs font-bold border-b-2 border-transparent text-stone-400 hover:text-stone-700";
-      b2.className = "pb-2 text-xs font-bold border-b-2 border-transparent text-stone-400 hover:text-stone-700";
-      b3.className = "pb-2 text-xs font-bold border-b-2 border-transparent text-stone-400 hover:text-stone-700";
-      t1.classList.add("hidden");
-      t2.classList.add("hidden");
-      t3.classList.add("hidden");
-
-      if (num === 1) {
-        b1.className = "pb-2 text-xs font-bold border-b-2 border-emerald-800 text-emerald-900";
-        t1.classList.remove("hidden");
-      } else if (num === 2) {
-        b2.className = "pb-2 text-xs font-bold border-b-2 border-emerald-800 text-emerald-900";
-        t2.classList.remove("hidden");
-      } else {
-        b3.className = "pb-2 text-xs font-bold border-b-2 border-emerald-800 text-emerald-900";
-        t3.classList.remove("hidden");
+    function desplegarFormularioBusqueda() {
+      const seccionFrase = document.getElementById("p4-frase-mitica-temis");
+      const seccionBusqueda = document.getElementById("p4-contenedor-busqueda");
+      
+      if (seccionFrase) seccionFrase.classList.add("hidden");
+      if (seccionBusqueda) {
+        seccionBusqueda.classList.remove("hidden");
+        seccionBusqueda.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
 
-    // 7. Visor Modal de Sentencia
-    function abrirModalResolucion() {
-      document.getElementById("modalResolucion").classList.remove("hidden");
+    function cambiarModoBusqueda(modo) {
+      const btnFiltros = document.getElementById("btn-tab-filtros");
+      const btnCodigo = document.getElementById("btn-tab-codigo");
+      const contFiltros = document.getElementById("tab-contenido-filtros");
+      const contCodigo = document.getElementById("tab-contenido-codigo");
+
+      if (modo === 'filtros') {
+        btnFiltros.className = "flex-1 py-3 px-3 sm:px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 bg-obsidian-800 text-goldtech-300 border border-goldtech-500/30 transition shadow-sm cursor-pointer";
+        btnCodigo.className = "flex-1 py-3 px-3 sm:px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-obsidian-900 border border-transparent transition cursor-pointer";
+        contFiltros.classList.remove("hidden");
+        contCodigo.classList.add("hidden");
+      } else {
+        btnCodigo.className = "flex-1 py-3 px-3 sm:px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 bg-obsidian-800 text-goldtech-300 border border-goldtech-500/30 transition shadow-sm cursor-pointer";
+        btnFiltros.className = "flex-1 py-3 px-3 sm:px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-obsidian-900 border border-transparent transition cursor-pointer";
+        contCodigo.classList.remove("hidden");
+        contFiltros.classList.add("hidden");
+      }
     }
 
-    function cerrarModalResolucion() {
-      document.getElementById("modalResolucion").classList.add("hidden");
+    function ejecutarAperturaExpediente() {
+      document.getElementById("pantalla-4-busqueda").classList.add("hidden");
+      document.getElementById("pantalla-5-expediente").classList.remove("hidden");
+      actualizarVisibilidadBanner(5);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Inicializar el CAPTCHA al abrir la web
-    window.onload = generarRetoCaptcha;
+    function volverABusqueda() {
+      document.getElementById("pantalla-5-expediente").classList.add("hidden");
+      document.getElementById("pantalla-4-busqueda").classList.remove("hidden");
+      actualizarVisibilidadBanner(4);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function reiniciarFlujoCompleto() {
+      if (temporizadorSplashInicial) clearInterval(temporizadorSplashInicial);
+      if (temporizadorSplashSincronizacion) clearInterval(temporizadorSplashSincronizacion);
+      
+      document.getElementById("pantalla-5-expediente").classList.add("hidden");
+      document.getElementById("pantalla-4-busqueda").classList.add("hidden");
+      document.getElementById("pantalla-3-splash-sync").classList.add("hidden");
+      document.getElementById("pantalla-2-captcha").classList.add("hidden");
+      document.getElementById("pantalla-1-splash").classList.add("hidden");
+      document.getElementById("pantalla-0-bienvenida").classList.remove("hidden");
+      actualizarVisibilidadBanner(0);
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function cambiarSubpestanaCuaderno(subtab) {
+      const bRes = document.getElementById("cuaderno-subtab-btn-resoluciones");
+      const bEsc = document.getElementById("cuaderno-subtab-btn-escritos");
+      const bCed = document.getElementById("cuaderno-subtab-btn-cedulas");
+      const vRes = document.getElementById("cuaderno-vista-resoluciones");
+      const vEsc = document.getElementById("cuaderno-vista-escritos");
+      const vCed = document.getElementById("cuaderno-vista-cedulas");
+
+      const estiloInactivo = "px-4 sm:px-5 py-2.5 sm:py-3 text-xs font-bold rounded-t-2xl text-slate-400 hover:text-white hover:bg-obsidian-900 flex items-center space-x-2 shrink-0 transition cursor-pointer";
+      const estiloActivo = "px-4 sm:px-5 py-2.5 sm:py-3 text-xs font-bold rounded-t-2xl bg-obsidian-900 text-goldtech-300 border-t-2 border-goldtech-500 shadow-sm flex items-center space-x-2 shrink-0 transition cursor-pointer";
+
+      bRes.className = estiloInactivo;
+      bEsc.className = estiloInactivo;
+      bCed.className = estiloInactivo;
+      vRes.classList.add("hidden");
+      vEsc.classList.add("hidden");
+      vCed.classList.add("hidden");
+
+      if (subtab === 'resoluciones') {
+        bRes.className = estiloActivo;
+        vRes.classList.remove("hidden");
+      } else if (subtab === 'escritos') {
+        bEsc.className = estiloActivo;
+        vEsc.classList.remove("hidden");
+      } else {
+        bCed.className = estiloActivo;
+        vCed.classList.remove("hidden");
+      }
+    }
+
+    function abrirModalInstitucional(tipo) {
+      const modal = document.getElementById("modal-institucional");
+      const titulo = document.getElementById("modal-inst-titulo");
+      const cuerpo = document.getElementById("modal-inst-cuerpo");
+      if (!modal) return;
+
+      const contenidos = {
+        mision: {
+          es: {
+            t: "Misión Institucional",
+            c: "<p><strong>Misión del Sistema de Trazabilidad:</strong> Garantizar a la ciudadanía, litigantes y operadores del derecho un acceso transparente, oportuno y verificable a las actuaciones judiciales, mitigando las barreras burocráticas y fortaleciendo la confianza en la impartición de justicia mediante el uso de tecnologías interoperables del Estado.</p>"
+          },
+          en: {
+            t: "Institutional Mission",
+            c: "<p><strong>Traceability System Mission:</strong> Guarantee citizens, litigants, and legal practitioners transparent, timely, and verifiable access to judicial proceedings, eliminating bureaucratic bottlenecks and enhancing public trust through interoperable state technologies.</p>"
+          }
+        },
+        vision: {
+          es: {
+            t: "Visión Institucional",
+            c: "<p><strong>Visión de Modernización:</strong> Consolidarse como el referente digital de celeridad procesal y gobierno abierto para el sector justicia, logrando cero papel, interoperabilidad plena con RENIEC y SUNARP, e impulsando un servicio jurisdiccional inclusivo con diseño accesible (WCAG).</p>"
+          },
+          en: {
+            t: "Institutional Vision",
+            c: "<p><strong>Modernization Vision:</strong> Establish a benchmark in open justice and procedural promptness, achieving full paperless workflows, direct interoperability with public registries, and universal accessibility (WCAG).</p>"
+          }
+        },
+        transparencia: {
+          es: {
+            t: "Portal de Transparencia y Rendición de Cuentas",
+            c: "<p>Conforme a la Ley de Transparencia y Acceso a la Información Pública y la Ley de Gobierno Digital (D.L. 1412), todas las resoluciones firmadas digitalmente y cédulas electrónicas depositadas en casillas SINOE se encuentran debidamente foliadas y sujetas a auditoría ciudadana sin necesidad de intermediarios.</p><p class='text-xs text-goldtech-300 font-mono'>Entorno Académico: CSJ Puno - Juzgado Penal Unipersonal.</p>"
+          },
+          en: {
+            t: "Transparency and Accountability Portal",
+            c: "<p>In compliance with the Public Information Access and Digital Government frameworks, all digitally signed rulings and SINOE notices are officially certified and open for citizen review.</p><p class='text-xs text-goldtech-300 font-mono'>Academic Context: CSJ Puno - Unipersonal Criminal Court.</p>"
+          }
+        },
+        contacto: {
+          es: {
+            t: "Canales de Atención Ciudadana",
+            c: "<p><strong>Sede Central:</strong> Jr. Teodoro Valcárcel N° 115, Cercado de Puno, Perú.</p><p><strong>Mesa de Partes Virtual:</strong> Disponible 24/7 para recepción con sello de tiempo.</p><p><strong>Central Telefónica:</strong> (051) 599000 anexo 2101</p><p><strong>Correo Institucional Académico:</strong> justicia.digital@pj-puno.edu.pe</p>"
+          },
+          en: {
+            t: "Citizen Support and Inquiries",
+            c: "<p><strong>Headquarters:</strong> Jr. Teodoro Valcarcel No. 115, Puno, Peru.</p><p><strong>Electronic Filing:</strong> 24/7 service with official cryptographic timestamps.</p><p><strong>Phone Directory:</strong> (051) 599000 ext. 2101</p><p><strong>Academic Email:</strong> justicia.digital@pj-puno.edu.pe</p>"
+          }
+        }
+      };
+
+      if (contenidos[tipo]) {
+        titulo.textContent = contenidos[tipo][idiomaActual].t;
+        cuerpo.innerHTML = contenidos[tipo][idiomaActual].c;
+        modal.classList.remove("hidden");
+      }
+    }
+
+    function cerrarModalInstitucional() {
+      const modal = document.getElementById("modal-institucional");
+      if (modal) modal.classList.add("hidden");
+    }
+
+    function abrirModalReniec() {
+      document.getElementById("modal-reniec").classList.remove("hidden");
+    }
+    function cerrarModalReniec() {
+      document.getElementById("modal-reniec").classList.add("hidden");
+    }
+
+    function abrirModalSubirEscrito() {
+      document.getElementById("modal-subir-escrito").classList.remove("hidden");
+    }
+    function cerrarModalSubirEscrito() {
+      document.getElementById("modal-subir-escrito").classList.add("hidden");
+    }
+
+    function procesarSubidaEscrito(e) {
+      e.preventDefault();
+      const sumilla = document.getElementById("input-sumilla-escrito").value;
+      const remitente = document.getElementById("select-remitente-escrito").value;
+      const numAleatorio = Math.floor(10000 + Math.random() * 90000);
+      const codigoReg = "REC-PUNO-2026-" + numAleatorio;
+      const ahora = new Date();
+      const fechaTexto = ahora.toLocaleDateString('es-PE') + " • " + ahora.toLocaleTimeString('es-PE') + " hrs";
+
+      document.getElementById("cargo-cod-reg").textContent = codigoReg;
+      document.getElementById("cargo-fecha-reg").textContent = fechaTexto;
+      document.getElementById("cargo-sumilla-reg").textContent = sumilla.toUpperCase();
+
+      cerrarModalSubirEscrito();
+      document.getElementById("modal-cargo-oficial").classList.remove("hidden");
+
+      const contenedorLista = document.getElementById("lista-escritos-dinamica");
+      const nuevoEscrito = document.createElement("div");
+      nuevoEscrito.className = "p-4 rounded-2xl bg-obsidian-950 border border-emeraldtech-500/50 space-y-1.5 text-xs animate-pulse";
+      nuevoEscrito.innerHTML = 
+        '<div class="flex justify-between items-center">' +
+          '<span class="font-bold text-emeraldtech-300 uppercase">' + sumilla + '</span>' +
+          '<span class="font-mono text-slate-400">' + fechaTexto + '</span>' +
+        '</div>' +
+        '<p class="text-slate-300">Presentante: ' + remitente + '</p>' +
+        '<div class="flex justify-between items-center text-[11px] font-mono text-slate-500 pt-1 border-t border-white/5">' +
+          '<span class="text-goldtech-300">Cargo Oficial: ' + codigoReg + '</span>' +
+          '<span class="text-emeraldtech-400">Firma Digital Verificada (Token DNIe)</span>' +
+        '</div>';
+      contenedorLista.prepend(nuevoEscrito);
+
+      const contadorBadge = document.getElementById("contador-escritos-badge");
+      if (contadorBadge) contadorBadge.textContent = "03";
+
+      document.getElementById("input-sumilla-escrito").value = "";
+    }
+
+    function cerrarModalCargo() {
+      document.getElementById("modal-cargo-oficial").classList.add("hidden");
+      cambiarSubpestanaCuaderno('escritos');
+    }
+
+    function abrirModalSentencia() {
+      document.getElementById("modal-sentencia").classList.remove("hidden");
+    }
+    function cerrarModalSentencia() {
+      document.getElementById("modal-sentencia").classList.add("hidden");
+    }
+
+    function abrirModalCedula(destinatario, casilla, acto, fecha) {
+      document.getElementById("cedula-destinatario-txt").textContent = destinatario;
+      document.getElementById("cedula-casilla-txt").textContent = casilla;
+      document.getElementById("cedula-acto-txt").textContent = acto;
+      document.getElementById("cedula-fecha-txt").textContent = fecha;
+      document.getElementById("modal-cedula").classList.remove("hidden");
+    }
+    function cerrarModalCedula() {
+      document.getElementById("modal-cedula").classList.add("hidden");
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      generarRetoCaptcha();
+      actualizarVisibilidadBanner(0);
+    });
   </script>
 </body>
 </html>
