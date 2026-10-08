@@ -52,6 +52,7 @@
       background-color: #070a10;
       color: #e2e8f0;
       font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
     }
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
@@ -94,23 +95,23 @@
 
   <!-- ==================== ENCABEZADO INSTITUCIONAL PERSISTENTE ==================== -->
   <header class="bg-obsidian-900/90 backdrop-blur-md border-b border-white/10 sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center gap-3">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3 flex justify-between items-center gap-2 sm:gap-3">
       
       <!-- Logotipo y Nombre Oficial -->
-      <div class="flex items-center space-x-3 cursor-pointer select-none" onclick="irAPantalla(0)">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-goldtech-500/20 via-obsidian-950 to-obsidian-900 border border-goldtech-500/50 flex items-center justify-center shadow-glow-gold">
-          <svg class="w-5 h-5 text-goldtech-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <div class="flex items-center space-x-2 sm:space-x-3 cursor-pointer select-none min-w-0" onclick="irAPantalla(0)">
+        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-goldtech-500/20 via-obsidian-950 to-obsidian-900 border border-goldtech-500/50 flex items-center justify-center shadow-glow-gold shrink-0">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-goldtech-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m0-18l-8 5 8-5 8 5-8-5zM4 8l4 8H0L4 8zm16 0l4 8h-8l4-8zM7 21h10"/>
           </svg>
         </div>
-        <div>
-          <h1 class="text-base sm:text-lg font-display tracking-widest text-white font-bold leading-tight">RASTREADOR JUDICIAL</h1>
-          <p class="text-[10px] text-goldtech-400/90 font-mono tracking-wider uppercase" data-i18n="header_sub">Trazabilidad Procesal &bull; D. Leg. Nº 1412 &bull; CSJ Puno</p>
+        <div class="min-w-0">
+          <h1 class="text-xs sm:text-base md:text-lg font-display tracking-wider sm:tracking-widest text-white font-bold leading-tight truncate">RASTREADOR JUDICIAL</h1>
+          <p class="text-[8px] sm:text-[10px] text-goldtech-400/90 font-mono tracking-wider uppercase truncate" data-i18n="header_sub">Trazabilidad Procesal &bull; D. Leg. Nº 1412 &bull; CSJ Puno</p>
         </div>
       </div>
 
       <!-- Reloj Oficial en Tiempo Real y Cronómetro de Sesión (10 min - D. Leg. 1412 Art. 14) -->
-      <div class="hidden sm:flex items-center space-x-3 px-3 py-1.5 rounded-xl bg-obsidian-950 border border-white/10 text-xs font-mono shadow-inner">
+      <div class="hidden sm:flex items-center space-x-3 px-3 py-1.5 rounded-xl bg-obsidian-950 border border-white/10 text-xs font-mono shadow-inner shrink-0">
         <!-- Fecha y Hora en Vivo -->
         <div class="flex items-center space-x-2 border-r border-white/10 pr-3">
           <span class="text-goldtech-400 text-sm">🕒</span>
@@ -134,27 +135,27 @@
       </div>
 
       <!-- Indicador móvil compacto del temporizador (visible en pantallas pequeñas) -->
-      <div class="flex sm:hidden items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-obsidian-950 border border-amber-500/30 text-[10px] font-mono">
+      <div class="flex sm:hidden items-center space-x-1 px-2 py-1 rounded-lg bg-obsidian-950 border border-amber-500/30 text-[9px] font-mono shrink-0">
         <span class="text-amber-400">⏳</span>
         <span id="cronometro-movil-texto" class="font-bold text-amber-300">10:00</span>
       </div>
 
       <!-- Controles de Accesibilidad TalkBack y Bilingüe -->
-      <div class="flex items-center space-x-2 sm:space-x-3">
+      <div class="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
         
         <!-- Botón TalkBack Accesibilidad Universal -->
-        <button id="btn-talkback-toggle" onclick="conmutarTalkBack()" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border border-goldtech-500/40 bg-goldtech-500/10 hover:bg-goldtech-500/20 text-goldtech-300 text-xs font-mono font-bold transition cursor-pointer shadow-sm" title="Activar/Desactivar lector de voz inclusivo TalkBack (D. Leg. 1412)">
+        <button id="btn-talkback-toggle" onclick="conmutarTalkBack()" class="flex items-center space-x-1 sm:space-x-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-goldtech-500/40 bg-goldtech-500/10 hover:bg-goldtech-500/20 text-goldtech-300 text-xs font-mono font-bold transition cursor-pointer shadow-sm" title="Activar/Desactivar lector de voz inclusivo TalkBack (D. Leg. 1412)">
           <span id="talkback-icon">🔊</span>
           <span class="hidden md:inline" data-i18n="talkback_btn">Voz TalkBack</span>
-          <span id="talkback-badge" class="px-1.5 py-0.2 rounded text-[9px] bg-slate-800 text-slate-300 border border-white/10 font-bold">OFF</span>
+          <span id="talkback-badge" class="px-1 sm:px-1.5 py-0.2 rounded text-[8px] sm:text-[9px] bg-slate-800 text-slate-300 border border-white/10 font-bold">OFF</span>
         </button>
 
         <!-- Conmutador Bilingüe (Toggle ES / EN) -->
-        <div class="flex items-center bg-obsidian-950 p-1 rounded-xl border border-white/10 shadow-inner">
-          <button id="btn-lang-es" onclick="cambiarIdioma('es')" class="px-2.5 py-1 text-[11px] font-bold font-mono rounded-lg bg-goldtech-500 text-obsidian-950 shadow transition cursor-pointer">
+        <div class="flex items-center bg-obsidian-950 p-0.5 sm:p-1 rounded-xl border border-white/10 shadow-inner">
+          <button id="btn-lang-es" onclick="cambiarIdioma('es')" class="px-2 sm:px-2.5 py-0.5 sm:py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg bg-goldtech-500 text-obsidian-950 shadow transition cursor-pointer">
             ES
           </button>
-          <button id="btn-lang-en" onclick="cambiarIdioma('en')" class="px-2.5 py-1 text-[11px] font-bold font-mono rounded-lg text-slate-400 hover:text-white transition cursor-pointer">
+          <button id="btn-lang-en" onclick="cambiarIdioma('en')" class="px-2 sm:px-2.5 py-0.5 sm:py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg text-slate-400 hover:text-white transition cursor-pointer">
             EN
           </button>
         </div>
@@ -288,17 +289,17 @@
     <section id="pantalla-2" class="hidden w-full max-w-md mx-auto my-auto py-6 space-y-6">
 
       <!-- Barra Horizontal Institucional (Pantallas 2, 4 y 5) -->
-      <nav class="bg-obsidian-900/90 border border-white/10 rounded-2xl p-2.5 shadow-xl flex flex-wrap justify-between items-center gap-2 text-xs font-mono">
-        <span class="text-goldtech-400 font-bold px-2 py-1 flex items-center gap-2">
+      <nav class="bg-obsidian-900/90 border border-white/10 rounded-2xl p-2 sm:p-2.5 shadow-xl flex items-center justify-between gap-2 text-xs font-mono overflow-x-auto custom-scrollbar whitespace-nowrap">
+        <span class="text-goldtech-400 font-bold px-2 py-1 flex items-center gap-1.5 shrink-0">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span data-i18n="bar_title">PORTAL DE SERVICIOS</span>
+          <span data-i18n="bar_title">PORTAL</span>
         </span>
-        <div class="flex items-center space-x-1 sm:space-x-2">
-          <button onclick="abrirModalInstitucional('mision')" class="text-slate-300 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_mission">Misión</button>
-          <button onclick="abrirModalInstitucional('vision')" class="text-slate-300 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_vision">Visión</button>
-          <button onclick="abrirModalInstitucional('transparencia')" class="text-slate-300 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_transparency">Transparencia</button>
-          <button onclick="abrirModalInstitucional('contacto')" class="text-slate-300 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_contact">Contacto</button>
-          <button onclick="abrirModalInstructivo()" class="text-emerald-300 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer font-bold" data-i18n="nav_instructions">Instrucciones de Uso</button>
+        <div class="flex items-center space-x-1 sm:space-x-2 shrink-0">
+          <button onclick="abrirModalInstitucional('mision')" class="text-slate-300 hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_mission">Misión</button>
+          <button onclick="abrirModalInstitucional('vision')" class="text-slate-300 hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_vision">Visión</button>
+          <button onclick="abrirModalInstitucional('transparencia')" class="text-slate-300 hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_transparency">Transparencia</button>
+          <button onclick="abrirModalInstitucional('contacto')" class="text-slate-300 hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_contact">Contacto</button>
+          <button onclick="abrirModalInstructivo()" class="text-emerald-300 hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer font-bold" data-i18n="nav_instructions">Instrucciones</button>
         </div>
       </nav>
 
@@ -398,18 +399,18 @@
     <section id="pantalla-4" class="hidden w-full max-w-4xl mx-auto my-auto py-6 space-y-6">
 
       <!-- Barra Horizontal Institucional con Botón de Búsqueda Integrado -->
-      <nav class="bg-obsidian-900/90 border border-white/10 rounded-2xl p-2.5 shadow-xl flex flex-wrap justify-between items-center gap-2 text-xs font-mono">
-        <div class="flex items-center space-x-1 sm:space-x-2">
-          <button onclick="irAPantalla(0)" class="text-slate-300 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_home">Inicio</button>
-          <button onclick="abrirModalInstitucional('mision')" class="text-slate-300 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_mission">Misión</button>
-          <button onclick="abrirModalInstitucional('vision')" class="text-slate-300 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_vision">Visión</button>
-          <button onclick="abrirModalInstitucional('transparencia')" class="text-slate-300 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_transparency">Transparencia</button>
-          <button onclick="abrirModalInstitucional('contacto')" class="text-slate-300 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_contact">Contacto</button>
-          <button onclick="abrirModalInstructivo()" class="text-emerald-300 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer font-bold" data-i18n="nav_instructions">Instrucciones de Uso</button>
+      <nav class="bg-obsidian-900/90 border border-white/10 rounded-2xl p-2 sm:p-2.5 shadow-xl flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2 text-xs font-mono">
+        <div class="flex items-center space-x-1 sm:space-x-2 overflow-x-auto custom-scrollbar whitespace-nowrap pb-1 sm:pb-0">
+          <button onclick="irAPantalla(0)" class="text-slate-300 hover:text-white px-2 sm:px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer shrink-0" data-i18n="nav_home">Inicio</button>
+          <button onclick="abrirModalInstitucional('mision')" class="text-slate-300 hover:text-white px-2 sm:px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer shrink-0" data-i18n="nav_mission">Misión</button>
+          <button onclick="abrirModalInstitucional('vision')" class="text-slate-300 hover:text-white px-2 sm:px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer shrink-0" data-i18n="nav_vision">Visión</button>
+          <button onclick="abrirModalInstitucional('transparencia')" class="text-slate-300 hover:text-white px-2 sm:px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer shrink-0" data-i18n="nav_transparency">Transparencia</button>
+          <button onclick="abrirModalInstitucional('contacto')" class="text-slate-300 hover:text-white px-2 sm:px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer shrink-0" data-i18n="nav_contact">Contacto</button>
+          <button onclick="abrirModalInstructivo()" class="text-emerald-300 hover:text-white px-2 sm:px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer font-bold shrink-0" data-i18n="nav_instructions">Instrucciones</button>
         </div>
 
         <!-- Botón Integrado: Búsqueda de Expediente Judicial -->
-        <button onclick="activarPanelBusqueda()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-goldtech-600 to-amber-400 hover:from-goldtech-500 hover:to-amber-300 text-obsidian-950 font-bold font-mono text-xs shadow-glow-gold hover:scale-105 transition cursor-pointer flex items-center space-x-1.5">
+        <button onclick="activarPanelBusqueda()" class="px-3.5 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-goldtech-600 to-amber-400 hover:from-goldtech-500 hover:to-amber-300 text-obsidian-950 font-bold font-mono text-xs shadow-glow-gold hover:scale-105 transition cursor-pointer flex items-center justify-center space-x-1.5 shrink-0">
           <span>🔍</span>
           <span data-i18n="btn_nav_search">Búsqueda de Expediente Judicial</span>
         </button>
@@ -463,7 +464,7 @@
         <!-- MODO 1: BÚSQUEDA GENERAL -->
         <div id="modo-busqueda-filtros" class="space-y-4">
           <p class="text-xs text-slate-400 font-mono" data-i18n="lbl_general_desc">Consulta abierta por filtros de sede jurisdiccional, juzgado y especialidad procesal:</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs font-mono">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 text-xs font-mono">
             <div>
               <label class="block text-slate-400 mb-1" data-i18n="lbl_distrito">Distrito Judicial:</label>
               <select class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-white">
@@ -491,15 +492,15 @@
             </div>
             <div>
               <label class="block text-slate-400 mb-1" data-i18n="lbl_jueza">Jueza Titular a Cargo:</label>
-              <input type="text" value="Dra. Gladis Huanca Quispe" readonly class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-goldtech-300 font-bold">
+              <input type="text" value="Dra. Gladis Huanca Quispe" readonly class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-goldtech-300 font-bold truncate">
             </div>
             <div>
               <label class="block text-slate-400 mb-1" data-i18n="lbl_materia">Materia / Especialidad:</label>
-              <input type="text" value="Penal (NCPP) - Homicidio Culposo" readonly class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-rose-300 font-bold">
+              <input type="text" value="Penal (NCPP) - Homicidio Culposo" readonly class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-rose-300 font-bold truncate">
             </div>
             <div>
               <label class="block text-slate-400 mb-1" data-i18n="lbl_especialista">Especialista Legal:</label>
-              <input type="text" value="Abg. Carlos M. Mamani Condori" readonly class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-slate-300">
+              <input type="text" value="Abg. Carlos M. Mamani Condori" readonly class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-slate-300 truncate">
             </div>
           </div>
         </div>
@@ -532,19 +533,19 @@
     <section id="pantalla-5" class="hidden w-full max-w-5xl mx-auto space-y-6 py-4">
 
       <!-- Barra Horizontal Institucional con Botón de Instructivo y Volver -->
-      <nav class="bg-obsidian-900/90 border border-white/10 rounded-2xl p-2.5 shadow-xl flex flex-wrap justify-between items-center gap-2 text-xs font-mono">
-        <div class="flex items-center space-x-2">
-          <button onclick="irAPantalla(4)" class="text-goldtech-300 hover:text-white px-3 py-1 rounded-lg bg-white/5 border border-white/10 transition flex items-center space-x-1 cursor-pointer">
+      <nav class="bg-obsidian-900/90 border border-white/10 rounded-2xl p-2 sm:p-2.5 shadow-xl flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2 text-xs font-mono">
+        <div class="flex items-center space-x-2 shrink-0">
+          <button onclick="irAPantalla(4)" class="w-full sm:w-auto text-goldtech-300 hover:text-white px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 transition flex items-center justify-center space-x-1 cursor-pointer">
             <span>&larr;</span> <span data-i18n="btn_back_search">Volver al Buscador</span>
           </button>
         </div>
 
-        <div class="flex items-center space-x-1 sm:space-x-2">
-          <button onclick="abrirModalInstitucional('mision')" class="text-slate-300 hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_mission">Misión</button>
-          <button onclick="abrirModalInstitucional('vision')" class="text-slate-300 hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_vision">Visión</button>
-          <button onclick="abrirModalInstitucional('transparencia')" class="text-slate-300 hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_transparency">Transparencia</button>
-          <button onclick="abrirModalInstitucional('contacto')" class="text-slate-300 hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer" data-i18n="nav_contact">Contacto</button>
-          <button onclick="abrirModalInstructivo()" class="text-emerald-300 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer font-bold" data-i18n="nav_instructions">Instrucciones de Uso</button>
+        <div class="flex items-center space-x-1 sm:space-x-2 overflow-x-auto custom-scrollbar whitespace-nowrap pb-1 sm:pb-0">
+          <button onclick="abrirModalInstitucional('mision')" class="text-slate-300 hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer shrink-0" data-i18n="nav_mission">Misión</button>
+          <button onclick="abrirModalInstitucional('vision')" class="text-slate-300 hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer shrink-0" data-i18n="nav_vision">Visión</button>
+          <button onclick="abrirModalInstitucional('transparencia')" class="text-slate-300 hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer shrink-0" data-i18n="nav_transparency">Transparencia</button>
+          <button onclick="abrirModalInstitucional('contacto')" class="text-slate-300 hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer shrink-0" data-i18n="nav_contact">Contacto</button>
+          <button onclick="abrirModalInstructivo()" class="text-emerald-300 hover:text-white px-2 sm:px-2.5 py-1 rounded-lg hover:bg-white/5 transition cursor-pointer font-bold shrink-0" data-i18n="nav_instructions">Instrucciones</button>
         </div>
       </nav>
 
@@ -576,18 +577,18 @@
         </div>
 
         <!-- Matriz de Datos Jurisdiccionales de Puno -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 sm:p-6 bg-obsidian-950/60 border-b border-white/10 text-xs font-mono">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 p-4 sm:p-6 bg-obsidian-950/60 border-b border-white/10 text-xs font-mono">
           <div>
             <span class="block text-[10px] text-slate-500 uppercase tracking-wider" data-i18n="tbl_instance">Instancia / Despacho:</span>
-            <span class="text-white font-bold">Juz. Penal Unipersonal</span>
+            <span class="text-white font-bold break-words">Juz. Penal Unipersonal</span>
           </div>
           <div>
             <span class="block text-[10px] text-slate-500 uppercase tracking-wider" data-i18n="tbl_judge">Jueza Titular:</span>
-            <span class="text-goldtech-300 font-bold">Dra. Gladis Huanca Quispe</span>
+            <span class="text-goldtech-300 font-bold break-words">Dra. Gladis Huanca Quispe</span>
           </div>
           <div>
             <span class="block text-[10px] text-slate-500 uppercase tracking-wider" data-i18n="tbl_specialist">Especialista Legal:</span>
-            <span class="text-slate-300">Abg. Carlos M. Mamani Condori</span>
+            <span class="text-slate-300 break-words">Abg. Carlos M. Mamani Condori</span>
           </div>
           <div>
             <span class="block text-[10px] text-slate-500 uppercase tracking-wider" data-i18n="tbl_entry">Fecha de Ingreso:</span>
@@ -595,17 +596,17 @@
           </div>
           <div class="sm:col-span-2 pt-2 border-t border-white/5">
             <span class="block text-[10px] text-slate-500 uppercase tracking-wider" data-i18n="tbl_crime">Delito Imputado / Materia:</span>
-            <span class="text-rose-400 font-bold text-xs sm:text-sm">HOMICIDIO CULPOSO (Artículo 111° del Código Penal)</span>
+            <span class="text-rose-400 font-bold text-xs sm:text-sm break-words">HOMICIDIO CULPOSO (Artículo 111° del Código Penal)</span>
           </div>
           <div class="sm:col-span-2 pt-2 border-t border-white/5">
             <span class="block text-[10px] text-slate-500 uppercase tracking-wider" data-i18n="tbl_prosecution">Procedencia Acusatoria:</span>
-            <span class="text-slate-300">1° Fiscalía Provincial Penal Corporativa de Puno</span>
+            <span class="text-slate-300 break-words">1° Fiscalía Provincial Penal Corporativa de Puno</span>
           </div>
         </div>
 
         <!-- STEPPER DE 5 ETAPAS PROCESALES DEL NCPP -->
-        <div class="p-5 sm:p-6">
-          <div class="flex justify-between items-center mb-3">
+        <div class="p-4 sm:p-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 mb-3">
             <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider" data-i18n="stepper_title">
               ITER PROCESAL DEL NUEVO CÓDIGO PROCESAL PENAL
             </h4>
@@ -614,50 +615,50 @@
             </span>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-xs font-mono">
-            <div class="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300">
-              <span class="block text-[10px] text-emerald-500 font-bold">FASE 1</span>
-              <span class="font-bold block py-0.5">Inv. Preparatoria</span>
-              <span class="text-[10px] text-emerald-400">✓ Concluida</span>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 text-center text-xs font-mono">
+            <div class="p-2 sm:p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300">
+              <span class="block text-[9px] sm:text-[10px] text-emerald-500 font-bold">FASE 1</span>
+              <span class="font-bold block py-0.5 text-[11px] sm:text-xs">Inv. Preparatoria</span>
+              <span class="text-[9px] sm:text-[10px] text-emerald-400">✓ Concluida</span>
             </div>
-            <div class="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300">
-              <span class="block text-[10px] text-emerald-500 font-bold">FASE 2</span>
-              <span class="font-bold block py-0.5">Etapa Intermedia</span>
-              <span class="text-[10px] text-emerald-400">✓ Enjuiciamiento</span>
+            <div class="p-2 sm:p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300">
+              <span class="block text-[9px] sm:text-[10px] text-emerald-500 font-bold">FASE 2</span>
+              <span class="font-bold block py-0.5 text-[11px] sm:text-xs">Etapa Intermedia</span>
+              <span class="text-[9px] sm:text-[10px] text-emerald-400">✓ Enjuiciamiento</span>
             </div>
-            <div class="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300">
-              <span class="block text-[10px] text-emerald-500 font-bold">FASE 3</span>
-              <span class="font-bold block py-0.5">Juicio Oral</span>
-              <span class="text-[10px] text-emerald-400">✓ Actuado</span>
+            <div class="p-2 sm:p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300">
+              <span class="block text-[9px] sm:text-[10px] text-emerald-500 font-bold">FASE 3</span>
+              <span class="font-bold block py-0.5 text-[11px] sm:text-xs">Juicio Oral</span>
+              <span class="text-[9px] sm:text-[10px] text-emerald-400">✓ Actuado</span>
             </div>
-            <div class="p-2.5 rounded-xl bg-goldtech-500/20 border-2 border-goldtech-500 text-goldtech-300 shadow-glow-gold">
-              <span class="block text-[10px] text-goldtech-400 font-bold">FASE 4</span>
-              <span class="font-bold block py-0.5">Sentencia</span>
-              <span class="text-[10px] text-goldtech-300">● Dictada N° 088</span>
+            <div class="p-2 sm:p-2.5 rounded-xl bg-goldtech-500/20 border-2 border-goldtech-500 text-goldtech-300 shadow-glow-gold">
+              <span class="block text-[9px] sm:text-[10px] text-goldtech-400 font-bold">FASE 4</span>
+              <span class="font-bold block py-0.5 text-[11px] sm:text-xs">Sentencia</span>
+              <span class="text-[9px] sm:text-[10px] text-goldtech-300">● Dictada N° 088</span>
             </div>
-            <div class="col-span-2 sm:col-span-1 p-2.5 rounded-xl bg-obsidian-950 border border-white/10 text-slate-400">
-              <span class="block text-[10px] text-slate-500 font-bold">FASE 5</span>
-              <span class="font-bold block py-0.5">Ejecución Penal</span>
-              <span class="text-[10px] text-slate-500">○ En Trámite</span>
+            <div class="col-span-2 sm:col-span-1 p-2 sm:p-2.5 rounded-xl bg-obsidian-950 border border-white/10 text-slate-400">
+              <span class="block text-[9px] sm:text-[10px] text-slate-500 font-bold">FASE 5</span>
+              <span class="font-bold block py-0.5 text-[11px] sm:text-xs">Ejecución Penal</span>
+              <span class="text-[9px] sm:text-[10px] text-slate-500">○ En Trámite</span>
             </div>
           </div>
         </div>
 
         <!-- SUJETOS PROCESALES Y DESTINATARIOS NOTIFICABLES (DOMICILIO DIGITAL ART. 22 D. LEG. 1412) -->
-        <div class="p-5 sm:p-6 border-t border-white/10 space-y-4">
-          <div class="flex flex-wrap justify-between items-center gap-2 border-b border-white/10 pb-3">
+        <div class="p-4 sm:p-6 border-t border-white/10 space-y-4">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-white/10 pb-3">
             <div>
-              <h4 class="text-sm font-mono font-bold text-white uppercase tracking-wider" data-i18n="parties_title">
+              <h4 class="text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-wider" data-i18n="parties_title">
                 SUJETOS PROCESALES Y DESTINATARIOS NOTIFICABLES
               </h4>
-              <p class="text-xs text-slate-400" data-i18n="parties_sub">Domicilio Digital (Art. 22 D. Leg. 1412) &bull; Casillas Electrónicas SINOE (Datos protegidos Ley N° 29733)</p>
+              <p class="text-[11px] sm:text-xs text-slate-400" data-i18n="parties_sub">Domicilio Digital (Art. 22 D. Leg. 1412) &bull; Casillas Electrónicas SINOE (Datos protegidos Ley N° 29733)</p>
             </div>
-            <button onclick="abrirModalMesaPartes()" class="px-4 py-2 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 text-emerald-300 border border-emerald-500/40 text-xs font-mono font-bold transition flex items-center gap-1.5 cursor-pointer">
+            <button onclick="abrirModalMesaPartes()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 text-emerald-300 border border-emerald-500/40 text-xs font-mono font-bold transition flex items-center justify-center gap-1.5 cursor-pointer">
               <span>+</span> <span data-i18n="btn_submit_filing">Subir Escrito a Mesa de Partes (Art. 21)</span>
             </button>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs font-mono">
             
             <!-- PARTE 1: FISCALÍA -->
             <div class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2">
@@ -680,8 +681,8 @@
               <p class="text-slate-300"><span class="text-slate-500">Defensa:</span> Dr. Néstor Pari Alanoca (ICAP 2419)</p>
               <p class="text-goldtech-400"><span class="text-slate-500">Casilla SINOE:</span> 61922-PUNO</p>
               
-              <!-- Trilogía de botones de consulta PIDE -->
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5 pt-2 border-t border-white/10">
+              <!-- Cuarteto de botones de consulta PIDE (RENIEC, SINOE, MIGRACIONES, SIDPOL) -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 pt-2 border-t border-white/10">
                 <button onclick="abrirModalReniec()" class="py-1.5 px-2 rounded-lg bg-white/5 hover:bg-goldtech-500/20 border border-white/15 text-slate-200 text-[10px] font-bold transition flex items-center justify-center gap-1 cursor-pointer" title="Ver ficha de identidad RENIEC">
                   <span>🪪</span> <span>RENIEC</span>
                 </button>
@@ -690,6 +691,9 @@
                 </button>
                 <button onclick="abrirModalMigraciones()" class="py-1.5 px-2 rounded-lg bg-white/5 hover:bg-cobalttech-500/20 border border-white/15 text-slate-200 text-[10px] font-bold transition flex items-center justify-center gap-1 cursor-pointer" title="Ver control migratorio y arraigo">
                   <span>✈️</span> <span>MIGRAC.</span>
+                </button>
+                <button onclick="abrirModalSidpol()" class="py-1.5 px-2 rounded-lg bg-white/5 hover:bg-rose-500/20 border border-white/15 text-rose-300 hover:text-rose-200 text-[10px] font-bold transition flex items-center justify-center gap-1 cursor-pointer" title="Ver ficha policial SIDPOL PNP">
+                  <span>🚨</span> <span>SIDPOL</span>
                 </button>
               </div>
             </div>
@@ -739,14 +743,14 @@
             </h5>
 
             <!-- RES 01 -->
-            <div class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                  <span class="px-2 py-0.5 rounded font-mono text-xs font-bold bg-white/10 text-slate-300">RESOLUCIÓN N° 01</span>
+            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 01</span>
                   <span class="font-bold text-xs text-white">RECEPCIÓN DE FORMALIZACIÓN DE INVESTIGACIÓN PREPARATORIA</span>
                 </div>
-                <div class="flex items-center space-x-3">
-                  <span class="text-xs font-mono text-slate-400">05/06/2018</span>
+                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
+                  <span class="text-[11px] font-mono text-slate-400">05/06/2018</span>
                   <button onclick="abrirModalResolucion(1)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
                 </div>
               </div>
@@ -756,14 +760,14 @@
             </div>
 
             <!-- RES 02 -->
-            <div class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                  <span class="px-2 py-0.5 rounded font-mono text-xs font-bold bg-white/10 text-slate-300">RESOLUCIÓN N° 02</span>
+            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 02</span>
                   <span class="font-bold text-xs text-white">ADMISIÓN DE CONSTITUCIÓN EN ACTOR CIVIL</span>
                 </div>
-                <div class="flex items-center space-x-3">
-                  <span class="text-xs font-mono text-slate-400">18/07/2018</span>
+                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
+                  <span class="text-[11px] font-mono text-slate-400">18/07/2018</span>
                   <button onclick="abrirModalResolucion(2)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
                 </div>
               </div>
@@ -773,15 +777,15 @@
             </div>
 
             <!-- RES 03 -->
-            <div class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                  <span class="px-2 py-0.5 rounded font-mono text-xs font-bold bg-white/10 text-slate-300">RESOLUCIÓN N° 03</span>
+            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 03</span>
                   <span class="font-bold text-xs text-white">INCORPORACIÓN DE PERITAJES Y DILIGENCIAS TÉCNICAS</span>
                 </div>
-                <div class="flex items-center space-x-3">
-                  <span class="text-xs font-mono text-slate-400">14/09/2018</span>
-                  <button onclick="abrirModalResolucion(3)" class="text-xs text-goldtech-400 hover:underline font-mono cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
+                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
+                  <span class="text-[11px] font-mono text-slate-400">14/09/2018</span>
+                  <button onclick="abrirModalResolucion(3)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
                 </div>
               </div>
               <p class="text-xs text-slate-400 font-serif">
@@ -790,15 +794,15 @@
             </div>
 
             <!-- RES 04 -->
-            <div class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                  <span class="px-2 py-0.5 rounded font-mono text-xs font-bold bg-white/10 text-slate-300">RESOLUCIÓN N° 04</span>
+            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 04</span>
                   <span class="font-bold text-xs text-white">CONCLUSIÓN DE INVESTIGACIÓN PREPARATORIA</span>
                 </div>
-                <div class="flex items-center space-x-3">
-                  <span class="text-xs font-mono text-slate-400">10/11/2018</span>
-                  <button onclick="abrirModalResolucion(4)" class="text-xs text-goldtech-400 hover:underline font-mono cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
+                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
+                  <span class="text-[11px] font-mono text-slate-400">10/11/2018</span>
+                  <button onclick="abrirModalResolucion(4)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
                 </div>
               </div>
               <p class="text-xs text-slate-400 font-serif">
@@ -807,15 +811,15 @@
             </div>
 
             <!-- RES 05 -->
-            <div class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                  <span class="px-2 py-0.5 rounded font-mono text-xs font-bold bg-white/10 text-slate-300">RESOLUCIÓN N° 05</span>
+            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 05</span>
                   <span class="font-bold text-xs text-white">TRASLADO DE ACUSACIÓN FISCAL (CONTROL INTERMEDIO)</span>
                 </div>
-                <div class="flex items-center space-x-3">
-                  <span class="text-xs font-mono text-slate-400">28/01/2019</span>
-                  <button onclick="abrirModalResolucion(5)" class="text-xs text-goldtech-400 hover:underline font-mono cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
+                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
+                  <span class="text-[11px] font-mono text-slate-400">28/01/2019</span>
+                  <button onclick="abrirModalResolucion(5)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
                 </div>
               </div>
               <p class="text-xs text-slate-400 font-serif">
@@ -824,14 +828,14 @@
             </div>
 
             <!-- RES 06: VALIDEZ FORMAL DE LA ACUSACIÓN FISCAL -->
-            <div class="p-4 rounded-2xl bg-obsidian-950 border-2 border-emerald-600/50 space-y-2 hover:border-emerald-500 transition">
-              <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                  <span class="px-2 py-0.5 rounded font-mono text-xs font-bold bg-emerald-950 text-emerald-300 border border-emerald-600">RESOLUCIÓN N° 06</span>
+            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border-2 border-emerald-600/50 space-y-2 hover:border-emerald-500 transition">
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-600 shrink-0">RESOLUCIÓN N° 06</span>
                   <span class="font-bold text-xs text-white uppercase">SANEAMIENTO FORMAL — VALIDEZ DE LA ACUSACIÓN FISCAL</span>
                 </div>
-                <div class="flex items-center space-x-3">
-                  <span class="text-xs font-mono text-slate-400">18/03/2019</span>
+                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
+                  <span class="text-[11px] font-mono text-slate-400">18/03/2019</span>
                   <button onclick="abrirModalResolucion(6)" class="px-2.5 py-1 rounded bg-emerald-900/60 hover:bg-emerald-800 text-emerald-300 text-xs font-mono font-bold border border-emerald-600 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
                 </div>
               </div>
@@ -841,14 +845,14 @@
             </div>
 
             <!-- RES 07: DECLARAN INFUNDADO EL SOBRESEIMIENTO -->
-            <div class="p-4 rounded-2xl bg-obsidian-950 border-2 border-amber-600/50 space-y-2 hover:border-amber-500 transition">
-              <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                  <span class="px-2 py-0.5 rounded font-mono text-xs font-bold bg-amber-950 text-amber-300 border border-amber-600">RESOLUCIÓN N° 07</span>
+            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border-2 border-amber-600/50 space-y-2 hover:border-amber-500 transition">
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-amber-950 text-amber-300 border border-amber-600 shrink-0">RESOLUCIÓN N° 07</span>
                   <span class="font-bold text-xs text-white uppercase">INFUNDADA SOLICITUD DE SOBRESEIMIENTO DE LA DEFENSA</span>
                 </div>
-                <div class="flex items-center space-x-3">
-                  <span class="text-xs font-mono text-slate-400">08/04/2019</span>
+                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
+                  <span class="text-[11px] font-mono text-slate-400">08/04/2019</span>
                   <button onclick="abrirModalResolucion(7)" class="px-2.5 py-1 rounded bg-amber-950 hover:bg-amber-900 text-amber-300 text-xs font-mono font-bold border border-amber-600 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
                 </div>
               </div>
@@ -858,24 +862,24 @@
             </div>
 
             <!-- RES 08: AUTO DE ENJUICIAMIENTO -->
-            <div class="p-4 rounded-2xl bg-obsidian-950 border-2 border-goldtech-500 space-y-2 shadow-glow-gold">
-              <div class="flex flex-wrap justify-between items-center gap-2">
-                <div class="flex items-center space-x-2">
-                  <span class="px-2 py-0.5 rounded font-mono text-xs font-bold bg-goldtech-500/20 text-goldtech-300 border border-goldtech-500/40">RESOLUCIÓN N° 08</span>
+            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border-2 border-goldtech-500 space-y-2 shadow-glow-gold">
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-2">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-goldtech-500/20 text-goldtech-300 border border-goldtech-500/40 shrink-0">RESOLUCIÓN N° 08</span>
                   <span class="font-bold text-xs sm:text-sm text-white uppercase">AUTO DE ENJUICIAMIENTO FORMAL</span>
                 </div>
-                <div class="flex items-center space-x-3">
-                  <span class="text-xs font-mono text-slate-400">20/05/2019</span>
+                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
+                  <span class="text-[11px] font-mono text-slate-400">20/05/2019</span>
                   <button onclick="abrirModalResolucion(8)" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-goldtech-600 to-amber-400 text-obsidian-950 font-bold font-mono text-xs hover:scale-105 transition cursor-pointer flex items-center gap-1">
                     <span>📄</span> <span>Ver Auto de Enjuiciamiento</span>
                   </button>
                 </div>
               </div>
-              <div class="text-xs text-slate-200 font-serif leading-relaxed bg-obsidian-900/70 p-3.5 rounded-xl border border-goldtech-500/30 space-y-1.5">
+              <div class="text-xs text-slate-200 font-serif leading-relaxed bg-obsidian-900/70 p-3 sm:p-3.5 rounded-xl border border-goldtech-500/30 space-y-1.5">
                 <p>
                   <strong>Auto de Enjuiciamiento N° 034-2019-JIP:</strong> Se dicta <strong>AUTO DE ENJUICIAMIENTO en contra de EDGAR RAÚL R**** C*****</strong> (DNI N° 4198****, de 35 años de edad, natural de Puno, con domicilio procesal en Jr. Deustua N° 340, Puno y Casilla SINOE 61922-PUNO, patrocinado por el Abg. Néstor Pari Alanoca) como presunto autor del delito de Homicidio Culposo (Art. 111 del Código Penal) en agravio de Víctor Alfonso Q***** M*****.
                 </p>
-                <p class="font-mono text-[11px] text-goldtech-300 font-semibold pt-1 border-t border-white/10">
+                <p class="font-mono text-[10px] sm:text-[11px] text-goldtech-300 font-semibold pt-1 border-t border-white/10">
                   ⚡ Pretensión acusatoria enjuiciada: Se solicita <span class="text-white underline">08 MESES DE PENA PRIVATIVA DE LIBERTAD</span> y el pago de <span class="text-white underline">S/ 25,000.00 (VEINTICINCO MIL SOLES)</span> por concepto de Reparación Civil a favor de los deudos. Remítase al Juzgado Penal Unipersonal de Puno.
                 </p>
               </div>
@@ -1442,6 +1446,60 @@
       <div class="bg-obsidian-950 p-2.5 rounded-xl border border-white/10 text-[11px] text-slate-400 flex justify-between items-center">
         <span>Respuesta WebService: PIDE-MIGRAC-200-OK</span>
         <button onclick="cerrarModalMigraciones()" class="px-3 py-1 rounded bg-white/10 hover:bg-white/20 text-white cursor-pointer">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: FICHA POLICIAL SIDPOL PNP (PIDE ART. 26) ==================== -->
+  <div id="modal-sidpol" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-obsidian-900 border border-rose-500/50 rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl space-y-4 font-mono text-xs">
+      <div class="flex justify-between items-center border-b border-white/10 pb-3">
+        <div class="flex items-center space-x-2">
+          <span class="text-xl text-rose-400">🚨</span>
+          <div>
+            <h4 class="font-bold text-white text-sm">POLICÍA NACIONAL DEL PERÚ &bull; SIDPOL</h4>
+            <p class="text-[10px] text-rose-400">Sistema de Denuncias Policiales &bull; Interoperabilidad PIDE (Art. 26 D. Leg. 1412)</p>
+          </div>
+        </div>
+        <button onclick="cerrarModalSidpol()" class="text-slate-400 hover:text-white text-lg font-bold cursor-pointer">✕</button>
+      </div>
+
+      <div class="space-y-3 text-slate-300">
+        <!-- Ficha de Datos Policiales -->
+        <div class="bg-obsidian-950 p-3.5 rounded-2xl border border-white/10 space-y-1.5">
+          <p><span class="text-slate-500">Persona Consultada:</span> <strong class="text-white">Edgar Raúl R**** C*****</strong></p>
+          <p><span class="text-slate-500">DNI / Identificador:</span> <span class="text-slate-300 font-bold">4198****</span></p>
+          <p><span class="text-slate-500">Dependencia Emisora:</span> <span class="text-slate-300">Región Policial Puno &bull; Comisaría Sectorial Central Puno</span></p>
+          <div class="pt-1 flex items-center justify-between border-t border-white/5 text-[11px]">
+            <span class="text-slate-500">Estado de Requisitorias (RQ):</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold">NO REGISTRA CAPTURA VIGENTE</span>
+          </div>
+        </div>
+
+        <!-- Registro de Ocurrencia / Denuncia Policial de la Causa -->
+        <div class="bg-obsidian-950 p-3.5 rounded-2xl border border-rose-500/30 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-rose-300 font-bold text-[11px] flex items-center gap-1.5">
+              <span>📋</span> <span>DENUNCIA N° 2018-00412-SIDPOL-PUNO</span>
+            </span>
+            <span class="text-slate-500 text-[10px]">14/05/2018 - 18:20 hrs</span>
+          </div>
+          <div class="text-[11px] text-slate-300 space-y-1 font-sans">
+            <p><strong>Hecho Registrado:</strong> Intervención por presunto delito contra la vida, el cuerpo y la salud - Accidente de tránsito con consecuencia de muerte (choque y posterior deceso).</p>
+            <p><strong>Lugar del Hecho:</strong> Intersección Av. Floral con Jr. El Sol, Distrito y Provincia de Puno.</p>
+            <p><strong>Vehículo Intervenido:</strong> Automóvil categoría M1, Placa Z3*-*** (Acta de incautación preventiva).</p>
+            <p><strong>Destino de la Ocurrencia:</strong> Puesto a disposición de la 1° Fiscalía Provincial Penal Corporativa de Puno (Ingreso judicial: Exp. 02766-2018-82-2101-JP-PE-02).</p>
+          </div>
+        </div>
+
+        <p class="text-[11px] text-slate-400 font-serif italic">
+          * Certificación policial interoperable en tiempo real bajo estándares de interoperabilidad semántica del Estado Peruano (PIDE / DIRTIC-PNP).
+        </p>
+      </div>
+
+      <div class="bg-obsidian-950 p-2.5 rounded-xl border border-white/10 text-[11px] text-slate-400 flex justify-between items-center">
+        <span>Hash Consulta: SHA256-SIDPOL-PNP-7721B</span>
+        <button onclick="cerrarModalSidpol()" class="px-3 py-1 rounded bg-white/10 hover:bg-white/20 text-white cursor-pointer">Cerrar</button>
       </div>
     </div>
   </div>
@@ -2531,6 +2589,14 @@
     }
     function cerrarModalMigraciones() {
       document.getElementById('modal-migraciones').classList.add('hidden');
+    }
+
+    function abrirModalSidpol() {
+      document.getElementById('modal-sidpol').classList.remove('hidden');
+      if (talkbackActivo) narrarTexto("Ficha policial SIDPOL abierta. Sistema de denuncias policiales de la Policía Nacional del Perú interconectado vía PIDE");
+    }
+    function cerrarModalSidpol() {
+      document.getElementById('modal-sidpol').classList.add('hidden');
     }
 
     function abrirModalMesaPartes() {
