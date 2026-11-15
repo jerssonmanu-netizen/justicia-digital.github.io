@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rastreador Judicial - Plataforma de Trazabilidad Procesal (D. Leg. N° 1412)</title>
+  <title>Rastreador Judicial - Plataforma de Trazabilidad Procesal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -76,18 +76,85 @@
       background-color: rgba(197, 155, 63, 0.15) !important;
       transition: all 0.2s ease;
     }
+
+    /* ==================== MODOS DE ACCESIBILIDAD DINÁMICOS ==================== */
+    html.a11y-text-lg { font-size: 112.5%; }
+    html.a11y-text-xl { font-size: 125%; }
+
+    html.a11y-high-contrast body {
+      background-color: #000000 !important;
+      color: #ffffff !important;
+    }
+    html.a11y-high-contrast .bg-obsidian-900,
+    html.a11y-high-contrast .bg-obsidian-950,
+    html.a11y-high-contrast .bg-obsidian-850,
+    html.a11y-high-contrast .bg-obsidian-900\/90,
+    html.a11y-high-contrast .bg-obsidian-900\/95 {
+      background-color: #000000 !important;
+      border-color: #ffff00 !important;
+    }
+    html.a11y-high-contrast p,
+    html.a11y-high-contrast span,
+    html.a11y-high-contrast div,
+    html.a11y-high-contrast label {
+      color: #ffffff !important;
+    }
+    html.a11y-high-contrast h1,
+    html.a11y-high-contrast h2,
+    html.a11y-high-contrast h3,
+    html.a11y-high-contrast h4,
+    html.a11y-high-contrast h5,
+    html.a11y-high-contrast strong,
+    html.a11y-high-contrast .text-goldtech-300,
+    html.a11y-high-contrast .text-goldtech-400 {
+      color: #ffff00 !important;
+    }
+
+    html.a11y-light-mode {
+      filter: invert(0.93) hue-rotate(180deg);
+    }
+    html.a11y-light-mode img,
+    html.a11y-light-mode canvas,
+    html.a11y-light-mode svg {
+      filter: invert(1) hue-rotate(180deg);
+    }
+
+    html.a11y-grayscale {
+      filter: grayscale(100%);
+    }
+
+    html.a11y-dyslexic * {
+      font-family: 'Plus Jakarta Sans', Arial, sans-serif !important;
+      letter-spacing: 0.06em !important;
+      word-spacing: 0.14em !important;
+      line-height: 1.7 !important;
+    }
+
+    html.a11y-highlight-links a,
+    html.a11y-highlight-links button {
+      outline: 2px solid #38bdf8 !important;
+      outline-offset: 2px;
+    }
+
+    html.a11y-no-motion *,
+    html.a11y-no-motion *::before,
+    html.a11y-no-motion *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between antialiased selection:bg-goldtech-500/30 selection:text-goldtech-300">
 
-  <!-- ==================== FRANJA SUPERIOR DE ADVERTENCIA ACADÉMICA (D. LEG. 1412) ==================== -->
+  <!-- ==================== FRANJA SUPERIOR DE ADVERTENCIA ACADÉMICA ==================== -->
   <aside id="franja-advertencia-academica" class="hidden bg-amber-950/95 border-b border-amber-600/40 text-amber-200 text-xs py-2 px-4 shadow-sm z-50 transition-all duration-300">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
       <div class="flex items-center space-x-2.5 mx-auto text-center sm:text-left">
         <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse shrink-0"></span>
         <p class="text-[11px] sm:text-xs font-mono font-medium tracking-wide">
           <strong class="text-amber-300 uppercase font-sans tracking-wider" data-i18n="adv_title">AVISO INSTITUCIONAL FORMATIVO:</strong>
-          <span data-i18n="adv_body">Prototipo académico conforme al Decreto Legislativo Nº 1412 (Ley de Gobierno Digital). No constituye un canal oficial del Poder Judicial del Perú ni tramita causas judiciales reales.</span>
+          <span data-i18n="adv_body">Prototipo académico de Gobierno Digital y Servicios Ciudadanos. No constituye un canal oficial del Poder Judicial del Perú ni tramita causas judiciales reales.</span>
         </p>
       </div>
     </div>
@@ -106,7 +173,7 @@
         </div>
         <div class="min-w-0">
           <h1 class="text-xs sm:text-base md:text-lg font-display tracking-wider sm:tracking-widest text-white font-bold leading-tight truncate">RASTREADOR JUDICIAL</h1>
-          <p class="text-[8px] sm:text-[10px] text-goldtech-400/90 font-mono tracking-wider uppercase truncate" data-i18n="header_sub">Trazabilidad Procesal &bull; D. Leg. Nº 1412 &bull; CSJ Puno</p>
+          <p class="text-[8px] sm:text-[10px] text-goldtech-400/90 font-mono tracking-wider uppercase truncate" data-i18n="header_sub">Trazabilidad Procesal &bull; Gobierno Digital &bull; CSJ Puno</p>
         </div>
       </div>
 
@@ -120,15 +187,12 @@
           </div>
         </div>
 
-        <div class="flex items-center space-x-2" title="Límite perimétrico de sesión segura por inactividad (D. Leg. 1412)">
+        <div class="flex items-center space-x-2" title="Límite perimétrico de sesión segura por inactividad">
           <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
           <div>
             <span class="block text-[9px] text-slate-400 uppercase leading-none font-bold" data-i18n="lbl_timer_session">Sesión</span>
             <span id="cronometro-sesion-texto" class="font-bold text-amber-300 tracking-wider text-xs">10:00</span>
           </div>
-          <button onclick="renovarSesionDiezMinutos()" class="p-1 text-slate-400 hover:text-goldtech-300 text-xs transition cursor-pointer" title="Renovar 10 minutos de sesión">
-            ↺
-          </button>
         </div>
       </div>
 
@@ -138,9 +202,15 @@
         <span id="cronometro-movil-texto" class="font-bold text-amber-300">10:00</span>
       </div>
 
-      <!-- Controles de Accesibilidad TalkBack y Bilingüe -->
-      <div class="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
-        <button id="btn-talkback-toggle" onclick="conmutarTalkBack()" class="flex items-center space-x-1 sm:space-x-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-goldtech-500/40 bg-goldtech-500/10 hover:bg-goldtech-500/20 text-goldtech-300 text-xs font-mono font-bold transition cursor-pointer shadow-sm" title="Activar/Desactivar lector de voz inclusivo TalkBack (D. Leg. 1412)">
+      <!-- Controles de Accesibilidad, TalkBack y Bilingüe -->
+      <div class="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0 relative">
+        <!-- Botón Panel Integral de Accesibilidad -->
+        <button id="btn-accesibilidad-toggle" onclick="alternarPanelAccesibilidad()" class="flex items-center space-x-1 sm:space-x-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-cobalttech-500/50 bg-cobalttech-500/15 hover:bg-cobalttech-500/25 text-cobalttech-300 text-xs font-mono font-bold transition cursor-pointer shadow-sm" title="Opciones de Accesibilidad Universal (Contraste, Texto, Sonido)">
+          <span class="text-sm">♿</span>
+          <span class="hidden sm:inline" data-i18n="a11y_btn">Accesibilidad</span>
+        </button>
+
+        <button id="btn-talkback-toggle" onclick="conmutarTalkBack()" class="flex items-center space-x-1 sm:space-x-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-goldtech-500/40 bg-goldtech-500/10 hover:bg-goldtech-500/20 text-goldtech-300 text-xs font-mono font-bold transition cursor-pointer shadow-sm" title="Activar/Desactivar lector de voz inclusivo TalkBack">
           <span id="talkback-icon">🔊</span>
           <span class="hidden md:inline" data-i18n="talkback_btn">Voz TalkBack</span>
           <span id="talkback-badge" class="px-1 sm:px-1.5 py-0.2 rounded text-[8px] sm:text-[9px] bg-slate-800 text-slate-300 border border-white/10 font-bold">OFF</span>
@@ -153,6 +223,101 @@
           <button id="btn-lang-en" onclick="cambiarIdioma('en')" class="px-2 sm:px-2.5 py-0.5 sm:py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg text-slate-400 hover:text-white transition cursor-pointer">
             EN
           </button>
+        </div>
+
+        <!-- PANEL DESPLEGABLE DE ACCESIBILIDAD UNIVERSAL -->
+        <div id="panel-accesibilidad" class="hidden fixed sm:absolute top-14 sm:top-12 right-3 sm:right-0 w-[92vw] sm:w-80 bg-obsidian-900/95 border-2 border-cobalttech-500/60 backdrop-blur-xl rounded-3xl p-4 shadow-2xl z-50 font-mono text-xs space-y-3.5 max-h-[82vh] overflow-y-auto custom-scrollbar">
+          <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+            <div class="flex items-center space-x-2">
+              <span class="text-base">♿</span>
+              <div>
+                <h4 class="font-bold text-white text-xs tracking-wide">ACCESIBILIDAD WEB</h4>
+                <p class="text-[9px] text-cobalttech-400">Inclusión Digital &bull; Estándar WCAG</p>
+              </div>
+            </div>
+            <button onclick="alternarPanelAccesibilidad()" class="text-slate-400 hover:text-white text-base font-bold p-1 cursor-pointer">✕</button>
+          </div>
+
+          <!-- 1. Contraste Visual -->
+          <div class="space-y-1.5">
+            <span class="block text-[10px] text-slate-400 uppercase font-bold">1. Contraste y Visibilidad:</span>
+            <div class="grid grid-cols-2 gap-1.5">
+              <button id="a11y-opt-normal" onclick="cambiarContraste('normal')" class="py-2 px-2 rounded-xl bg-cobalttech-500/30 border border-cobalttech-400 text-white font-bold text-[10px] transition cursor-pointer">
+                🌑 Oscuro Normal
+              </button>
+              <button id="a11y-opt-high" onclick="cambiarContraste('high')" class="py-2 px-2 rounded-xl bg-obsidian-950 hover:bg-white/10 border border-white/15 text-slate-300 font-bold text-[10px] transition cursor-pointer">
+                ⚡ Alto Contraste
+              </button>
+              <button id="a11y-opt-light" onclick="cambiarContraste('light')" class="py-2 px-2 rounded-xl bg-obsidian-950 hover:bg-white/10 border border-white/15 text-slate-300 font-bold text-[10px] transition cursor-pointer">
+                ☀️ Modo Claro
+              </button>
+              <button id="a11y-opt-gray" onclick="cambiarContraste('gray')" class="py-2 px-2 rounded-xl bg-obsidian-950 hover:bg-white/10 border border-white/15 text-slate-300 font-bold text-[10px] transition cursor-pointer">
+                🌗 Escala Grises
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Tamaño de Letra -->
+          <div class="space-y-1.5 pt-2 border-t border-white/10">
+            <span class="block text-[10px] text-slate-400 uppercase font-bold">2. Tamaño de Tipografía:</span>
+            <div class="grid grid-cols-3 gap-1.5">
+              <button id="a11y-font-100" onclick="cambiarTamanoTexto('normal')" class="py-1.5 rounded-xl bg-cobalttech-500/30 border border-cobalttech-400 text-white font-bold text-[11px] cursor-pointer">
+                A (100%)
+              </button>
+              <button id="a11y-font-112" onclick="cambiarTamanoTexto('lg')" class="py-1.5 rounded-xl bg-obsidian-950 hover:bg-white/10 border border-white/15 text-slate-300 font-bold text-xs cursor-pointer">
+                A+ (112%)
+              </button>
+              <button id="a11y-font-125" onclick="cambiarTamanoTexto('xl')" class="py-1.5 rounded-xl bg-obsidian-950 hover:bg-white/10 border border-white/15 text-slate-300 font-bold text-sm cursor-pointer">
+                A++ (125%)
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. Sonido y Lectura de Voz -->
+          <div class="space-y-2 pt-2 border-t border-white/10">
+            <span class="block text-[10px] text-slate-400 uppercase font-bold">3. Sonido y Asistencia Auditiva:</span>
+            <div class="grid grid-cols-2 gap-1.5">
+              <button id="a11y-btn-sonido" onclick="alternarSonidoSistema()" class="py-2 px-2 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-bold text-[10px] flex items-center justify-center gap-1 cursor-pointer">
+                <span id="a11y-sonido-icono">🔊</span>
+                <span id="a11y-sonido-texto">Sonido: ACTIVO</span>
+              </button>
+              <button onclick="probarAudioAccesibilidad()" class="py-2 px-2 rounded-xl bg-obsidian-950 hover:bg-white/10 border border-white/15 text-goldtech-300 font-bold text-[10px] flex items-center justify-center gap-1 cursor-pointer">
+                <span>▶️</span>
+                <span>Probar Voz</span>
+              </button>
+            </div>
+            <div class="bg-obsidian-950 p-2 rounded-xl border border-white/10 space-y-1">
+              <div class="flex justify-between text-[10px] text-slate-400">
+                <span>Velocidad de Voz:</span>
+                <span id="a11y-velocidad-valor" class="text-goldtech-300 font-bold">0.9x (Normal)</span>
+              </div>
+              <input type="range" id="a11y-velocidad-slider" min="0.6" max="1.5" step="0.1" value="0.9" oninput="ajustarVelocidadVoz(this.value)" class="w-full accent-goldtech-400 cursor-pointer">
+            </div>
+          </div>
+
+          <!-- 4. Ayudas Cognitivas y Motoras -->
+          <div class="space-y-1.5 pt-2 border-t border-white/10">
+            <span class="block text-[10px] text-slate-400 uppercase font-bold">4. Lectura y Navegación:</span>
+            <label class="flex items-center justify-between p-2 rounded-xl bg-obsidian-950 border border-white/10 cursor-pointer">
+              <span class="text-[10px] text-slate-200">Tipografía Lectura Fácil</span>
+              <input type="checkbox" id="chk-a11y-dyslexic" onchange="alternarClaseA11y('a11y-dyslexic', this.checked)" class="accent-goldtech-400 w-4 h-4 cursor-pointer">
+            </label>
+            <label class="flex items-center justify-between p-2 rounded-xl bg-obsidian-950 border border-white/10 cursor-pointer">
+              <span class="text-[10px] text-slate-200">Resaltar Botones y Enlaces</span>
+              <input type="checkbox" id="chk-a11y-links" onchange="alternarClaseA11y('a11y-highlight-links', this.checked)" class="accent-goldtech-400 w-4 h-4 cursor-pointer">
+            </label>
+            <label class="flex items-center justify-between p-2 rounded-xl bg-obsidian-950 border border-white/10 cursor-pointer">
+              <span class="text-[10px] text-slate-200">Detener Animaciones</span>
+              <input type="checkbox" id="chk-a11y-motion" onchange="alternarClaseA11y('a11y-no-motion', this.checked)" class="accent-goldtech-400 w-4 h-4 cursor-pointer">
+            </label>
+          </div>
+
+          <!-- Botón Restablecer -->
+          <div class="pt-1">
+            <button onclick="restablecerAccesibilidad()" class="w-full py-2 rounded-xl bg-rose-950/70 hover:bg-rose-900 border border-rose-500/40 text-rose-200 font-bold text-[10px] transition cursor-pointer">
+              ↺ Restablecer Valores por Defecto
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -172,7 +337,7 @@
     </button>
     <div class="w-full text-[10px] text-slate-400 pt-1 border-t border-white/5 flex justify-between">
       <span>Toca o pasa el cursor para narrar</span>
-      <span class="text-goldtech-400">D. Leg. N° 1412 Art. 4</span>
+      <span class="text-goldtech-400">Inclusión Digital</span>
     </div>
   </div>
 
@@ -191,7 +356,7 @@
 
       <div class="space-y-2">
         <span class="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-goldtech-500/10 text-goldtech-300 border border-goldtech-500/30 uppercase tracking-widest inline-block">
-          DECRETO LEGISLATIVO Nº 1412 &bull; GOBIERNO DIGITAL
+          GOBIERNO DIGITAL &bull; ARQUITECTURA DE INTEROPERABILIDAD
         </span>
         <h3 class="text-xl sm:text-2xl font-display font-bold text-white tracking-widest uppercase">RASTREADOR JUDICIAL</h3>
         <p id="pre0-estado" class="text-xs text-goldtech-300 font-mono">Iniciando plataforma de trazabilidad procesal...</p>
@@ -209,13 +374,6 @@
         </div>
       </div>
 
-      <div class="pt-2">
-        <button onclick="saltarSplashPre0()" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-slate-300 hover:text-white font-mono transition cursor-pointer flex items-center gap-1.5 mx-auto">
-          <span>Acceder de inmediato</span>
-          <span>&rarr;</span>
-        </button>
-      </div>
-
     </section>
 
     <!-- ==================== PANTALLA 0: BIENVENIDA INSTITUCIONAL Y AUTORÍA ==================== -->
@@ -223,7 +381,7 @@
       
       <div class="text-center space-y-2">
         <span class="px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-goldtech-500/10 text-goldtech-400 border border-goldtech-500/30 uppercase tracking-widest inline-block" data-i18n="p0_tag">
-          DECRETO LEGISLATIVO Nº 1412 &bull; LEY DE GOBIERNO DIGITAL
+          PLATAFORMA DE GOBIERNO DIGITAL &bull; SERVICIOS CIUDADANOS
         </span>
         <h2 class="text-2xl sm:text-4xl font-display font-bold text-white tracking-wide leading-tight">
           <span data-i18n="p0_welcome">Bienvenido a la Plataforma</span><br>
@@ -307,12 +465,6 @@
           <span id="splash-1-pct">5%</span>
         </div>
       </div>
-
-      <div class="pt-2">
-        <button onclick="saltarSplash1()" class="text-xs text-slate-400 hover:text-white underline font-mono transition cursor-pointer" data-i18n="btn_skip">
-          Saltar introducción &rarr;
-        </button>
-      </div>
     </section>
 
     <!-- ==================== PANTALLA 2: VALIDACIÓN PERIMÉTRICA CAPTCHA + "NO SOY UN ROBOT" ==================== -->
@@ -337,7 +489,7 @@
       <div class="bg-obsidian-900 border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
         <div class="text-center space-y-1">
           <h3 class="text-lg font-display font-bold text-white tracking-wider uppercase" data-i18n="cap_title">FILTRO DE SEGURIDAD DIGITAL</h3>
-          <p class="text-xs text-slate-400 font-mono" data-i18n="cap_sub">Autenticación perimétrica conforme al Art. 14 y 30 del D. Leg. Nº 1412</p>
+          <p class="text-xs text-slate-400 font-mono" data-i18n="cap_sub">Control de identidad digital y nivel de seguridad perimétrica</p>
         </div>
 
         <form id="formularioCaptcha" onsubmit="validarCaptcha(event)" class="space-y-4">
@@ -349,8 +501,8 @@
             </label>
             <div class="flex items-center space-x-1.5 text-right">
               <div class="text-[9px] font-mono text-slate-500 leading-tight">
-                <span>D. Leg. 1412</span><br>
-                <span class="text-emerald-400">Seguridad Digital</span>
+                <span>Identidad Digital</span><br>
+                <span class="text-emerald-400">Seguridad Verificada</span>
               </div>
               <button type="button" onclick="narrarTexto('Casilla de verificación de seguridad: No soy un robot')" class="text-goldtech-400 hover:text-white text-xs p-1" title="Escuchar">
                 🔊
@@ -415,12 +567,6 @@
           <span data-i18n="sp2_sync">Interoperabilidad PIDE...</span>
           <span id="splash-2-pct">10%</span>
         </div>
-      </div>
-
-      <div class="pt-2">
-        <button onclick="saltarSplash2()" class="text-xs text-slate-400 hover:text-white underline font-mono transition cursor-pointer" data-i18n="btn_skip">
-          Saltar introducción &rarr;
-        </button>
       </div>
 
     </section>
@@ -584,7 +730,7 @@
           <div>
             <div class="flex items-center space-x-2">
               <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-goldtech-500/20 text-goldtech-300 border border-goldtech-500/40 uppercase">
-                EXPEDIENTE PENAL PRINCIPAL (NCPP &bull; D. LEG. 1412)
+                EXPEDIENTE PENAL PRINCIPAL (NCPP &bull; GOBIERNO DIGITAL)
               </span>
               <span class="text-xs text-slate-400 font-mono">D.J. Puno</span>
             </div>
@@ -599,7 +745,7 @@
           <div class="text-right">
             <span class="px-3 py-1.5 rounded-full text-xs font-mono font-bold bg-emerald-950/80 text-emerald-400 border border-emerald-500/40 inline-flex items-center gap-1.5">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>ESTADO: SENTENCIA ABSOLUTORIA (RES. 18) &bull; PLAZO DE APELACIÓN / ARCHIVO</span>
+              <span>ESTADO: SENTENCIA ABSOLUTORIA (RES. 10) &bull; PLAZO DE APELACIÓN / ARCHIVO</span>
             </span>
           </div>
         </div>
@@ -639,7 +785,7 @@
               ITER PROCESAL DEL NUEVO CÓDIGO PROCESAL PENAL
             </h4>
             <span class="text-xs font-mono text-goldtech-400 font-bold">
-              Fase 4: Sentencia Absolutoria Dictada &bull; Res. 18 N° 088-2020
+              Fase 4: Sentencia Absolutoria Dictada &bull; Res. 10 N° 088-2020
             </span>
           </div>
 
@@ -647,22 +793,22 @@
             <div class="p-2 sm:p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300">
               <span class="block text-[9px] sm:text-[10px] text-emerald-500 font-bold">FASE 1</span>
               <span class="font-bold block py-0.5 text-[11px] sm:text-xs">Inv. Preparatoria</span>
-              <span class="text-[9px] sm:text-[10px] text-emerald-400">✓ Concluida</span>
+              <span class="text-[9px] sm:text-[10px] text-emerald-400">✓ Formalización Fiscal</span>
             </div>
             <div class="p-2 sm:p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300">
               <span class="block text-[9px] sm:text-[10px] text-emerald-500 font-bold">FASE 2</span>
               <span class="font-bold block py-0.5 text-[11px] sm:text-xs">Etapa Intermedia</span>
-              <span class="text-[9px] sm:text-[10px] text-emerald-400">✓ Enjuiciamiento (Res. 8)</span>
+              <span class="text-[9px] sm:text-[10px] text-emerald-400">✓ Actuado (Res. 1-4)</span>
             </div>
             <div class="p-2 sm:p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300">
               <span class="block text-[9px] sm:text-[10px] text-emerald-500 font-bold">FASE 3</span>
               <span class="font-bold block py-0.5 text-[11px] sm:text-xs">Juicio Oral</span>
-              <span class="text-[9px] sm:text-[10px] text-emerald-400">✓ Actuado (Res. 9-17)</span>
+              <span class="text-[9px] sm:text-[10px] text-emerald-400">✓ Actuado (Res. 5-9)</span>
             </div>
             <div class="p-2 sm:p-2.5 rounded-xl bg-goldtech-500/20 border-2 border-goldtech-500 text-goldtech-300 shadow-glow-gold">
               <span class="block text-[9px] sm:text-[10px] text-goldtech-400 font-bold">FASE 4</span>
               <span class="font-bold block py-0.5 text-[11px] sm:text-xs">Sentencia</span>
-              <span class="text-[9px] sm:text-[10px] text-goldtech-300">● Absolutoria Res. 18</span>
+              <span class="text-[9px] sm:text-[10px] text-goldtech-300">● Absolutoria Res. 10</span>
             </div>
             <div class="col-span-2 sm:col-span-1 p-2 sm:p-2.5 rounded-xl bg-obsidian-950 border border-white/10 text-slate-400">
               <span class="block text-[9px] sm:text-[10px] text-slate-500 font-bold">FASE 5</span>
@@ -679,10 +825,10 @@
               <h4 class="text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-wider" data-i18n="parties_title">
                 SUJETOS PROCESALES Y DESTINATARIOS NOTIFICABLES
               </h4>
-              <p class="text-[11px] sm:text-xs text-slate-400" data-i18n="parties_sub">Domicilio Digital (Art. 22 D. Leg. 1412) &bull; Casillas Electrónicas SINOE (Datos protegidos Ley N° 29733)</p>
+              <p class="text-[11px] sm:text-xs text-slate-400" data-i18n="parties_sub">Domicilio Digital &bull; Casilla Única Electrónica SINOE (Datos Personales Protegidos)</p>
             </div>
             <button onclick="abrirModalMesaPartes()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 text-emerald-300 border border-emerald-500/40 text-xs font-mono font-bold transition flex items-center justify-center gap-1.5 cursor-pointer">
-              <span>+</span> <span data-i18n="btn_submit_filing">Subir Escrito a Mesa de Partes (Art. 21)</span>
+              <span>+</span> <span data-i18n="btn_submit_filing">Subir Escrito a Mesa de Partes Digital</span>
             </button>
           </div>
 
@@ -744,7 +890,7 @@
         
         <div class="bg-obsidian-950 px-6 pt-4 border-b border-white/10 flex gap-4 overflow-x-auto custom-scrollbar">
           <button id="subtab-btn-resoluciones" onclick="cambiarSubpestana(1)" class="pb-3 text-xs sm:text-sm font-mono font-bold border-b-2 border-goldtech-500 text-goldtech-300 flex items-center gap-2 shrink-0 cursor-pointer">
-            <span>📜</span> <span data-i18n="tab_binder_resolutions">Resoluciones Judiciales (18)</span>
+            <span>📜</span> <span data-i18n="tab_binder_resolutions">Actuados y Resoluciones (10)</span>
           </button>
           <button id="subtab-btn-escritos" onclick="cambiarSubpestana(2)" class="pb-3 text-xs sm:text-sm font-mono font-bold border-b-2 border-transparent text-slate-400 hover:text-white flex items-center gap-2 shrink-0 cursor-pointer">
             <span>📥</span> <span data-i18n="tab_binder_filings">Escritos Presentados</span>
@@ -754,354 +900,152 @@
           </button>
         </div>
 
-        <!-- SUBTAB 1: LAS 18 RESOLUCIONES JUDICIALES -->
+        <!-- SUBTAB 1: LOS 10 DOCUMENTOS CORRELATIVOS (1 FISCAL + RESOLUCIONES 1 A 10 CON 8 Y 9 UNIFICADAS) -->
         <div id="subtab-contenido-resoluciones" class="p-6 space-y-4">
-          <div class="p-3 bg-obsidian-950 rounded-xl border border-white/10 flex justify-between items-center text-xs font-mono">
-            <span class="text-goldtech-400 font-bold">Cuaderno Principal: 18 Resoluciones Judiciales Foliadas (Firma Digital Art. 19 D. Leg. 1412)</span>
+          <div class="p-3 bg-obsidian-950 rounded-xl border border-white/10 flex flex-wrap justify-between items-center gap-2 text-xs font-mono">
+            <span class="text-goldtech-400 font-bold">Cuaderno Principal Correlativo: 10 Actuados Foliados (1 Disposición Fiscal + Resoluciones 01 a 10)</span>
             <span class="text-slate-400">Exp. 02766-2018-82-2101-JP-PE-02</span>
           </div>
 
-          <!-- BLOQUE 1: ETAPA PREPARATORIA E INTERMEDIA (RESOLUCIONES 1 A 8) -->
-          <div class="space-y-3">
-            <h5 class="text-xs font-mono font-bold text-amber-300 uppercase tracking-wider flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-              <span>ETAPA PREPARATORIA E INTERMEDIA (RESOLUCIONES 1 A 8)</span>
-            </h5>
-
-            <!-- RES 01 -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 01</span>
-                  <span class="font-bold text-xs text-white">RECEPCIÓN DE FORMALIZACIÓN DE INVESTIGACIÓN PREPARATORIA</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">05/06/2018</span>
-                  <button onclick="abrirModalResolucion(1)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
+          <!-- 01. FORMALIZACIÓN DE INVESTIGACIÓN PREPARATORIA (MINISTERIO PÚBLICO) -->
+          <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border-2 border-amber-500/50 hover:border-amber-400 transition">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-2">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 shrink-0">01 &bull; MINISTERIO PÚBLICO</span>
+                <span class="font-bold text-xs text-white uppercase">FORMALIZACIÓN DE LA INVESTIGACIÓN PREPARATORIA (DISPOSICIÓN FISCAL)</span>
               </div>
-              <p class="text-xs text-slate-400 font-serif">
-                Tiene por comunicada la Disposición Fiscal de Formalización de la Investigación Preparatoria contra Edgar Raúl R**** C***** por Homicidio Culposo (Art. 111 CP). Fija plazo y dispone comparecencia simple.
-              </p>
-            </div>
-
-            <!-- RES 02 -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 02</span>
-                  <span class="font-bold text-xs text-white">ADMISIÓN DE CONSTITUCIÓN EN ACTOR CIVIL</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">18/07/2018</span>
-                  <button onclick="abrirModalResolucion(2)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
-              </div>
-              <p class="text-xs text-slate-400 font-serif">
-                Admite a trámite la solicitud de constitución en actor civil presentada por Elena F***** T*****, cónyuge supérstite del agraviado occiso Víctor Alfonso Q***** M*****.
-              </p>
-            </div>
-
-            <!-- RES 03 -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 03</span>
-                  <span class="font-bold text-xs text-white">INCORPORACIÓN DE PERITAJES Y DILIGENCIAS TÉCNICAS</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">14/09/2018</span>
-                  <button onclick="abrirModalResolucion(3)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
-              </div>
-              <p class="text-xs text-slate-400 font-serif">
-                Tiene por incorporados los informes periciales de dosaje etílico, peritaje técnico de ingeniería vial emitido por la UPIAT-PNP Puno y protocolo de necropsia de ley.
-              </p>
-            </div>
-
-            <!-- RES 04 -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 04</span>
-                  <span class="font-bold text-xs text-white">CONCLUSIÓN DE INVESTIGACIÓN PREPARATORIA</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">10/11/2018</span>
-                  <button onclick="abrirModalResolucion(4)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
-              </div>
-              <p class="text-xs text-slate-400 font-serif">
-                Declara concluida la etapa de investigación preparatoria tras vencerse el plazo reglamentario y requiere al Ministerio Público formular requerimiento acusatorio o sobreseimiento en 15 días.
-              </p>
-            </div>
-
-            <!-- RES 05 -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 05</span>
-                  <span class="font-bold text-xs text-white">TRASLADO DE ACUSACIÓN FISCAL (CONTROL INTERMEDIO)</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">28/01/2019</span>
-                  <button onclick="abrirModalResolucion(5)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
-              </div>
-              <p class="text-xs text-slate-400 font-serif">
-                Dispone correr traslado del requerimiento acusatorio presentado por el Fiscal Dr. Roberto Valdivia Cari a las demás partes procesales por el plazo perentorio de 10 días conforme al Art. 350 del NCPP.
-              </p>
-            </div>
-
-            <!-- RES 06: VALIDEZ FORMAL DE LA ACUSACIÓN FISCAL -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border-2 border-emerald-600/50 space-y-2 hover:border-emerald-500 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-600 shrink-0">RESOLUCIÓN N° 06</span>
-                  <span class="font-bold text-xs text-white uppercase">SANEAMIENTO FORMAL — VALIDEZ DE LA ACUSACIÓN FISCAL</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">18/03/2019</span>
-                  <button onclick="abrirModalResolucion(6)" class="px-2.5 py-1 rounded bg-emerald-900/60 hover:bg-emerald-800 text-emerald-300 text-xs font-mono font-bold border border-emerald-600 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
-              </div>
-              <p class="text-xs text-slate-300 font-serif bg-obsidian-900/50 p-2.5 rounded-xl border border-white/5">
-                <strong>Pronunciamiento Judicial:</strong> Se declara la <strong>validez formal de la acusación fiscal</strong> formulada por la 1° Fiscalía Provincial Penal Corporativa de Puno contra Edgar Raúl R**** C***** al cumplir estrictamente con los presupuestos de imputación fáctica y jurídica previstos en el Art. 349 del Código Procesal Penal.
-              </p>
-            </div>
-
-            <!-- RES 07: DECLARAN INFUNDADO EL SOBRESEIMIENTO -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border-2 border-amber-600/50 space-y-2 hover:border-amber-500 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-amber-950 text-amber-300 border border-amber-600 shrink-0">RESOLUCIÓN N° 07</span>
-                  <span class="font-bold text-xs text-white uppercase">INFUNDADA SOLICITUD DE SOBRESEIMIENTO DE LA DEFENSA</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">08/04/2019</span>
-                  <button onclick="abrirModalResolucion(7)" class="px-2.5 py-1 rounded bg-amber-950 hover:bg-amber-900 text-amber-300 text-xs font-mono font-bold border border-amber-600 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
-              </div>
-              <p class="text-xs text-slate-300 font-serif bg-obsidian-900/50 p-2.5 rounded-xl border border-white/5">
-                <strong>Pronunciamiento Judicial:</strong> Se declara <strong>INFUNDADA la solicitud de sobreseimiento</strong> peticionada por la defensa técnica del acusado Edgar Raúl R**** C*****; al advertirse la concurrencia de suficientes elementos de convicción que vinculan al imputado con la infracción del deber objetivo de cuidado en el accidente de tránsito que cobró la vida del agraviado.
-              </p>
-            </div>
-
-            <!-- RES 08: AUTO DE ENJUICIAMIENTO -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border-2 border-goldtech-500 space-y-2 shadow-glow-gold">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-2">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-goldtech-500/20 text-goldtech-300 border border-goldtech-500/40 shrink-0">RESOLUCIÓN N° 08</span>
-                  <span class="font-bold text-xs sm:text-sm text-white uppercase">AUTO DE ENJUICIAMIENTO FORMAL</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">20/05/2019</span>
-                  <button onclick="abrirModalResolucion(8)" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-goldtech-600 to-amber-400 text-obsidian-950 font-bold font-mono text-xs hover:scale-105 transition cursor-pointer flex items-center gap-1">
-                    <span>📄</span> <span>Ver Auto de Enjuiciamiento</span>
-                  </button>
-                </div>
-              </div>
-              <div class="text-xs text-slate-200 font-serif leading-relaxed bg-obsidian-900/70 p-3 sm:p-3.5 rounded-xl border border-goldtech-500/30 space-y-1.5">
-                <p>
-                  <strong>Auto de Enjuiciamiento N° 034-2019-JIP:</strong> Se dicta <strong>AUTO DE ENJUICIAMIENTO en contra de EDGAR RAÚL R**** C*****</strong> (DNI N° 4198****, de 35 años de edad, natural de Puno, con domicilio procesal en Jr. Deustua N° 340, Puno y Casilla SINOE 61922-PUNO, patrocinado por el Abg. Néstor Pari Alanoca) como presunto autor del delito de Homicidio Culposo (Art. 111 del Código Penal) en agravio de Víctor Alfonso Q***** M*****.
-                </p>
-                <p class="font-mono text-[10px] sm:text-[11px] text-goldtech-300 font-semibold pt-1 border-t border-white/10">
-                  ⚡ Pretensión acusatoria enjuiciada: Se solicita <span class="text-white underline">08 MESES DE PENA PRIVATIVA DE LIBERTAD</span> y el pago de <span class="text-white underline">S/ 25,000.00 (VEINTICINCO MIL SOLES)</span> por concepto de Reparación Civil a favor de los deudos. Remítase al Juzgado Penal Unipersonal de Puno.
-                </p>
+              <div class="flex flex-wrap items-center gap-2 self-end sm:self-auto shrink-0">
+                <span class="text-[11px] font-mono text-slate-400">28/05/2018</span>
+                <button onclick="abrirModalResolucion(0)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
               </div>
             </div>
           </div>
 
-          <!-- BLOQUE 2: ETAPA DE JUZGAMIENTO Y DEBATE PROBATORIO (RESOLUCIONES 9 A 17) -->
-          <div class="space-y-3 pt-4 border-t border-white/10">
-            <h5 class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-              <span>ETAPA DE JUZGAMIENTO Y DEBATE PROBATORIO (RESOLUCIONES 9 A 17)</span>
-            </h5>
-
-            <!-- RES 09 -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 09</span>
-                  <span class="font-bold text-xs text-white">CONVOCATORIA A JUICIO ORAL</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">28/05/2019</span>
-                  <button onclick="abrirModalResolucion(9)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
+          <!-- 02. RESOLUCIÓN N° 01 -->
+          <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 hover:border-goldtech-500/40 transition">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-2">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">02 &bull; RESOLUCIÓN N° 01</span>
+                <span class="font-bold text-xs text-white">RECEPCIÓN DE FORMALIZACIÓN Y CONTROL DE PLAZOS</span>
               </div>
-              <p class="text-xs text-slate-400 font-serif">
-                Avoca conocimiento la Jueza Dra. Gladis Huanca Quispe y dispone formalmente la convocatoria a juicio oral contra Edgar Raúl R**** C*****, fijando fecha de instalación ante el Juzgado Penal Unipersonal de Puno.
-              </p>
-            </div>
-
-            <!-- RES 10 -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 10</span>
-                  <span class="font-bold text-xs text-white">DAR POR FORMADO EL EXPEDIENTE JUDICIAL FOLIADO</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">12/08/2019</span>
-                  <button onclick="abrirModalResolucion(10)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
+              <div class="flex flex-wrap items-center gap-2 self-end sm:self-auto shrink-0">
+                <span class="text-[11px] font-mono text-slate-400">05/06/2018</span>
+                <button onclick="abrirModalResolucion(1)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
               </div>
-              <p class="text-xs text-slate-400 font-serif">
-                Dispone dar por formado y foliado el expediente judicial principal de juzgamiento, habilitando el registro digital en el SIJ de la CSJ de Puno.
-              </p>
-            </div>
-
-            <!-- RES 11 -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-rose-500/40 space-y-2 hover:border-rose-400 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-rose-950 text-rose-300 border border-rose-600 shrink-0">RESOLUCIÓN N° 11</span>
-                  <span class="font-bold text-xs text-white uppercase">DECLARACIÓN DE REO CONTUMAZ CON ORDEN DE CAPTURA POLICIAL</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">24/10/2019</span>
-                  <button onclick="abrirModalResolucion(11)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-rose-300 hover:text-rose-200 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
-              </div>
-              <p class="text-xs text-slate-400 font-serif">
-                Ante la inasistencia injustificada a la audiencia de instalación, declara al imputado Edgar Raúl R**** C***** reo contumaz, suspende el trámite del juicio a su respecto y libra oficios de inmediata ubicación y captura policial (PNP).
-              </p>
-            </div>
-
-            <!-- RES 12 -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 12</span>
-                  <span class="font-bold text-xs text-white uppercase">SEÑALAMIENTO DE FECHA PARA INSTALACIÓN TRAS LEVANTAMIENTO DE CONTUMACIA</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">15/01/2020</span>
-                  <button onclick="abrirModalResolucion(12)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
-              </div>
-              <p class="text-xs text-slate-400 font-serif">
-                Apersonado espontáneamente el acusado Edgar Raúl R**** C*****, se levanta la condición de contumacia, se anulan los oficios de captura y se señala nueva fecha improrrogable para la instalación de juicio oral.
-              </p>
-            </div>
-
-            <!-- RES 13 -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border-2 border-amber-600/40 space-y-2 hover:border-amber-500 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-amber-950 text-amber-300 border border-amber-600 shrink-0">RESOLUCIÓN N° 13</span>
-                  <span class="font-bold text-xs text-white uppercase">CONDUCCIÓN COMPULSIVA DE TESTIGOS, NOTIFICACIÓN A PERITOS Y 24 HRS A FISCALÍA</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">18/06/2020</span>
-                  <button onclick="abrirModalResolucion(13)" class="px-2.5 py-1 rounded bg-amber-950 hover:bg-amber-900 text-amber-300 text-xs font-mono font-bold border border-amber-600 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
-              </div>
-              <p class="text-xs text-slate-300 font-serif bg-obsidian-900/50 p-2.5 rounded-xl border border-white/5">
-                <strong>Pronunciamiento Judicial:</strong> Se ordena la conducción compulsiva con auxilio de la Policía Nacional de los testigos <strong>Marcos Efraín T**** H****</strong> y <strong>Lucía Beatriz M**** C*****</strong>; se dispone la notificación directa a los peritos técnicos de tránsito; y se concede el término perentorio de <strong>24 horas a la Fiscalía Provincial</strong> para que señale sus domicilios reales y actualizados.
-              </p>
-            </div>
-
-            <!-- RES 14 -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 14</span>
-                  <span class="font-bold text-xs text-white uppercase">TÉNGASE PRESENTE ESCRITO FISCAL CONFORME A LA RES. 13</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">25/08/2020</span>
-                  <button onclick="abrirModalResolucion(14)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
-              </div>
-              <p class="text-xs text-slate-400 font-serif">
-                Téngase presente el escrito presentado por el Representante del Ministerio Público dando cumplimiento al requerimiento formulado en la Resolución N° 13 sobre la individualización de domicilios de los órganos de prueba.
-              </p>
-            </div>
-
-            <!-- RES 15 -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 15</span>
-                  <span class="font-bold text-xs text-white uppercase">PRESCINDIR DEL EXAMEN PRESENCIAL DE PERITOS</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">14/10/2020</span>
-                  <button onclick="abrirModalResolucion(15)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
-              </div>
-              <p class="text-xs text-slate-400 font-serif">
-                Con anuencia y conformidad expresa de los sujetos procesales, se resuelve prescindir del examen oral y presencial de los peritos en juicio, disponiéndose su incorporación mediante lectura conforme al Art. 383° del NCPP.
-              </p>
-            </div>
-
-            <!-- RES 16 -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 16</span>
-                  <span class="font-bold text-xs text-white uppercase">NO HA LUGAR A LA REPROGRAMACIÓN DE AUDIENCIA</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">03/11/2020</span>
-                  <button onclick="abrirModalResolucion(16)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
-              </div>
-              <p class="text-xs text-slate-400 font-serif">
-                Declara no ha lugar la solicitud de reprogramación solicitada por la defensa técnica por no acreditar causal fortuita o de fuerza mayor objetiva, en salvaguarda del principio de celeridad y unidad de audiencia.
-              </p>
-            </div>
-
-            <!-- RES 17 -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 space-y-2 hover:border-goldtech-500/40 transition">
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-1.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">RESOLUCIÓN N° 17</span>
-                  <span class="font-bold text-xs text-white uppercase">ORALIZACIÓN DE PIEZAS: CERT. MÉDICO LEGAL, INF. PERICIAL Y CERT. DE DEFUNCIÓN</span>
-                </div>
-                <div class="flex items-center space-x-2.5 self-end sm:self-auto shrink-0">
-                  <span class="text-[11px] font-mono text-slate-400">20/11/2020</span>
-                  <button onclick="abrirModalResolucion(17)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
-                </div>
-              </div>
-              <p class="text-xs text-slate-400 font-serif">
-                Dispone que se oralice en debate público: 1 Certificado Médico Legal, el Informe Técnico Pericial de Tránsito UPIAT-PNP y el Certificado de Defunción de Víctor Alfonso Q***** M*****; cerrándose el periodo probatorio para alegatos de clausura.
-              </p>
             </div>
           </div>
 
-          <!-- BLOQUE 3: SENTENCIA ABSOLUTORIA Y MANDATO DE ARCHIVO DEFINITIVO (RESOLUCIÓN 18) -->
-          <div class="space-y-3 pt-4 border-t border-white/10">
-            <h5 class="text-xs font-mono font-bold text-goldtech-400 uppercase tracking-wider flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-goldtech-400 animate-pulse"></span>
-              <span>SENTENCIA ABSOLUTORIA Y MANDATO DE ARCHIVO DEFINITIVO (RESOLUCIÓN 18)</span>
-            </h5>
-
-            <!-- RES 18: SENTENCIA ABSOLUTORIA N° 088-2020-JPU -->
-            <div class="p-4 rounded-2xl bg-obsidian-950 border-2 border-goldtech-500 hover:border-goldtech-400 transition space-y-2 shadow-glow-gold">
-              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded font-mono text-xs font-bold bg-goldtech-500/20 text-goldtech-300 border border-goldtech-500/40">RESOLUCIÓN N° 18</span>
-                  <span class="font-bold text-xs sm:text-sm text-white">SENTENCIA ABSOLUTORIA N° 088-2020-JPU &bull; ARCHIVO DEFINITIVO</span>
-                </div>
-                <div class="flex items-center space-x-3 self-end sm:self-auto shrink-0">
-                  <span class="text-xs font-mono text-slate-400">14/12/2020</span>
-                  <button onclick="abrirModalSentencia()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-goldtech-600 via-goldtech-500 to-amber-400 text-obsidian-950 font-bold font-mono text-xs shadow hover:scale-105 transition cursor-pointer flex items-center gap-1.5">
-                    <span>📜</span>
-                    <span>Ver Sentencia Absolutoria Foliada</span>
-                  </button>
-                </div>
+          <!-- 03. RESOLUCIÓN N° 02 -->
+          <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 hover:border-goldtech-500/40 transition">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-2">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">03 &bull; RESOLUCIÓN N° 02</span>
+                <span class="font-bold text-xs text-white">ADMISIÓN DE CONSTITUCIÓN EN ACTOR CIVIL</span>
               </div>
-              <div class="text-xs text-slate-200 font-serif leading-relaxed bg-obsidian-900/70 p-3.5 rounded-xl border border-goldtech-500/30 space-y-1.5">
-                <p>
-                  <strong>Sumilla Jurisdiccional:</strong> La Dra. Gladis Huanca Quispe, Jueza Titular del Juzgado Penal Unipersonal de Puno, falla declarando la <strong>ABSOLUCIÓN de EDGAR RAÚL R**** C*****</strong> de la acusación fiscal como autor del delito de Homicidio Culposo (Art. 111° del Código Penal) en agravio de Víctor Alfonso Q***** M*****.
-                </p>
-                <p class="font-mono text-[10px] sm:text-[11px] text-emerald-300 font-semibold pt-1 border-t border-white/10">
-                  ✓ Mandato de Juzgamiento: <strong>ORDENA EL ARCHIVO DEFINITIVO</strong> de la causa una vez consentida, dispone la inmediata <strong>ANULACIÓN DE ANTECEDENTES</strong> policiales y judiciales, y el levantamiento definitivo de cualquier medida coercitiva dictada en su contra.
-                </p>
+              <div class="flex flex-wrap items-center gap-2 self-end sm:self-auto shrink-0">
+                <span class="text-[11px] font-mono text-slate-400">18/07/2018</span>
+                <button onclick="abrirModalResolucion(2)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 04. RESOLUCIÓN N° 03 -->
+          <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 hover:border-goldtech-500/40 transition">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-2">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">04 &bull; RESOLUCIÓN N° 03</span>
+                <span class="font-bold text-xs text-white">INCORPORACIÓN DE PERITAJES Y CONCLUSIÓN DE PREPARATORIA</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2 self-end sm:self-auto shrink-0">
+                <span class="text-[11px] font-mono text-slate-400">10/11/2018</span>
+                <button onclick="abrirModalResolucion(3)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 05. RESOLUCIÓN N° 04 -->
+          <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border-2 border-emerald-600/50 hover:border-emerald-500 transition">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-2">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-600 shrink-0">05 &bull; RESOLUCIÓN N° 04</span>
+                <span class="font-bold text-xs text-white uppercase">SANEAMIENTO FORMAL Y AUTO DE ENJUICIAMIENTO</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2 self-end sm:self-auto shrink-0">
+                <span class="text-[11px] font-mono text-slate-400">20/05/2019</span>
+                <button onclick="abrirModalResolucion(4)" class="px-2.5 py-1 rounded bg-emerald-900/60 hover:bg-emerald-800 text-emerald-300 text-xs font-mono font-bold border border-emerald-600 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 06. RESOLUCIÓN N° 05 -->
+          <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-white/10 hover:border-goldtech-500/40 transition">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-2">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-white/10 text-slate-300 shrink-0">06 &bull; RESOLUCIÓN N° 05</span>
+                <span class="font-bold text-xs text-white">AVOCAMIENTO Y CONVOCATORIA A JUICIO ORAL</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2 self-end sm:self-auto shrink-0">
+                <span class="text-[11px] font-mono text-slate-400">28/05/2019</span>
+                <button onclick="abrirModalResolucion(5)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 07. RESOLUCIÓN N° 06 -->
+          <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border border-rose-500/40 hover:border-rose-400 transition">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-2">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-rose-950 text-rose-300 border border-rose-600 shrink-0">07 &bull; RESOLUCIÓN N° 06</span>
+                <span class="font-bold text-xs text-white uppercase">DECLARACIÓN DE REO CONTUMAZ Y LEVANTAMIENTO DE CONTUMACIA</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2 self-end sm:self-auto shrink-0">
+                <span class="text-[11px] font-mono text-slate-400">15/01/2020</span>
+                <button onclick="abrirModalResolucion(6)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-rose-300 hover:text-rose-200 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 08. RESOLUCIÓN N° 07 -->
+          <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border-2 border-amber-600/40 hover:border-amber-500 transition">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-2">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-amber-950 text-amber-300 border border-amber-600 shrink-0">08 &bull; RESOLUCIÓN N° 07</span>
+                <span class="font-bold text-xs text-white uppercase">CONDUCCIÓN COMPULSIVA DE TESTIGOS, NOTIFICACIÓN A PERITOS Y 24 HRS A FISCALÍA</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2 self-end sm:self-auto shrink-0">
+                <span class="text-[11px] font-mono text-slate-400">18/06/2020</span>
+                <button onclick="abrirModalResolucion(7)" class="px-2.5 py-1 rounded bg-amber-950 hover:bg-amber-900 text-amber-300 text-xs font-mono font-bold border border-amber-600 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 09. RESOLUCIÓN N° 08 Y RESOLUCIÓN N° 09 (UNIFICADAS EN UN SOLO APARTADO) -->
+          <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950 border-2 border-cobalttech-500/50 hover:border-cobalttech-400 transition">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center items-start gap-2">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-cobalttech-500/20 text-cobalttech-300 border border-cobalttech-500/40 shrink-0">09 &bull; RESOLUCIONES N° 08 Y N° 09</span>
+                <span class="font-bold text-xs text-white uppercase">ACTUACIÓN PROBATORIA, PRESCINDENCIA DE PERITOS Y ORALIZACIÓN DE PIEZAS</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2 self-end sm:self-auto shrink-0">
+                <span class="text-[11px] font-mono text-slate-400">20/11/2020</span>
+                <button onclick="abrirModalResolucion(89)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-xs text-goldtech-300 hover:text-goldtech-400 font-mono font-bold border border-white/10 cursor-pointer" data-i18n="btn_visualize">Visualizar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 10. RESOLUCIÓN N° 10 (SENTENCIA ABSOLUTORIA N° 088-2020-JPU Y ARCHIVO DEFINITIVO) -->
+          <div class="p-4 rounded-2xl bg-obsidian-950 border-2 border-goldtech-500 hover:border-goldtech-400 transition shadow-glow-gold">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="px-2 py-0.5 rounded font-mono text-xs font-bold bg-goldtech-500/20 text-goldtech-300 border border-goldtech-500/40">10 &bull; RESOLUCIÓN N° 10</span>
+                <span class="font-bold text-xs sm:text-sm text-white">SENTENCIA ABSOLUTORIA N° 088-2020-JPU &bull; ARCHIVO DEFINITIVO</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2 self-end sm:self-auto shrink-0">
+                <span class="text-xs font-mono text-slate-400">14/12/2020</span>
+                <button onclick="abrirModalSentencia()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-goldtech-600 via-goldtech-500 to-amber-400 text-obsidian-950 font-bold font-mono text-xs shadow hover:scale-105 transition cursor-pointer flex items-center gap-1.5">
+                  <span>📜</span>
+                  <span>Ver Sentencia Foliada</span>
+                </button>
               </div>
             </div>
           </div>
@@ -1110,18 +1054,23 @@
 
         <!-- SUBTAB 2: ESCRITOS PRESENTADOS -->
         <div id="subtab-contenido-escritos" class="hidden p-6 space-y-3">
-          <div class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 text-xs font-mono space-y-1">
-            <div class="flex justify-between items-center text-goldtech-300 font-bold">
-              <span>REQUERIMIENTO DE ACUSACIÓN PENAL (DOC. FISCAL)</span>
-              <span class="text-slate-400">23/05/2019 &bull; Cargo Nº 11204-2019</span>
+          <div class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 text-xs font-mono space-y-2">
+            <div class="flex flex-wrap justify-between items-center gap-2 text-goldtech-300 font-bold">
+              <span>FORMALIZACIÓN DE INVESTIGACIÓN PREPARATORIA (DOC. FISCAL)</span>
+              <div class="flex items-center gap-2">
+                <span class="text-slate-400">28/05/2018 &bull; Cargo Nº 11204-2018</span>
+                <button onclick="abrirModalResolucion(0)" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/15 text-goldtech-300 border border-white/10 font-bold text-[11px] cursor-pointer">
+                  Visualizar
+                </button>
+              </div>
             </div>
-            <p class="text-slate-300 font-sans">Presentado por: 1° Fiscalía Provincial Penal Corporativa de Puno (42 fojas).</p>
+            <p class="text-slate-300 font-sans">Presentado por: 1° Fiscalía Provincial Penal Corporativa de Puno.</p>
           </div>
 
           <div class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 text-xs font-mono space-y-1">
             <div class="flex justify-between items-center text-goldtech-300 font-bold">
               <span>CONSTITUCIÓN EN ACTOR CIVIL Y PETICIÓN INDEMNIZATORIA</span>
-              <span class="text-slate-400">14/06/2019 &bull; Cargo Nº 13982-2019</span>
+              <span class="text-slate-400">14/06/2018 &bull; Cargo Nº 13982-2018</span>
             </div>
             <p class="text-slate-300 font-sans">Presentado por: Elena Flores Ticona con patrocinio de la Dra. Maritza Choque Cruz.</p>
           </div>
@@ -1131,22 +1080,22 @@
 
         <!-- SUBTAB 3: CÉDULAS DE NOTIFICACIÓN SINOE -->
         <div id="subtab-contenido-notificaciones" class="hidden p-6 space-y-3">
-          <div onclick="abrirModalCedula('Edgar Raúl Ramos Chambi', '61922-PUNO', 'Sentencia Absolutoria N° 088-2020-JPU (Absolución y Archivo Definitivo)', '16/12/2020')" class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 hover:border-goldtech-500/40 text-xs font-mono space-y-2 cursor-pointer transition">
+          <div onclick="abrirModalCedula('Edgar Raúl Ramos Chambi', '61922-PUNO', 'Sentencia Absolutoria N° 088-2020-JPU (Res. 10 - Absolución y Archivo Definitivo)', '16/12/2020')" class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 hover:border-goldtech-500/40 text-xs font-mono space-y-2 cursor-pointer transition">
             <div class="flex justify-between items-center">
               <span class="font-bold text-white">CÉDULA ELECTRÓNICA Nº 2020-00892-JR-PE</span>
               <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40">DEPOSITADA EN CASILLA</span>
             </div>
             <p class="text-slate-300 font-sans"><span class="text-slate-500">Destinatario:</span> Edgar Raúl Ramos Chambi (Casilla SINOE 61922-PUNO)</p>
-            <p class="text-slate-400 text-[11px]">Acto Notificado: Sentencia Absolutoria N° 088-2020-JPU &bull; Notificación de absolución y archivo definitivo</p>
+            <p class="text-slate-400 text-[11px]">Acto Notificado: Sentencia Absolutoria N° 088-2020-JPU (Res. 10) &bull; Notificación de absolución y archivo definitivo</p>
           </div>
 
-          <div onclick="abrirModalCedula('Elena Flores Ticona (Actor Civil)', '73041-PUNO', 'Sentencia Absolutoria N° 088-2020-JPU (Fallo Notificado a Sujetos Procesales)', '16/12/2020')" class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 hover:border-goldtech-500/40 text-xs font-mono space-y-2 cursor-pointer transition">
+          <div onclick="abrirModalCedula('Elena Flores Ticona (Actor Civil)', '73041-PUNO', 'Sentencia Absolutoria N° 088-2020-JPU (Res. 10 - Fallo Notificado a Sujetos Procesales)', '16/12/2020')" class="p-4 rounded-2xl bg-obsidian-950 border border-white/10 hover:border-goldtech-500/40 text-xs font-mono space-y-2 cursor-pointer transition">
             <div class="flex justify-between items-center">
               <span class="font-bold text-white">CÉDULA ELECTRÓNICA Nº 2020-00893-JR-PE</span>
               <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40">DEPOSITADA EN CASILLA</span>
             </div>
             <p class="text-slate-300 font-sans"><span class="text-slate-500">Destinatario:</span> Elena Flores Ticona (Casilla SINOE 73041-PUNO)</p>
-            <p class="text-slate-400 text-[11px]">Acto Notificado: Sentencia Absolutoria N° 088-2020-JPU &bull; Plazo de 5 días hábiles para recurso de apelación</p>
+            <p class="text-slate-400 text-[11px]">Acto Notificado: Sentencia Absolutoria N° 088-2020-JPU (Res. 10) &bull; Plazo de 5 días hábiles para recurso de apelación</p>
           </div>
         </div>
 
@@ -1166,7 +1115,7 @@
       </div>
       <div class="text-left font-mono leading-tight">
         <span class="block text-xs font-bold text-goldtech-300 group-hover:text-goldtech-200">Lexi Asistente IA</span>
-        <span class="block text-[9px] text-slate-400">Orientación D. Leg. 1412</span>
+        <span class="block text-[9px] text-slate-400">Orientación Digital</span>
       </div>
     </button>
 
@@ -1205,24 +1154,24 @@
           <span class="text-base shrink-0 mt-0.5">🤖</span>
           <div class="bg-obsidian-950 border border-goldtech-500/30 rounded-2xl p-3 text-slate-200 space-y-1.5 leading-relaxed font-sans text-xs">
             <p class="font-bold text-goldtech-300 font-mono text-[11px]">¡Hola! Soy Lexi, tu asistente judicial digital.</p>
-            <p>Estoy aquí para orientarte sobre el <strong>Expediente Penal N° 02766-2018-82-2101-JP-PE-02</strong> de la Corte de Puno, las <strong>18 resoluciones</strong>, la <strong>Sentencia Absolutoria (Res. 18)</strong>, los servicios <strong>PIDE (RENIEC, SINOE, MIGRACIONES, SIDPOL)</strong> y el <strong>Decreto Legislativo Nº 1412</strong>.</p>
+            <p>Estoy aquí para orientarte sobre el <strong>Expediente Penal N° 02766-2018-82-2101-JP-PE-02</strong> de la Corte de Puno, los <strong>10 actuados correlativos</strong> (Formalización Fiscal + Resoluciones 01 a 10), la <strong>Sentencia Absolutoria (Res. 10)</strong> y los servicios <strong>PIDE</strong>.</p>
             <p class="text-[10px] font-mono text-slate-400 pt-1 border-t border-white/5">Pregúntame lo que necesites o selecciona una opción rápida abajo:</p>
           </div>
         </div>
 
         <!-- Preguntas Frecuentes / Atajos Rápidos -->
         <div class="flex flex-wrap gap-1.5 pt-1">
-          <button onclick="hacerPreguntaSugerida('¿Qué resolvió la Sentencia Absolutoria N° 088-2020 (Res. 18)?')" class="text-[10px] px-2.5 py-1 rounded-xl bg-obsidian-950 hover:bg-goldtech-500/20 border border-white/10 hover:border-goldtech-500/40 text-goldtech-300 transition text-left cursor-pointer">
-            ⚖ Sentencia Absolutoria (Res. 18)
+          <button onclick="hacerPreguntaSugerida('¿Qué resolvió la Sentencia Absolutoria N° 088-2020 (Res. 10)?')" class="text-[10px] px-2.5 py-1 rounded-xl bg-obsidian-950 hover:bg-goldtech-500/20 border border-white/10 hover:border-goldtech-500/40 text-goldtech-300 transition text-left cursor-pointer">
+            ⚖ Sentencia Absolutoria (Res. 10)
           </button>
-          <button onclick="hacerPreguntaSugerida('¿Qué dice el Auto de Enjuiciamiento (Res. 08)?')" class="text-[10px] px-2.5 py-1 rounded-xl bg-obsidian-950 hover:bg-goldtech-500/20 border border-white/10 hover:border-goldtech-500/40 text-goldtech-300 transition text-left cursor-pointer">
-            📜 Auto de Enjuiciamiento (Res. 8)
+          <button onclick="hacerPreguntaSugerida('¿Qué contiene el apartado unificado de las Resoluciones 08 y 09?')" class="text-[10px] px-2.5 py-1 rounded-xl bg-obsidian-950 hover:bg-goldtech-500/20 border border-white/10 hover:border-goldtech-500/40 text-goldtech-300 transition text-left cursor-pointer">
+            📜 Resoluciones 08 y 09 Unificadas
           </button>
-          <button onclick="hacerPreguntaSugerida('¿Por qué se declaró reo contumaz en la Res. 11 y qué pasó en la 13 y 15?')" class="text-[10px] px-2.5 py-1 rounded-xl bg-obsidian-950 hover:bg-goldtech-500/20 border border-white/10 hover:border-goldtech-500/40 text-goldtech-300 transition text-left cursor-pointer">
-            🔍 Juicio Oral y Testigos (Res. 11 a 17)
+          <button onclick="hacerPreguntaSugerida('¿Qué ordenó la Resolución 07 sobre testigos y peritos?')" class="text-[10px] px-2.5 py-1 rounded-xl bg-obsidian-950 hover:bg-goldtech-500/20 border border-white/10 hover:border-goldtech-500/40 text-goldtech-300 transition text-left cursor-pointer">
+            🔍 Testigos y Peritos (Res. 07)
           </button>
-          <button onclick="hacerPreguntaSugerida('¿Qué es el D. Leg. 1412 y las consultas PIDE?')" class="text-[10px] px-2.5 py-1 rounded-xl bg-obsidian-950 hover:bg-goldtech-500/20 border border-white/10 hover:border-goldtech-500/40 text-goldtech-300 transition text-left cursor-pointer">
-            🏛️ D. Leg. 1412 y PIDE
+          <button onclick="hacerPreguntaSugerida('¿Cómo funcionan las consultas interoperables PIDE?')" class="text-[10px] px-2.5 py-1 rounded-xl bg-obsidian-950 hover:bg-goldtech-500/20 border border-white/10 hover:border-goldtech-500/40 text-goldtech-300 transition text-left cursor-pointer">
+            🏛️ Gobierno Digital y PIDE
           </button>
         </div>
 
@@ -1250,7 +1199,7 @@
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
       <p>
         <span class="text-goldtech-400 font-bold">RASTREADOR JUDICIAL</span> &bull; 
-        <span data-i18n="footer_course">Gobierno Digital (D. Leg. N° 1412) &bull; CSJ Puno</span>
+        <span data-i18n="footer_course">Plataforma de Gobierno Digital &bull; CSJ Puno</span>
       </p>
       <p class="text-slate-400">
         <span data-i18n="footer_owner">Autor: Negreiros Alvarez, Jersson Manuel</span>
@@ -1260,7 +1209,7 @@
 
   <!-- ==================== MODALES DEL SISTEMA ==================== -->
 
-  <!-- MODAL: INSTRUCTIVO DE USO CONFORME AL D. LEG. Nº 1412 -->
+  <!-- MODAL: INSTRUCTIVO DE USO -->
   <div id="modal-instructivo" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-obsidian-900 border border-emerald-500/50 rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
       <div class="bg-obsidian-950 p-4 border-b border-white/10 flex justify-between items-center">
@@ -1268,7 +1217,7 @@
           <span class="text-xl text-emerald-400">📖</span>
           <div>
             <h4 class="font-display text-sm font-bold text-white tracking-wider">GUÍA INSTITUCIONAL E INSTRUCTIVO DE USO</h4>
-            <p class="text-[10px] text-emerald-400 font-mono">Bases del Decreto Legislativo N° 1412 (Ley de Gobierno Digital)</p>
+            <p class="text-[10px] text-emerald-400 font-mono">Estándares de Gobierno Digital, Interoperabilidad y Confianza Digital</p>
           </div>
         </div>
         <button onclick="cerrarModalInstructivo()" class="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer">✕</button>
@@ -1276,22 +1225,22 @@
 
       <div class="p-6 overflow-y-auto space-y-4 font-mono text-xs text-slate-300 leading-relaxed custom-scrollbar">
         <div class="p-3 bg-emerald-950/40 border border-emerald-500/30 rounded-xl space-y-1">
-          <strong class="text-emerald-300 block text-xs">PROPÓSITO DE LA PLATAFORMA (Art. 4 D. Leg. 1412):</strong>
+          <strong class="text-emerald-300 block text-xs">PROPÓSITO DE LA PLATAFORMA:</strong>
           <p class="text-slate-300 font-sans text-xs">
-            Facilitar el acceso transparente, seguro y trazable de la ciudadanía a los actos procesales del Poder Judicial, promoviendo la inclusión digital y la celeridad jurisdiccional.
+            Facilitar el acceso transparente, seguro y trazable de la ciudadanía a los actos procesales del Poder Judicial, promoviendo la inclusión digital, el principio de una sola vez y la celeridad jurisdiccional.
           </p>
         </div>
 
         <div class="space-y-3">
           <div class="p-3 bg-obsidian-950 rounded-xl border border-white/10 space-y-1">
-            <span class="text-goldtech-300 font-bold">1. AUTENTICACIÓN Y FILTRO PERIMÉTRICO (Arts. 14 y 30)</span>
+            <span class="text-goldtech-300 font-bold">1. IDENTIDAD DIGITAL Y FILTRO PERIMÉTRICO</span>
             <p class="text-slate-400 font-sans">
-              La verificación perimétrica (CAPTCHA + "No soy un robot") garantiza que el servicio esté protegido contra denegación de servicios y scraping no autorizado, garantizando disponibilidad continua.
+              La verificación perimétrica (CAPTCHA + "No soy un robot") garantiza que el servicio esté protegido contra accesos automatizados no autorizados, asegurando disponibilidad continua y niveles de autenticación segura.
             </p>
           </div>
 
           <div class="p-3 bg-obsidian-950 rounded-xl border border-white/10 space-y-1">
-            <span class="text-goldtech-300 font-bold">2. BÚSQUEDA GENERAL Y ESPECÍFICA (Art. 3 Numeral 4)</span>
+            <span class="text-goldtech-300 font-bold">2. BÚSQUEDA GENERAL Y ESPECÍFICA</span>
             <p class="text-slate-400 font-sans">
               - <strong>Búsqueda General:</strong> Filtra por Distrito Judicial, juzgado, jueza a cargo y especialidad procesal.<br>
               - <strong>Búsqueda Específica:</strong> Permite ingresar directamente el Código Único de Expediente (27 dígitos) para acceso puntual al dossier.
@@ -1299,30 +1248,30 @@
           </div>
 
           <div class="p-3 bg-obsidian-950 rounded-xl border border-white/10 space-y-1">
-            <span class="text-goldtech-300 font-bold">3. IDENTIDAD DIGITAL E INTEROPERABILIDAD RENIEC (Arts. 10, 16 y 26)</span>
+            <span class="text-goldtech-300 font-bold">3. ARQUITECTURA DE INTEROPERABILIDAD PIDE</span>
             <p class="text-slate-400 font-sans">
-              El botón <em>«Ver Ficha RENIEC»</em> consulta los atributos de identidad digital y biometría a través de la Plataforma de Interoperabilidad del Estado (PIDE).
+              Las consultas a <em>RENIEC, SINOE, MIGRACIONES y SIDPOL</em> operan mediante servicios web de interoperabilidad técnica y semántica, evitando solicitar al ciudadano información que ya obra en poder del Estado.
             </p>
           </div>
 
           <div class="p-3 bg-obsidian-950 rounded-xl border border-white/10 space-y-1">
-            <span class="text-goldtech-300 font-bold">4. DOMICILIO DIGITAL Y NOTIFICACIONES SINOE (Art. 22)</span>
+            <span class="text-goldtech-300 font-bold">4. DOMICILIO DIGITAL Y CASILLA ÚNICA ELECTRÓNICA (SINOE)</span>
             <p class="text-slate-400 font-sans">
-              Las cédulas depositadas en las casillas electrónicas SINOE constituyen el domicilio habitual de las partes en el entorno digital, con pleno valor legal para el cómputo de plazos.
+              Las cédulas depositadas en las casillas electrónicas constituyen el domicilio habitual de las partes en el entorno digital, con pleno valor probatorio para el cómputo de plazos.
             </p>
           </div>
 
           <div class="p-3 bg-obsidian-950 rounded-xl border border-white/10 space-y-1">
-            <span class="text-goldtech-300 font-bold">5. MESA DE PARTES Y REGISTRO DIGITAL (Art. 21)</span>
+            <span class="text-goldtech-300 font-bold">5. MESA DIGITAL Y MARCO DE CONFIANZA DIGITAL</span>
             <p class="text-slate-400 font-sans">
-              Permite a los letrados ingresar solicitudes y escritos electrónicos generando un cargo con sellado de tiempo y firma digital conforme al Art. 19.
+              Permite ingresar solicitudes y escritos electrónicos las 24 horas generando un cargo oficial con sellado de tiempo, firma digital e integridad criptográfica (SHA-256).
             </p>
           </div>
 
           <div class="p-3 bg-obsidian-950 rounded-xl border border-white/10 space-y-1">
-            <span class="text-goldtech-300 font-bold">6. ACCESIBILIDAD UNIVERSAL TALKBACK (Art. 15 Inclusión Digital)</span>
+            <span class="text-goldtech-300 font-bold">6. ACCESIBILIDAD UNIVERSAL E INCLUSIÓN DIGITAL</span>
             <p class="text-slate-400 font-sans">
-              Activa el lector de voz en cualquier momento desde el botón superior "Voz TalkBack" para que la plataforma narre en tiempo real el contenido en pantalla a personas con discapacidad visual.
+              Activa el menú de <strong>Accesibilidad</strong> o el lector <strong>Voz TalkBack</strong> desde la barra superior para ajustar contraste, tamaño de fuente y narración auditiva en tiempo real.
             </p>
           </div>
         </div>
@@ -1336,49 +1285,24 @@
     </div>
   </div>
 
-  <!-- MODAL: VISOR DE SENTENCIA ABSOLUTORIA N° 088-2020-JPU -->
+  <!-- MODAL: VISOR DE SENTENCIA ABSOLUTORIA N° 088-2020-JPU (RESOLUCIÓN N° 10) -->
   <div id="modal-sentencia" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-obsidian-900 border border-goldtech-500/50 rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
-      <div class="bg-obsidian-950 p-4 border-b border-white/10 flex justify-between items-center">
+    <div class="bg-obsidian-900 border border-goldtech-500/50 rounded-3xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="bg-obsidian-950 p-4 border-b border-white/10 flex justify-between items-center gap-2">
         <div class="flex items-center space-x-2">
           <span class="text-goldtech-400 text-lg">⚖</span>
           <div>
             <h4 class="font-display text-sm font-bold text-white tracking-wider">PODER JUDICIAL DEL PERÚ &bull; CORTE DE PUNO</h4>
-            <p class="text-[10px] text-slate-400 font-mono">SENTENCIA ABSOLUTORIA N° 088-2020-JPU &bull; MANDATO DE ARCHIVO DEFINITIVO</p>
+            <p class="text-[10px] text-slate-400 font-mono">RESOLUCIÓN N° 10 &bull; SENTENCIA ABSOLUTORIA N° 088-2020-JPU</p>
           </div>
         </div>
         <button onclick="cerrarModalSentencia()" class="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer">✕</button>
       </div>
 
-      <div class="p-6 overflow-y-auto space-y-4 font-serif text-slate-300 text-xs sm:text-sm leading-relaxed custom-scrollbar">
-        <div class="text-center pb-3 border-b border-white/10 space-y-1">
-          <p class="font-display font-bold text-xs uppercase tracking-widest text-goldtech-400">JUZGADO PENAL UNIPERSONAL DE PUNO</p>
-          <p class="font-mono text-xs text-slate-400">Jueza Titular: Dra. Gladis Huanca Quispe</p>
-          <p class="text-xs font-mono text-white pt-1">SENTENCIA ABSOLUTORIA N° 088-2020-JPU &bull; EXP. 02766-2018-82-2101-JP-PE-02</p>
-        </div>
-
-        <p><strong>VISTOS:</strong> En audiencia pública e inaplazable de juicio oral, la causa penal seguida contra <strong>EDGAR RAÚL R**** C*****</strong> como presunto autor del delito contra la Vida, el Cuerpo y la Salud, en la modalidad de <strong>HOMICIDIO CULPOSO (Artículo 111° del Código Penal)</strong>, en presunto agravio de quien en vida fue Víctor Alfonso Q***** M*****.</p>
-
-        <p><strong>CONSIDERANDO:</strong> Que de la valoración individual y conjunta de los medios probatorios válidamente incorporados por lectura (Certificado Médico Legal, Informe Pericial de Tránsito UPIAT-PNP y Protocolo de Necropsia) y del debate oral en juicio, no se logró enervar el principio constitucional de presunción de inocencia por concurrir insuficiencia probatoria y duda razonable insuperable (principio <em>in dubio pro reo</em>), al no acreditarse objetivamente que la conducta del imputado haya incrementado un riesgo no permitido que fuera determinante en el desenlace fatal acaecido en la Av. Floral de Puno.</p>
-
-        <div class="bg-obsidian-950 p-4 rounded-xl border border-goldtech-500/30 space-y-2 text-xs font-sans">
-          <p class="font-bold text-goldtech-300 uppercase">FALLO JUDICIAL FORMAL (PARTE RESOLUTIVA):</p>
-          <ol class="list-decimal pl-5 space-y-1.5 text-slate-200">
-            <li><strong>ABSOLVER</strong> a <strong>EDGAR RAÚL R**** C*****</strong> de la acusación fiscal formulada en su contra como presunto autor del delito contra la Vida, el Cuerpo y la Salud, en la modalidad de Homicidio Culposo (Artículo 111° del Código Penal), en agravio de Víctor Alfonso Q***** M*****.</li>
-            <li><strong>ORDENAR EL ARCHIVO DEFINITIVO</strong> del presente proceso penal una vez que la presente resolución quede firme o consentida conforme a ley.</li>
-            <li><strong>DISPONER LA ANULACIÓN</strong> de todos los antecedentes policiales y judiciales que se hubieren generado en contra del absuelto Edgar Raúl R**** C***** con motivo de la presente causa penal, así como el levantamiento definitivo de cualquier medida coercitiva dictada en su contra.</li>
-          </ol>
-        </div>
-
-        <div class="pt-4 border-t border-white/10 flex justify-between items-center font-mono text-[11px]">
-          <div>
-            <p class="font-bold text-white font-sans">Dra. Gladis Huanca Quispe</p>
-            <p class="text-slate-400">Jueza del Juzgado Penal Unipersonal de Puno</p>
-            <p class="text-emerald-400 text-[10px]">Firma Digital Validada &bull; Sello de Tiempo (Art. 19 D. Leg. 1412)</p>
-          </div>
-          <div class="w-16 h-16 bg-obsidian-950 border border-goldtech-500/40 rounded-xl flex items-center justify-center text-[10px] text-goldtech-400 text-center p-1">
-            [SELLO QR OFICIAL]
-          </div>
+      <div class="p-3 sm:p-4 overflow-y-auto custom-scrollbar">
+        <!-- Visor PDF Incrustado dentro de la página -->
+        <div class="w-full h-[72vh] rounded-2xl overflow-hidden border border-goldtech-500/40 bg-obsidian-950">
+          <iframe id="sentencia-iframe-pdf" src="" class="w-full h-full border-0" title="Visor PDF Resolución 10"></iframe>
         </div>
       </div>
 
@@ -1388,67 +1312,41 @@
     </div>
   </div>
 
-  <!-- MODAL: VISOR DETALLADO DE RESOLUCIONES JUDICIALES (1 A 18) -->
+  <!-- MODAL: VISOR DETALLADO DE ACTUADOS Y RESOLUCIONES -->
   <div id="modal-resolucion-detalle" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-obsidian-900 border border-goldtech-500/50 rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
-      <div class="bg-obsidian-950 p-4 border-b border-white/10 flex justify-between items-center">
+    <div class="bg-obsidian-900 border border-goldtech-500/50 rounded-3xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="bg-obsidian-950 p-4 border-b border-white/10 flex justify-between items-center gap-2">
         <div class="flex items-center space-x-2.5">
           <span class="text-goldtech-400 text-xl">📜</span>
           <div>
-            <h4 id="detalle-res-numero" class="font-mono font-bold text-white text-sm">RESOLUCIÓN N° --</h4>
+            <h4 id="detalle-res-numero" class="font-mono font-bold text-white text-sm">ACTUADO N° --</h4>
             <p id="detalle-res-subtitulo" class="text-[10px] text-goldtech-400 font-mono">EXP. 02766-2018-82-2101-JP-PE-02 &bull; CSJ PUNO</p>
           </div>
         </div>
         <button onclick="cerrarModalResolucionDetalle()" class="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer">✕</button>
       </div>
 
-      <div class="p-6 overflow-y-auto space-y-4 font-serif text-slate-300 text-xs sm:text-sm leading-relaxed custom-scrollbar">
-        <div class="border-b border-white/10 pb-3 flex justify-between items-center text-xs font-mono">
-          <span id="detalle-res-instancia" class="text-white font-bold">Juzgado Penal</span>
+      <div class="p-3 sm:p-4 overflow-y-auto custom-scrollbar">
+        <div class="border-b border-white/10 pb-2.5 mb-3 flex justify-between items-center text-xs font-mono">
+          <span id="detalle-res-instancia" class="text-white font-bold">Despacho / Fiscalía</span>
           <span id="detalle-res-fecha" class="text-goldtech-300">--/--/----</span>
         </div>
 
-        <div class="space-y-1">
-          <p class="font-mono text-[11px] text-slate-500 uppercase">MATERIA / IMPUTACIÓN:</p>
-          <p class="font-sans font-bold text-rose-300 text-xs sm:text-sm">HOMICIDIO CULPOSO (Art. 111° CP) contra Edgar Raúl R**** C*****</p>
-        </div>
-
-        <div class="space-y-1.5">
-          <p class="font-mono text-[11px] text-goldtech-400 font-bold uppercase">I. VISTOS:</p>
-          <p id="detalle-res-vistos" class="text-slate-300 font-serif">--</p>
-        </div>
-
-        <div class="space-y-1.5">
-          <p class="font-mono text-[11px] text-goldtech-400 font-bold uppercase">II. CONSIDERANDO:</p>
-          <div id="detalle-res-considerando" class="text-slate-300 font-serif space-y-2">--</div>
-        </div>
-
-        <div class="bg-obsidian-950 p-4 rounded-xl border border-goldtech-500/30 space-y-2 text-xs font-sans">
-          <p class="font-bold text-goldtech-300 uppercase font-mono text-[11px]">III. PARTE RESOLUTIVA (SE RESUELVE):</p>
-          <div id="detalle-res-resuelve" class="text-slate-200 leading-relaxed font-sans space-y-1.5">--</div>
-        </div>
-
-        <div class="pt-3 border-t border-white/10 flex justify-between items-center font-mono text-[11px]">
-          <div>
-            <p id="detalle-res-firmante" class="font-bold text-white font-sans">Dra. Gladis Huanca Quispe</p>
-            <p class="text-slate-400">Jueza Titular &bull; Especialista: Abg. Carlos M. Mamani Condori</p>
-            <p class="text-emerald-400 text-[10px]">✓ Firma Digital Certificada &bull; Art. 19 D. Leg. 1412</p>
-          </div>
-          <div class="w-14 h-14 bg-obsidian-950 border border-goldtech-500/40 rounded-xl flex items-center justify-center text-[9px] text-goldtech-400 text-center p-1">
-            [FIRMA DIGITAL]
-          </div>
+        <!-- Visor PDF Incrustado dentro de la página -->
+        <div class="w-full h-[70vh] rounded-2xl overflow-hidden border border-goldtech-500/40 bg-obsidian-950">
+          <iframe id="detalle-res-iframe-pdf" src="" class="w-full h-full border-0" title="Visor PDF Actuado Judicial"></iframe>
         </div>
       </div>
 
       <div class="bg-obsidian-950 p-3 border-t border-white/10 flex justify-end">
         <button onclick="cerrarModalResolucionDetalle()" class="px-5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-mono text-xs font-bold transition cursor-pointer">
-          Cerrar Resolución
+          Cerrar Visor
         </button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL: FICHA RENIEC BIOMÉTRICA (PIDE ART. 16 Y 26) -->
+  <!-- MODAL: FICHA RENIEC BIOMÉTRICA -->
   <div id="modal-reniec" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-obsidian-900 border border-goldtech-500/50 rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4">
       <div class="flex justify-between items-center border-b border-white/10 pb-3">
@@ -1456,7 +1354,7 @@
           <span class="text-xl">🪪</span>
           <div>
             <h4 class="font-mono font-bold text-white text-sm">RENIEC &bull; IDENTIDAD DIGITAL PIDE</h4>
-            <p class="text-[10px] font-mono text-goldtech-400">Credencial e Interoperabilidad (Arts. 10, 16 y 26 D. Leg. 1412)</p>
+            <p class="text-[10px] font-mono text-goldtech-400">Credencial e Interoperabilidad Semántica</p>
           </div>
         </div>
         <button onclick="cerrarModalReniec()" class="text-slate-400 hover:text-white text-lg font-bold cursor-pointer">✕</button>
@@ -1477,7 +1375,7 @@
         <div class="col-span-2 space-y-1.5 text-slate-300">
           <p><span class="text-slate-500">DNI:</span> <strong class="text-white">4198****</strong></p>
           <p><span class="text-slate-500">Nombres:</span> <strong class="text-white">EDGAR RAÚL</strong></p>
-          <p><span class="text-slate-500">Apellidos:</span> <strong class="text-goldtech-300">R**** C*****</strong> (Anonimizado Ley 29733)</p>
+          <p><span class="text-slate-500">Apellidos:</span> <strong class="text-goldtech-300">R**** C*****</strong> (Datos Protegidos)</p>
           <p><span class="text-slate-500">Fecha Nac:</span> 14/08/1983 (35 años al hecho)</p>
           <p><span class="text-slate-500">Ubigeo:</span> 210101 (Puno, Puno, Puno)</p>
           <p><span class="text-slate-500">Estado Civil:</span> Soltero</p>
@@ -1501,8 +1399,8 @@
         <div class="flex items-center space-x-2">
           <span class="text-xl text-emerald-400">📬</span>
           <div>
-            <h4 class="font-bold text-white text-sm">PODER JUDICIAL &bull; SINOE CASILLA ELECTRÓNICA</h4>
-            <p class="text-[10px] text-emerald-400">Domicilio Digital Constituido (Art. 22 D. Leg. 1412)</p>
+            <h4 class="font-bold text-white text-sm">PODER JUDICIAL &bull; SINOE CASILLA ÚNICA ELECTRÓNICA</h4>
+            <p class="text-[10px] text-emerald-400">Domicilio Digital Constituido</p>
           </div>
         </div>
         <button onclick="cerrarModalSinoeImputado()" class="text-slate-400 hover:text-white text-lg font-bold cursor-pointer">✕</button>
@@ -1515,7 +1413,7 @@
         <p><span class="text-slate-500">Sede de Adscripción:</span> <span class="text-slate-200">Corte Superior de Justicia de Puno</span></p>
         <p><span class="text-slate-500">Estado de la Casilla:</span> <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold">ACTIVA / VIGENTE</span></p>
         <p><span class="text-slate-500">Cédulas Recibidas en Causa:</span> <span class="text-white font-bold">14 notificaciones depositadas</span></p>
-        <p class="text-emerald-400 text-[11px] pt-1">✓ Domicilio Digital surte plenos efectos de notificación conforme al Art. 155-E de la LOPJ y Art. 22 del D. Leg. 1412.</p>
+        <p class="text-emerald-400 text-[11px] pt-1">✓ Domicilio Digital surte plenos efectos jurídicos para el cómputo de plazos procesales.</p>
       </div>
 
       <div class="flex justify-end pt-1">
@@ -1524,7 +1422,7 @@
     </div>
   </div>
 
-  <!-- MODAL: FICHA DE MIGRACIONES (PIDE ART. 26) -->
+  <!-- MODAL: FICHA DE MIGRACIONES -->
   <div id="modal-migraciones" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-obsidian-900 border border-cobalttech-500/50 rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 font-mono text-xs">
       <div class="flex justify-between items-center border-b border-white/10 pb-3">
@@ -1532,7 +1430,7 @@
           <span class="text-xl text-cobalttech-400">✈️</span>
           <div>
             <h4 class="font-bold text-white text-sm">SUPERINTENDENCIA NACIONAL DE MIGRACIONES</h4>
-            <p class="text-[10px] text-cobalttech-400">Interoperabilidad PIDE &bull; Control Migratorio y Arraigo (Art. 26 D. Leg. 1412)</p>
+            <p class="text-[10px] text-cobalttech-400">Interoperabilidad PIDE &bull; Control Migratorio y Arraigo</p>
           </div>
         </div>
         <button onclick="cerrarModalMigraciones()" class="text-slate-400 hover:text-white text-lg font-bold cursor-pointer">✕</button>
@@ -1545,15 +1443,14 @@
           <p><span class="text-slate-500">Último Movimiento:</span> <span class="text-slate-300">12/02/2018 - Ingreso Fronterizo Desaguadero</span></p>
         </div>
 
-        <div class="bg-rose-950/70 border border-rose-500/50 p-3.5 rounded-2xl space-y-1">
-          <div class="flex items-center space-x-2 text-rose-300 font-bold">
-            <span>⚠️</span>
-            <span>MEDIDA JUDICIAL REGISTRADA EN SISTEMA MIGRATORIO:</span>
+        <div class="bg-emerald-950/60 border border-emerald-500/40 p-3.5 rounded-2xl space-y-1">
+          <div class="flex items-center space-x-2 text-emerald-300 font-bold">
+            <span>✓</span>
+            <span>ESTADO MIGRATORIO ACTUALIZADO:</span>
           </div>
-          <p class="text-[11px] text-rose-200 font-sans">
-            <strong>Restricción de Ausentamiento:</strong> Sujeto a regla de conducta de no ausentarse del lugar de su residencia (Provincia de Puno) sin previa autorización del Juzgado Penal Unipersonal de Puno, en virtud a la Sentencia Condenatoria N° 088-2020-JPU (Exp. 02766-2018-82-2101-JP-PE-02).
+          <p class="text-[11px] text-slate-200 font-sans">
+            <strong>Sin impedimento de salida vigente:</strong> Levantamiento de restricciones ordenado por Sentencia Absolutoria N° 088-2020-JPU (Exp. 02766-2018-82-2101-JP-PE-02).
           </p>
-          <p class="text-[10px] text-slate-400 font-mono pt-1">Oficio Judicial N° 4190-2020-JPU-PUNO cursado a la Jefatura Zonal de Migraciones Puno.</p>
         </div>
       </div>
 
@@ -1564,7 +1461,7 @@
     </div>
   </div>
 
-  <!-- MODAL: FICHA POLICIAL SIDPOL PNP (PIDE ART. 26) -->
+  <!-- MODAL: FICHA POLICIAL SIDPOL PNP -->
   <div id="modal-sidpol" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-obsidian-900 border border-rose-500/50 rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl space-y-4 font-mono text-xs">
       <div class="flex justify-between items-center border-b border-white/10 pb-3">
@@ -1572,7 +1469,7 @@
           <span class="text-xl text-rose-400">🚨</span>
           <div>
             <h4 class="font-bold text-white text-sm">POLICÍA NACIONAL DEL PERÚ &bull; SIDPOL</h4>
-            <p class="text-[10px] text-rose-400">Sistema de Denuncias Policiales &bull; Interoperabilidad PIDE (Art. 26 D. Leg. 1412)</p>
+            <p class="text-[10px] text-rose-400">Sistema de Denuncias Policiales &bull; Interoperabilidad PIDE</p>
           </div>
         </div>
         <button onclick="cerrarModalSidpol()" class="text-slate-400 hover:text-white text-lg font-bold cursor-pointer">✕</button>
@@ -1623,8 +1520,8 @@
         <div class="flex items-center space-x-2">
           <span class="text-xl text-emerald-400">📥</span>
           <div>
-            <h4 class="font-mono font-bold text-white text-sm">MESA DE PARTES ELECTRÓNICA</h4>
-            <p class="text-[10px] text-emerald-400 font-mono">Registro Digital Oficial (Art. 21 D. Leg. 1412) &bull; CSJ Puno</p>
+            <h4 class="font-mono font-bold text-white text-sm">MESA DIGITAL DE PARTES ELECTRÓNICA</h4>
+            <p class="text-[10px] text-emerald-400 font-mono">Recepción Documentaria 24 Horas &bull; CSJ Puno</p>
           </div>
         </div>
         <button onclick="cerrarModalMesaPartes()" class="text-slate-400 hover:text-white text-lg font-bold cursor-pointer">✕</button>
@@ -1641,14 +1538,14 @@
         </div>
         <div>
           <label class="block text-slate-400 mb-1">Sumilla del Escrito:</label>
-          <input type="text" id="input-sumilla" required placeholder="EJ: CUMPLE MANDATO Y ADJUNTA CUPÓN DE DEPÓSITO" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-white uppercase">
+          <input type="text" id="input-sumilla" required placeholder="EJ: SOLICITA DECLARAR CONSENTIDA SENTENCIA ABSOLUTORIA" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-white uppercase">
         </div>
         <div>
           <label class="block text-slate-400 mb-1">Adjuntar Archivo Foliado (PDF con Firma Digital):</label>
           <input type="file" accept=".pdf" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2 text-slate-400 text-xs">
         </div>
         <button type="submit" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow">
-          <span>Firmar Digitalmente y Registrar (Art. 19)</span>
+          <span>Firmar Digitalmente y Registrar con Sellado de Tiempo</span>
           <span>&rarr;</span>
         </button>
       </form>
@@ -1660,13 +1557,13 @@
     <div class="bg-obsidian-900 border border-emerald-500/50 rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 font-mono text-xs">
       <div class="text-center pb-3 border-b border-white/10 space-y-1">
         <p class="text-emerald-400 font-bold text-sm">✓ CARGO DE RECEPCIÓN ELECTRÓNICA</p>
-        <p class="text-slate-400 text-[10px]">CORTE SUPERIOR DE JUSTICIA DE PUNO &bull; ART. 21 D. LEG. 1412</p>
+        <p class="text-slate-400 text-[10px]">CORTE SUPERIOR DE JUSTICIA DE PUNO &bull; MESA DIGITAL</p>
       </div>
 
       <div class="bg-obsidian-950 p-4 rounded-2xl border border-white/10 space-y-1.5 text-slate-300">
         <p><span class="text-slate-500">Expediente:</span> <strong class="text-white">02766-2018-82-2101-JP-PE-02</strong></p>
         <p><span class="text-slate-500">Cargo Nº:</span> <strong class="text-goldtech-300" id="cargo-numero">2026-004128-MPE</strong></p>
-        <p><span class="text-slate-500">Fecha/Hora:</span> <span id="cargo-fecha" class="text-white">--</span></p>
+        <p><span class="text-slate-500">Fecha/Hora (Sellado):</span> <span id="cargo-fecha" class="text-white">--</span></p>
         <p><span class="text-slate-500">Presentante:</span> <span id="cargo-parte" class="text-white">--</span></p>
         <p><span class="text-slate-500">Sumilla:</span> <span id="cargo-sumilla" class="text-emerald-300">--</span></p>
         <p class="text-[10px] text-slate-500 pt-1">Hash SHA-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</p>
@@ -1682,15 +1579,15 @@
   <div id="modal-cedula" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-obsidian-900 border border-goldtech-500/50 rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 font-mono text-xs">
       <div class="flex justify-between items-center border-b border-white/10 pb-3">
-        <h4 class="font-bold text-white text-sm">CONSTANCIA DE NOTIFICACIÓN SINOE (ART. 22)</h4>
+        <h4 class="font-bold text-white text-sm">CONSTANCIA DE NOTIFICACIÓN SINOE</h4>
         <button onclick="cerrarModalCedula()" class="text-slate-400 hover:text-white text-lg font-bold cursor-pointer">✕</button>
       </div>
       <div class="space-y-2 text-slate-300">
         <p><span class="text-slate-500">Destinatario:</span> <strong id="cedula-destinatario" class="text-white">--</strong></p>
-        <p><span class="text-slate-500">Casilla Electrónica:</span> <span id="cedula-casilla" class="text-goldtech-300">--</span></p>
+        <p><span class="text-slate-500">Casilla Única Electrónica:</span> <span id="cedula-casilla" class="text-goldtech-300">--</span></p>
         <p><span class="text-slate-500">Acto Notificado:</span> <span id="cedula-acto" class="text-white">--</span></p>
         <p><span class="text-slate-500">Fecha y Hora de Depósito:</span> <span id="cedula-fecha" class="text-slate-300">--</span></p>
-        <p class="text-emerald-400 text-[11px] pt-1">✓ Domicilio Digital constituido con plenos efectos jurídicos (Art. 22 D. Leg. 1412).</p>
+        <p class="text-emerald-400 text-[11px] pt-1">✓ Domicilio Digital constituido con plenos efectos jurídicos en el entorno digital.</p>
       </div>
       <div class="flex justify-end pt-2">
         <button onclick="cerrarModalCedula()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white cursor-pointer">Cerrar</button>
@@ -1727,8 +1624,9 @@
     let timerSplash1 = null;
     let timerSplash2 = null;
     let talkbackActivo = false;
-    let utteranceActual = null;
     let historialChatLexi = [];
+    let sonidoHabilitado = true;
+    let velocidadVozActual = 0.9;
 
     // Cronómetro de Sesión: 10 minutos = 600 segundos (inicia a partir de Pantalla 3)
     let segundosRestantesSesion = 600;
@@ -1738,10 +1636,12 @@
     const traducciones = {
       es: {
         adv_title: "AVISO INSTITUCIONAL FORMATIVO:",
-        adv_body: "Prototipo académico conforme al Decreto Legislativo Nº 1412 (Ley de Gobierno Digital). No constituye un canal oficial del Poder Judicial del Perú ni tramita causas judiciales reales.",
-        header_sub: "Trazabilidad Procesal • D. Leg. Nº 1412 • CSJ Puno",
+        adv_body: "Prototipo académico de Gobierno Digital y Servicios Ciudadanos. No constituye un canal oficial del Poder Judicial del Perú ni tramita causas judiciales reales.",
+        header_sub: "Trazabilidad Procesal • Gobierno Digital • CSJ Puno",
+        lbl_timer_session: "Sesión",
+        a11y_btn: "Accesibilidad",
         talkback_btn: "Voz TalkBack",
-        p0_tag: "DECRETO LEGISLATIVO Nº 1412 • LEY DE GOBIERNO DIGITAL",
+        p0_tag: "PLATAFORMA DE GOBIERNO DIGITAL • SERVICIOS CIUDADANOS",
         p0_welcome: "Bienvenido a la Plataforma",
         p0_sub: "Trazabilidad procesal ciudadana, interoperabilidad semántica (PIDE) y fiscalización de plazos en causas penales bajo estándares de gobierno digital.",
         card_author_header: "FICHA TÉCNICA DEL PROYECTO ACADÉMICO",
@@ -1751,7 +1651,6 @@
         btn_start_flow: "INICIAR ACCESO SEGURO",
         sp1_status_1: "Iniciando protocolo de seguridad perimétrica...",
         sp_loading: "Cargando módulos...",
-        btn_skip: "Saltar introducción →",
         bar_title: "PORTAL DE SERVICIOS",
         nav_home: "Inicio",
         nav_mission: "Misión",
@@ -1760,7 +1659,7 @@
         nav_contact: "Contacto",
         nav_instructions: "Instrucciones de Uso",
         cap_title: "FILTRO DE SEGURIDAD DIGITAL",
-        cap_sub: "Autenticación perimétrica conforme al Art. 14 y 30 del D. Leg. Nº 1412",
+        cap_sub: "Control de identidad digital y nivel de seguridad perimétrica",
         cap_not_robot: "No soy un robot",
         cap_refresh: "Regenerar",
         cap_voice: "Escuchar (Voz)",
@@ -1785,7 +1684,6 @@
         code_hint: "Causa penal registrada en la Corte Superior de Justicia de Puno (Ingreso: 23/05/2019).",
         btn_do_search: "BUSCAR EXPEDIENTE",
         btn_back_search: "Volver al Buscador",
-        case_status: "ESTADO: SENTENCIA EN EJECUCIÓN",
         tbl_instance: "Instancia / Despacho:",
         tbl_judge: "Jueza Titular:",
         tbl_specialist: "Especialista Legal:",
@@ -1793,24 +1691,24 @@
         tbl_crime: "Delito Imputado / Materia:",
         tbl_prosecution: "Procedencia Acusatoria:",
         stepper_title: "ITER PROCESAL DEL NUEVO CÓDIGO PROCESAL PENAL",
-        stepper_progress: "Fase 4 de 5 (80% Concluido)",
         parties_title: "SUJETOS PROCESALES Y DESTINATARIOS NOTIFICABLES",
-        parties_sub: "Domicilio Digital (Art. 22 D. Leg. 1412) • Casillas Electrónicas SINOE",
-        btn_submit_filing: "Subir Escrito a Mesa de Partes (Art. 21)",
-        tab_binder_resolutions: "Resoluciones Judiciales (18)",
+        parties_sub: "Domicilio Digital • Casilla Única Electrónica SINOE (Datos Personales Protegidos)",
+        btn_submit_filing: "Subir Escrito a Mesa de Partes Digital",
+        tab_binder_resolutions: "Actuados y Resoluciones (10)",
         tab_binder_filings: "Escritos Presentados",
         tab_binder_notifications: "Cédulas SINOE & Plazos (02)",
         btn_visualize: "Visualizar",
-        btn_view_sentence: "Ver Sentencia Foliada",
-        footer_course: "Gobierno Digital (D. Leg. N° 1412) • CSJ Puno",
+        footer_course: "Plataforma de Gobierno Digital • CSJ Puno",
         footer_owner: "Autor: Negreiros Alvarez, Jersson Manuel"
       },
       en: {
         adv_title: "FORMATIVE ACADEMIC NOTICE:",
-        adv_body: "Academic prototype under Legislative Decree No. 1412 (Digital Government Law). It does not constitute an official channel of the Judiciary of Peru nor does it process actual court proceedings.",
-        header_sub: "Procedural Traceability • Leg. Dec. No. 1412 • Puno Court",
+        adv_body: "Academic prototype of Digital Government and Citizen Services. It does not constitute an official channel of the Judiciary of Peru nor does it process actual court proceedings.",
+        header_sub: "Procedural Traceability • Digital Government • Puno Court",
+        lbl_timer_session: "Session",
+        a11y_btn: "Accessibility",
         talkback_btn: "TalkBack Voice",
-        p0_tag: "LEGISLATIVE DECREE NO. 1412 • DIGITAL GOVERNMENT ACT",
+        p0_tag: "DIGITAL GOVERNMENT PLATFORM • CITIZEN SERVICES",
         p0_welcome: "Welcome to the Platform",
         p0_sub: "Citizen procedural traceability, semantic interoperability (PIDE), and deadline tracking in criminal proceedings under digital government standards.",
         card_author_header: "ACADEMIC PROJECT DATA SHEET",
@@ -1820,7 +1718,6 @@
         btn_start_flow: "START SECURE ACCESS",
         sp1_status_1: "Initializing perimeter security protocol...",
         sp_loading: "Loading modules...",
-        btn_skip: "Skip introduction →",
         bar_title: "SERVICES PORTAL",
         nav_home: "Home",
         nav_mission: "Mission",
@@ -1829,7 +1726,7 @@
         nav_contact: "Contact",
         nav_instructions: "User Instructions",
         cap_title: "DIGITAL SECURITY FILTER",
-        cap_sub: "Perimeter authentication under Arts. 14 & 30 of Leg. Dec. No. 1412",
+        cap_sub: "Digital identity control and perimeter security level",
         cap_not_robot: "I'm not a robot",
         cap_refresh: "Regenerate",
         cap_voice: "Listen (Audio)",
@@ -1854,7 +1751,6 @@
         code_hint: "Criminal case recorded at the Superior Court of Justice of Puno (Filed: 05/23/2019).",
         btn_do_search: "SEARCH CASE FILE",
         btn_back_search: "Back to Search",
-        case_status: "STATUS: SENTENCE IN EXECUTION",
         tbl_instance: "Court / Chamber:",
         tbl_judge: "Presiding Judge:",
         tbl_specialist: "Legal Specialist:",
@@ -1862,16 +1758,14 @@
         tbl_crime: "Charged Offense / Subject:",
         tbl_prosecution: "Prosecutorial Origin:",
         stepper_title: "CRIMINAL PROCEDURE STAGES (NCPP)",
-        stepper_progress: "Stage 4 of 5 (80% Completed)",
         parties_title: "PROCEEDING PARTIES & NOTIFIABLE RECIPIENTS",
-        parties_sub: "Digital Domicile (Art. 22 Leg. Dec. 1412) • SINOE Electronic Mailboxes",
-        btn_submit_filing: "File Document to E-Desk (Art. 21)",
-        tab_binder_resolutions: "Judicial Resolutions (18)",
+        parties_sub: "Digital Domicile • SINOE Single Electronic Mailbox",
+        btn_submit_filing: "File Document to Digital E-Desk",
+        tab_binder_resolutions: "Filings & Resolutions (10)",
         tab_binder_filings: "Filed Submissions",
         tab_binder_notifications: "SINOE Notices & Deadlines (02)",
         btn_visualize: "View File",
-        btn_view_sentence: "View Certified Judgment",
-        footer_course: "Digital Government (Leg. Dec. No. 1412) • Puno Court",
+        footer_course: "Digital Government Platform • Puno Court",
         footer_owner: "Author: Negreiros Alvarez, Jersson Manuel"
       }
     };
@@ -1889,7 +1783,7 @@
             detenerCronometroSesion();
             irAPantalla(0);
             const msjExpiracion = idiomaActual === 'es'
-              ? "⚠️ Su sesión segura de 10 minutos ha expirado (D. Leg. 1412 Art. 14). Retornando a la pantalla inicial."
+              ? "⚠️ Su sesión segura de 10 minutos ha expirado. Retornando a la pantalla inicial."
               : "⚠️ Your 10-minute secure session has expired. Returning to initial screen.";
             mostrarNotificacion(msjExpiracion);
             if (talkbackActivo) narrarTexto(msjExpiracion);
@@ -1943,28 +1837,17 @@
       }
     }
 
-    function renovarSesionDiezMinutos() {
-      segundosRestantesSesion = 600;
-      if (pantallaActual >= 3) {
-        cronometroEnMarcha = true;
-      }
-      actualizarRelojYTimer();
-      const msj = idiomaActual === 'es' ? "Sesión segura renovada a 10:00 minutos." : "Secure session renewed to 10:00 minutes.";
-      mostrarNotificacion(msj);
-      if (talkbackActivo) narrarTexto(msj);
-    }
-
     function cambiarIdioma(lang) {
       idiomaActual = lang;
       const btnEs = document.getElementById('btn-lang-es');
       const btnEn = document.getElementById('btn-lang-en');
 
       if (lang === 'es') {
-        btnEs.className = "px-2.5 py-1 text-[11px] font-bold font-mono rounded-lg bg-goldtech-500 text-obsidian-950 shadow transition cursor-pointer";
-        btnEn.className = "px-2.5 py-1 text-[11px] font-bold font-mono rounded-lg text-slate-400 hover:text-white transition cursor-pointer";
+        btnEs.className = "px-2 sm:px-2.5 py-0.5 sm:py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg bg-goldtech-500 text-obsidian-950 shadow transition cursor-pointer";
+        btnEn.className = "px-2 sm:px-2.5 py-0.5 sm:py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg text-slate-400 hover:text-white transition cursor-pointer";
       } else {
-        btnEn.className = "px-2.5 py-1 text-[11px] font-bold font-mono rounded-lg bg-goldtech-500 text-obsidian-950 shadow transition cursor-pointer";
-        btnEs.className = "px-2.5 py-1 text-[11px] font-bold font-mono rounded-lg text-slate-400 hover:text-white transition cursor-pointer";
+        btnEn.className = "px-2 sm:px-2.5 py-0.5 sm:py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg bg-goldtech-500 text-obsidian-950 shadow transition cursor-pointer";
+        btnEs.className = "px-2 sm:px-2.5 py-0.5 sm:py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg text-slate-400 hover:text-white transition cursor-pointer";
       }
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -1979,18 +1862,179 @@
       }
     }
 
-    // ==================== MOTOR DE ACCESIBILIDAD UNIVERSAL TALKBACK ====================
+    // ==================== MOTOR DE ACCESIBILIDAD UNIVERSAL TALKBACK Y PANEL A11Y ====================
+    function alternarPanelAccesibilidad() {
+      const panel = document.getElementById('panel-accesibilidad');
+      if (!panel) return;
+      panel.classList.toggle('hidden');
+      if (!panel.classList.contains('hidden') && talkbackActivo) {
+        narrarTexto("Menú de accesibilidad web abierto. Puede ajustar contraste, tamaño de texto y sonido.");
+      }
+    }
+
+    function cambiarContraste(modo) {
+      const htmlEl = document.documentElement;
+      htmlEl.classList.remove('a11y-high-contrast', 'a11y-light-mode', 'a11y-grayscale');
+
+      const botones = {
+        normal: document.getElementById('a11y-opt-normal'),
+        high: document.getElementById('a11y-opt-high'),
+        light: document.getElementById('a11y-opt-light'),
+        gray: document.getElementById('a11y-opt-gray')
+      };
+
+      Object.values(botones).forEach(btn => {
+        if (btn) btn.className = "py-2 px-2 rounded-xl bg-obsidian-950 hover:bg-white/10 border border-white/15 text-slate-300 font-bold text-[10px] transition cursor-pointer";
+      });
+
+      if (botones[modo]) {
+        botones[modo].className = "py-2 px-2 rounded-xl bg-cobalttech-500/30 border border-cobalttech-400 text-white font-bold text-[10px] transition cursor-pointer";
+      }
+
+      let descripcion = "Contraste oscuro estándar activado";
+      if (modo === 'high') {
+        htmlEl.classList.add('a11y-high-contrast');
+        descripcion = "Modo alto contraste amarillo sobre negro activado";
+      } else if (modo === 'light') {
+        htmlEl.classList.add('a11y-light-mode');
+        descripcion = "Modo claro de lectura diurna activado";
+      } else if (modo === 'gray') {
+        htmlEl.classList.add('a11y-grayscale');
+        descripcion = "Modo monocromático en escala de grises activado";
+      }
+
+      mostrarNotificacion(descripcion);
+      narrarTexto(descripcion);
+    }
+
+    function cambiarTamanoTexto(tam) {
+      const htmlEl = document.documentElement;
+      htmlEl.classList.remove('a11y-text-lg', 'a11y-text-xl');
+
+      const btns = {
+        normal: document.getElementById('a11y-font-100'),
+        lg: document.getElementById('a11y-font-112'),
+        xl: document.getElementById('a11y-font-125')
+      };
+
+      Object.values(btns).forEach(b => {
+        if (b) b.className = "py-1.5 rounded-xl bg-obsidian-950 hover:bg-white/10 border border-white/15 text-slate-300 font-bold text-xs cursor-pointer";
+      });
+
+      if (btns[tam]) {
+        btns[tam].className = "py-1.5 rounded-xl bg-cobalttech-500/30 border border-cobalttech-400 text-white font-bold text-xs cursor-pointer";
+      }
+
+      let desc = "Tamaño de texto normal al 100 por ciento";
+      if (tam === 'lg') {
+        htmlEl.classList.add('a11y-text-lg');
+        desc = "Tamaño de texto aumentado al 112 por ciento";
+      } else if (tam === 'xl') {
+        htmlEl.classList.add('a11y-text-xl');
+        desc = "Tamaño de texto máximo al 125 por ciento";
+      }
+
+      mostrarNotificacion(desc);
+      narrarTexto(desc);
+    }
+
+    function alternarSonidoSistema() {
+      sonidoHabilitado = !sonidoHabilitado;
+      const btn = document.getElementById('a11y-btn-sonido');
+      const icono = document.getElementById('a11y-sonido-icono');
+      const texto = document.getElementById('a11y-sonido-texto');
+
+      if (sonidoHabilitado) {
+        if (btn) btn.className = "py-2 px-2 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-bold text-[10px] flex items-center justify-center gap-1 cursor-pointer";
+        if (icono) icono.textContent = "🔊";
+        if (texto) texto.textContent = "Sonido: ACTIVO";
+        mostrarNotificacion("Audio y narración por voz habilitados");
+        narrarTexto("Sonido del sistema habilitado");
+      } else {
+        detenerVoz();
+        if (btn) btn.className = "py-2 px-2 rounded-xl bg-rose-950/80 border border-rose-500/40 text-rose-300 font-bold text-[10px] flex items-center justify-center gap-1 cursor-pointer";
+        if (icono) icono.textContent = "🔇";
+        if (texto) texto.textContent = "Sonido: MUDO";
+        mostrarNotificacion("Sonido del sistema silenciado");
+      }
+    }
+
+    function ajustarVelocidadVoz(valor) {
+      velocidadVozActual = parseFloat(valor);
+      const etiqueta = document.getElementById('a11y-velocidad-valor');
+      if (etiqueta) {
+        let etiquetaTexto = `${velocidadVozActual.toFixed(1)}x`;
+        if (velocidadVozActual <= 0.7) etiquetaTexto += " (Lenta)";
+        else if (velocidadVozActual <= 1.0) etiquetaTexto += " (Normal)";
+        else etiquetaTexto += " (Rápida)";
+        etiqueta.textContent = etiquetaTexto;
+      }
+    }
+
+    function probarAudioAccesibilidad() {
+      if (!sonidoHabilitado) {
+        alternarSonidoSistema();
+      }
+      reproducirTonoConfirmacion();
+      narrarTexto("Prueba de audio verificada. Sistema accesible conforme a estándares de inclusión digital.");
+    }
+
+    function reproducirTonoConfirmacion() {
+      if (!sonidoHabilitado) return;
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+        gain.gain.setValueAtTime(0.08, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.25);
+      } catch (e) {}
+    }
+
+    function alternarClaseA11y(clase, activo) {
+      if (activo) {
+        document.documentElement.classList.add(clase);
+      } else {
+        document.documentElement.classList.remove(clase);
+      }
+    }
+
+    function restablecerAccesibilidad() {
+      cambiarContraste('normal');
+      cambiarTamanoTexto('normal');
+      ajustarVelocidadVoz(0.9);
+      const slider = document.getElementById('a11y-velocidad-slider');
+      if (slider) slider.value = 0.9;
+
+      const chks = ['chk-a11y-dyslexic', 'chk-a11y-links', 'chk-a11y-motion'];
+      chks.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.checked = false;
+      });
+      document.documentElement.classList.remove('a11y-dyslexic', 'a11y-highlight-links', 'a11y-no-motion');
+
+      if (!sonidoHabilitado) alternarSonidoSistema();
+      mostrarNotificacion("Preferencias de accesibilidad restablecidas");
+    }
+
     function conmutarTalkBack() {
       talkbackActivo = !talkbackActivo;
       const badge = document.getElementById('talkback-badge');
       const barraControl = document.getElementById('barra-control-talkback');
 
       if (talkbackActivo) {
+        if (!sonidoHabilitado) alternarSonidoSistema();
         badge.textContent = "ON";
         badge.className = "px-1.5 py-0.2 rounded text-[9px] bg-emerald-500 text-obsidian-950 font-bold animate-pulse";
         barraControl.classList.remove('hidden');
         narrarTexto(idiomaActual === 'es' 
-          ? "Portal Inclusivo TalkBack activado. Conforme al Principio de Usabilidad e Inclusión Digital del Decreto Legislativo 1412. Toca cualquier elemento para escucharlo o presiona Leer Pantalla."
+          ? "Portal Inclusivo TalkBack activado. Toca cualquier elemento para escucharlo o presiona Leer Pantalla."
           : "TalkBack Inclusive Voice Reader activated under Digital Government accessibility standards.");
         habilitarTalkBackInteractivo();
       } else {
@@ -2002,11 +2046,12 @@
     }
 
     function narrarTexto(texto) {
+      if (!sonidoHabilitado) return;
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const locucion = new SpeechSynthesisUtterance(texto);
         locucion.lang = idiomaActual === 'es' ? 'es-PE' : 'en-US';
-        locucion.rate = 0.9;
+        locucion.rate = velocidadVozActual;
         window.speechSynthesis.speak(locucion);
       }
     }
@@ -2041,6 +2086,7 @@
     // Control de Visualización de la Franja de Advertencia en pantallas 0, 2, 4 y 5
     function actualizarVisibilidadAdvertencia(numPantalla) {
       const banner = document.getElementById('franja-advertencia-academica');
+      if (!banner) return;
       if (numPantalla === 0 || numPantalla === 2 || numPantalla === 4 || numPantalla === 5) {
         banner.classList.remove('hidden');
       } else {
@@ -2135,7 +2181,7 @@
         if (textoPct) textoPct.textContent = pct + '%';
 
         if (pct >= 35 && pct < 70) {
-          if (estado) estado.textContent = "Verificando protocolos de interoperabilidad PIDE (D. Leg. 1412)...";
+          if (estado) estado.textContent = "Verificando protocolos de interoperabilidad PIDE...";
           if (subtexto) subtexto.textContent = "Conectando con bases de CSJ Puno...";
         } else if (pct >= 70 && pct < 95) {
           if (estado) estado.textContent = "Inicializando asistente virtual Lexi y módulos accesibles...";
@@ -2149,11 +2195,6 @@
           }, 350);
         }
       }, 160);
-    }
-
-    function saltarSplashPre0() {
-      if (timerSplashPre0) clearInterval(timerSplashPre0);
-      irAPantalla(0);
     }
 
     // Flujo inicial desde Pantalla 0
@@ -2180,7 +2221,7 @@
 
         if (pct >= 50 && pct < 85) {
           estado.textContent = idiomaActual === 'es' 
-            ? "Verificando llaves de seguridad PIDE / PJ (D. Leg. 1412)..." 
+            ? "Verificando llaves de seguridad PIDE / PJ..." 
             : "Verifying PIDE / Judicial security keys...";
         } else if (pct >= 85) {
           estado.textContent = idiomaActual === 'es' 
@@ -2195,11 +2236,6 @@
           }, 350);
         }
       }, 200);
-    }
-
-    function saltarSplash1() {
-      if (timerSplash1) clearInterval(timerSplash1);
-      irAPantalla(2);
     }
 
     // Pantalla 2: Generación de CAPTCHA en Canvas
@@ -2305,7 +2341,7 @@
             : "Connecting to PIDE node and Puno Court database...";
         } else if (pct >= 80) {
           estado.textContent = idiomaActual === 'es'
-            ? "Interoperabilidad confirmada (Art. 26 D. Leg. 1412)."
+            ? "Interoperabilidad confirmada."
             : "Interoperability confirmed.";
         }
 
@@ -2316,11 +2352,6 @@
           }, 350);
         }
       }, 200);
-    }
-
-    function saltarSplash2() {
-      if (timerSplash2) clearInterval(timerSplash2);
-      irAPantalla(4);
     }
 
     function activarPanelBusqueda() {
@@ -2387,341 +2418,203 @@
 
     function abrirModalInstructivo() {
       document.getElementById('modal-instructivo').classList.remove('hidden');
-      if (talkbackActivo) narrarTexto("Instructivo de uso abierto. Describe los estándares del Decreto Legislativo 1412.");
+      if (talkbackActivo) narrarTexto("Instructivo de uso abierto. Describe los estándares de gobierno digital y confianza digital.");
     }
     function cerrarModalInstructivo() {
       document.getElementById('modal-instructivo').classList.add('hidden');
     }
 
     function abrirModalSentencia() {
+      const iframeSentencia = document.getElementById('sentencia-iframe-pdf');
+      if (iframeSentencia) {
+        const rawPdfUrl = encodeURIComponent("https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%2010.pdf");
+        iframeSentencia.src = `https://docs.google.com/gview?url=${rawPdfUrl}&embedded=true`;
+      }
       document.getElementById('modal-sentencia').classList.remove('hidden');
-      if (talkbackActivo) narrarTexto("Sentencia Absolutoria Número 088 de 2020. Falla absolviendo a Edgar Raúl R por Homicidio Culposo y ordenando el archivo definitivo de la causa.");
+      if (talkbackActivo) narrarTexto("Resolución Número 10, Sentencia Absolutoria Número 088 de 2020. Falla absolviendo a Edgar Raúl R por Homicidio Culposo y ordenando el archivo definitivo de la causa.");
     }
     function cerrarModalSentencia() {
+      const iframeSentencia = document.getElementById('sentencia-iframe-pdf');
+      if (iframeSentencia) iframeSentencia.src = "";
       document.getElementById('modal-sentencia').classList.add('hidden');
     }
 
-    // BASE DE DATOS DETALLADA DE LAS 18 RESOLUCIONES JUDICIALES
+    // BASE DE DATOS CORRELATIVA DE LOS 10 ACTUADOS (0 = FISCAL, 1-7 = RES 1-7, 89 = RES 8 Y 9 UNIFICADAS, 10 = SENTENCIA)
     const bancoResolucionesJudiciales = {
+      0: {
+        numero: "DISPOSICIÓN FISCAL DE FORMALIZACIÓN",
+        fecha: "28/05/2018 - 11:00 hrs",
+        instancia: "1° Fiscalía Provincial Penal Corporativa de Puno",
+        firmante: "Dr. Roberto Valdivia Cari (Fiscal Provincial)",
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/FISCAL.pdf&embedded=true",
+        vistos: "Los actuados preliminares remitidos por la Comisaría Sectorial Central de Puno y la Unidad de Prevención e Investigación de Accidentes de Tránsito (UPIAT-PNP) respecto al accidente de tránsito acaecido en la Av. Floral con Jr. El Sol de Puno.",
+        considerando: [
+          "Que, de los recaudos preliminares emergen indicios reveladores de la presunta comisión del delito contra la Vida, el Cuerpo y la Salud en la modalidad de Homicidio Culposo previsto en el Art. 111° del Código Penal.",
+          "Que, se ha cumplido con individualizar plenamente al investigado Edgar Raúl R**** C***** y al agraviado occiso Víctor Alfonso Q***** M*****."
+        ],
+        resuelve: [
+          "1. FORMALIZAR Y CONTINUAR LA INVESTIGACIÓN PREPARATORIA contra EDGAR RAÚL R**** C***** como presunto autor del delito de Homicidio Culposo (Art. 111° CP).",
+          "2. COMUNICAR la presente Disposición al Juez de la Investigación Preparatoria de Puno conforme al Art. 336° del Código Procesal Penal."
+        ]
+      },
       1: {
-        numero: "01",
+        numero: "RESOLUCIÓN N° 01",
         fecha: "05/06/2018 - 09:30 hrs",
         instancia: "1° Juzgado de Investigación Preparatoria de Puno",
         firmante: "Dr. Mario Cárdenas Silva (Juez de IP)",
-        vistos: "La Disposición Fiscal N° 01-2018 remitida por la 1° Fiscalía Provincial Penal Corporativa de Puno, mediante la cual comunica la Formalización y Continuación de la Investigación Preparatoria contra Edgar Raúl R**** C***** por la presunta comisión del delito de Homicidio Culposo (Art. 111° CP) en agravio del occiso Víctor Alfonso Q***** M*****.",
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25201.pdf&embedded=true",
+        vistos: "La Disposición Fiscal remitida por la 1° Fiscalía Provincial Penal Corporativa de Puno mediante la cual comunica la Formalización y Continuación de la Investigación Preparatoria contra Edgar Raúl R**** C*****.",
         considerando: [
           "Que, conforme al Art. 3° del Código Procesal Penal, el Juez de la Investigación Preparatoria es competente para tutelar las garantías del proceso y supervisar el plazo legal de la investigación.",
-          "Que, la Disposición Fiscal cumple con individualizar al imputado, fijar los hechos fácticos sobre el accidente vehicular acaecido en la Av. Floral de Puno y precisar los actos de investigación preliminares.",
-          "Que, no habiéndose solicitado medida coercitiva gravosa de prisión preventiva, corresponde imponer la medida cautelar de comparecencia simple conforme al Art. 286° del NCPP."
+          "Que, no habiéndose solicitado medida coercitiva gravosa de prisión preventiva, corresponde imponer la medida de comparecencia simple."
         ],
         resuelve: [
-          "1. TENER POR COMUNICADA la Disposición de Formalización y Continuación de la Investigación Preparatoria contra Edgar Raúl R**** C***** por el plazo improrrogable de 120 días.",
-          "2. DICTAR mandato de COMPARECENCIA SIMPLE en contra del imputado Edgar Raúl R**** C*****, exhortándolo a concurrir a todas las citaciones del Ministerio Público y del Órgano Jurisdiccional.",
-          "3. DISPONER la asignación del número de expediente y la habilitación de las casillas electrónicas SINOE a los sujetos procesales."
+          "1. TENER POR COMUNICADA la Disposición de Formalización y Continuación de la Investigación Preparatoria contra Edgar Raúl R**** C*****.",
+          "2. DICTAR mandato de COMPARECENCIA SIMPLE y habilitar las casillas electrónicas SINOE de las partes."
         ]
       },
       2: {
-        numero: "02",
+        numero: "RESOLUCIÓN N° 02",
         fecha: "18/07/2018 - 11:15 hrs",
         instancia: "1° Juzgado de Investigación Preparatoria de Puno",
         firmante: "Dr. Mario Cárdenas Silva (Juez de IP)",
-        vistos: "El escrito N° 01 presentado por doña Elena F***** T*****, en calidad de cónyuge supérstite del agraviado Víctor Alfonso Q***** M*****, solicitando su constitución en Actor Civil en el presente proceso penal.",
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25202.pdf&embedded=true",
+        vistos: "El escrito presentado por doña Elena F***** T*****, en calidad de cónyuge supérstite del agraviado Víctor Alfonso Q***** M*****, solicitando su constitución en Actor Civil.",
         considerando: [
-          "Que, los Arts. 98° a 102° del NCPP establecen la facultad de los herederos legales y cónyuge supérstite para constituirse en actor civil y deducir la pretensión indemnizatoria emergente del hecho punible.",
-          "Que, la solicitante acredita su legítimo interés mediante partida de matrimonio civil e inscripción en el Registro de Sucesión Intestada de los Registros Públicos de Puno (SUNARP).",
-          "Que, el traslado corrido al Ministerio Público y a la defensa del imputado no mereció oposición fundada dentro del término de ley."
+          "Que, los Arts. 98° a 102° del NCPP facultan a los sucesores legales a constituirse en actor civil para deducir la pretensión indemnizatoria.",
+          "Que, la solicitante acredita su entroncamiento familiar y legítimo interés conforme a ley."
         ],
         resuelve: [
-          "1. DECLARAR FUNDADA la solicitud de constitución en ACTOR CIVIL promovida por doña Elena F***** T*****, con los derechos y facultades procesales previstos en los Arts. 104° y 105° del Código Procesal Penal.",
-          "2. TENER por señalado su domicilio procesal y la Casilla Electrónica SINOE N° 73041-PUNO, con el patrocinio de la Dra. Maritza Choque Cruz."
+          "1. DECLARAR FUNDADA la solicitud de constitución en ACTOR CIVIL promovida por doña Elena F***** T*****.",
+          "2. TENER por señalada su Casilla Electrónica SINOE N° 73041-PUNO con el patrocinio de la Dra. Maritza Choque Cruz."
         ]
       },
       3: {
-        numero: "03",
-        fecha: "14/09/2018 - 10:00 hrs",
-        instancia: "1° Juzgado de Investigación Preparatoria de Puno",
-        firmante: "Dr. Mario Cárdenas Silva (Juez de IP)",
-        vistos: "El oficio remitido por la Unidad de Prevención e Investigación de Accidentes de Tránsito (UPIAT-PNP Puno) y los informes periciales del Instituto de Medicina Legal de Puno incorporados al cuaderno de actos de investigación.",
-        considerando: [
-          "Que, se han remitido válidamente el Certificado de Dosaje Etílico N° 00481-2018 practicado al imputado, el Informe Técnico Pericial de Ingeniería Vial N° 088-2018 de la UPIAT-PNP y el Protocolo de Necropsia N° 2018-00124 del agraviado Víctor Alfonso Q***** M*****.",
-          "Que, los actos urgentes e inaplazables han respetado la cadena de custodia y el principio de contradicción probatoria exigidos en el Art. 383° del NCPP."
-        ],
-        resuelve: [
-          "1. TENER POR INCORPORADOS los informes periciales de tránsito, dosaje etílico y protocolo de necropsia de ley al expediente judicial con conocimiento de las partes.",
-          "2. REQUERIR al Fiscal provincial agotar las diligencias testimoniales pendientes dentro del término estricto de la etapa preparatoria."
-        ]
-      },
-      4: {
-        numero: "04",
+        numero: "RESOLUCIÓN N° 03",
         fecha: "10/11/2018 - 12:30 hrs",
         instancia: "1° Juzgado de Investigación Preparatoria de Puno",
         firmante: "Dr. Mario Cárdenas Silva (Juez de IP)",
-        vistos: "El requerimiento de conclusión de investigación preparatoria formulado por la defensa técnica y el vencimiento del plazo temporal legal otorgado al titular de la acción penal.",
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25203.pdf&embedded=true",
+        vistos: "Los informes periciales incorporados de la UPIAT-PNP Puno, Instituto de Medicina Legal y el vencimiento del plazo de investigación preparatoria.",
         considerando: [
-          "Que, habiéndose cumplido el plazo de 120 días fijado en la Disposición N° 01-2018, la investigación preparatoria no puede extenderse más allá de sus límites perentorios (Art. 343° NCPP).",
-          "Que, corresponde conminar al Ministerio Público a formalizar su pronunciamiento conclusivo (acusación o sobreseimiento) dentro del plazo improrrogable de 15 días."
+          "Que, se encuentran agregados en autos el Certificado de Dosaje Etílico, el Informe Técnico Pericial de Ingeniería Vial y el Protocolo de Necropsia.",
+          "Que, vencido el término legal corresponde declarar concluida la etapa preparatoria y correr traslado del requerimiento acusatorio."
         ],
         resuelve: [
-          "1. DECLARAR CONCLUIDA la Etapa de Investigación Preparatoria seguida contra Edgar Raúl R**** C***** por el delito de Homicidio Culposo.",
-          "2. CONCEDER al Fiscal provincial el plazo legal de 15 días para emitir su requerimiento acusatorio o de sobreseimiento bajo responsabilidad funcional."
+          "1. TENER POR INCORPORADOS los informes periciales y DECLARAR CONCLUIDA la Etapa de Investigación Preparatoria.",
+          "2. CORRER TRASLADO del requerimiento acusatorio fiscal a los sujetos procesales por el plazo de ley."
         ]
       },
-      5: {
-        numero: "05",
-        fecha: "28/01/2019 - 15:45 hrs",
-        instancia: "1° Juzgado de Investigación Preparatoria de Puno",
-        firmante: "Dr. Mario Cárdenas Silva (Juez de IP)",
-        vistos: "El Requerimiento Acusatorio presentado por el Fiscal Dr. Roberto Valdivia Cari (1° Fiscalía Provincial Penal Corporativa de Puno) obrante a fojas 210 a 248 del expediente.",
-        considerando: [
-          "Que, ingresado el requerimiento de acusación, el Art. 350° del Código Procesal Penal exige notificar a los demás sujetos procesales para que en el plazo de 10 días puedan formular observaciones formales, excepciones o deducir medios de defensa y ofrecer medios probatorios.",
-          "Que, debe garantizarse el ejercicio irrestricto del derecho a la defensa y el principio de contradicción procesal en la etapa intermedia."
-        ],
-        resuelve: [
-          "1. CORRER TRASLADO del requerimiento acusatorio a la defensa técnica del imputado Edgar Raúl R**** C***** y a la actora civil por el plazo común e improrrogable de DIEZ DÍAS.",
-          "2. FIJAR fecha para la AUDIENCIA PRELIMINAR DE CONTROL DE ACUSACIÓN para el día 18 de marzo de 2019 a horas 09:00 a.m. en la Sala N° 02 de la CSJ Puno."
-        ]
-      },
-      6: {
-        numero: "06",
-        fecha: "18/03/2019 - 11:20 hrs",
-        instancia: "1° Juzgado de Investigación Preparatoria de Puno",
-        firmante: "Dr. Mario Cárdenas Silva (Juez de IP)",
-        vistos: "El debate suscitado en la sesión de audiencia preliminar de control de acusación respecto a los defectos formales denunciados por la defensa del imputado.",
-        considerando: [
-          "Que, en el control formal de la acusación se verifica la concurrencia de los presupuestos estipulados en el Art. 349° del NCPP, tales como la relación clara y precisa del hecho atribuido, la calificación jurídica y los elementos de convicción que la sustentan.",
-          "Que, las precisiones fácticas formuladas oralmente por el Representante del Ministerio Público en audiencia han subsanado las omisiones menores advertidas, quedando delimitado el ámbito de imputación objetiva respecto a la velocidad y maniobra imprudente en el cruce de la Av. Floral.",
-          "Que, la acusación cumple con los estándares formales exigidos para ingresar al saneamiento sustancial de la causa."
-        ],
-        resuelve: [
-          "1. DECLARAR LA VALIDEZ FORMAL DE LA ACUSACIÓN FISCAL formulada por la 1° Fiscalía Provincial Penal Corporativa de Puno en contra de EDGAR RAÚL R**** C***** como presunto autor del delito de Homicidio Culposo (Art. 111° CP).",
-          "2. CONTINUAR con el control sustancial de la acusación y debate de sobreseimiento en la sesión continuada de audiencia."
-        ]
-      },
-      7: {
-        numero: "07",
-        fecha: "08/04/2019 - 16:10 hrs",
-        instancia: "1° Juzgado de Investigación Preparatoria de Puno",
-        firmante: "Dr. Mario Cárdenas Silva (Juez de IP)",
-        vistos: "La solicitud de Sobreseimiento deducida por la defensa técnica del imputado Edgar Raúl R**** C***** al amparo del literal b) numeral 2 del Art. 344° del Código Procesal Penal.",
-        considerando: [
-          "Que, la defensa alega atipicidad por supuesta culpa exclusiva de la víctima en el cruce de la vía peatonal.",
-          "Que, del Informe Pericial de Ingeniería Vial UPIAT-PNP se desprende que el vehículo conducido por el acusado transitaba superando el límite de velocidad en zona urbana escolar (65 km/h cuando el límite era 30 km/h), infringiendo el deber de cuidado que le era exigible.",
-          "Que, existen fundados y graves elementos de convicción que impiden archivar la causa en esta sede preliminar, debiendo ser debatidos de manera amplia y contradictoria en el juicio oral y público."
-        ],
-        resuelve: [
-          "1. DECLARAR INFUNDADA la solicitud de SOBRESEIMIENTO deducida por la defensa técnica del acusado Edgar Raúl R**** C*****.",
-          "2. DISPONER el pase a la etapa de admisibilidad de medios probatorios para el dictado del Auto de Enjuiciamiento respectivo."
-        ]
-      },
-      8: {
-        numero: "08 (AUTO DE ENJUICIAMIENTO)",
+      4: {
+        numero: "RESOLUCIÓN N° 04 (AUTO DE ENJUICIAMIENTO)",
         fecha: "20/05/2019 - 14:00 hrs",
         instancia: "1° Juzgado de Investigación Preparatoria de Puno",
         firmante: "Dr. Mario Cárdenas Silva (Juez de IP)",
-        vistos: "La culminación del control de acusación y la calificación de medios probatorios ofrecidos por las partes procesales.",
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25204.pdf&embedded=true",
+        vistos: "El debate de control formal y sustancial de la acusación fiscal y calificación de medios probatorios.",
         considerando: [
-          "Que, concurren todos los presupuestos de procedibilidad y no existiendo causales de extinción de la acción penal, corresponde dictar el respectivo Auto de Enjuiciamiento de conformidad con el Art. 353° del Código Procesal Penal.",
-          "Que, se admiten los medios de prueba testimoniales, periciales y documentales ofrecidos por el Fiscal y el Actor Civil, así como la testimonial de descargo de la defensa."
+          "Que, saneada formalmente la acusación y desestimado el pedido de sobreseimiento de la defensa, concurren los presupuestos para emitir el Auto de Enjuiciamiento conforme al Art. 353° del NCPP.",
+          "Que, se admiten los medios de prueba testimoniales, periciales y documentales ofrecidos por las partes."
         ],
         resuelve: [
-          "1. DICTAR AUTO DE ENJUICIAMIENTO en contra de EDGAR RAÚL R**** C***** (DNI N° 4198****, natural de Puno, soltero, de 35 años de edad, con domicilio en Jr. Deustua N° 340, Puno y Casilla SINOE 61922-PUNO, abogado Dr. Néstor Pari Alanoca), como presunto autor del delito contra la Vida, el Cuerpo y la Salud, en la modalidad de HOMICIDIO CULPOSO (Art. 111° CP) en agravio de quien en vida fue Víctor Alfonso Q***** M*****.",
-          "2. FIJAR como pretensión del Ministerio Público la imposición de OCHO MESES DE PENA PRIVATIVA DE LIBERTAD e inhabilitación; y por parte del Actor Civil, el pago solidario de S/ 25,000.00 (Veinticinco Mil Soles) de Reparación Civil.",
-          "3. REMITIR los actuados al Juzgado Penal Unipersonal de Puno que por turno corresponda para el juzgamiento oral."
+          "1. DICTAR AUTO DE ENJUICIAMIENTO en contra de EDGAR RAÚL R**** C***** como presunto autor del delito de Homicidio Culposo (Art. 111° CP).",
+          "2. REMITIR los actuados al Juzgado Penal Unipersonal de Puno para el juzgamiento oral."
         ]
       },
-      9: {
-        numero: "09",
+      5: {
+        numero: "RESOLUCIÓN N° 05",
         fecha: "28/05/2019 - 08:45 hrs",
         instancia: "Juzgado Penal Unipersonal de Puno - Sede Central",
         firmante: "Dra. Gladis Huanca Quispe (Jueza Titular)",
-        vistos: "El expediente penal remitido por el 1° Juzgado de Investigación Preparatoria con el Auto de Enjuiciamiento N° 034-2019.",
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25205.pdf&embedded=true",
+        vistos: "El expediente penal remitido con el Auto de Enjuiciamiento para la etapa de juzgamiento.",
         considerando: [
-          "Que, asume competencia por turno aleatorio esta judicatura conforme al Art. 355° del Código Procesal Penal.",
-          "Que, corresponde radicar la causa y citar formalmente para la realización de la audiencia de juicio oral."
+          "Que, asume competencia esta judicatura conforme al Art. 355° del Código Procesal Penal.",
+          "Que, corresponde dar por formado el expediente judicial foliado y convocar formalmente a juicio oral."
         ],
         resuelve: [
-          "1. DISPONER LA CONVOCATORIA A JUICIO ORAL contra el acusado Edgar Raúl R**** C*****, fijando fecha de instalación.",
-          "2. EMPLAZAR a los sujetos procesales a sus casillas electrónicas SINOE."
+          "1. AVOCAR conocimiento y DAR POR FORMADO el expediente judicial foliado en autos.",
+          "2. CONVOCAR A JUICIO ORAL contra el acusado Edgar Raúl R**** C*****, emplazando a las partes a sus casillas SINOE."
         ]
       },
-      10: {
-        numero: "10",
-        fecha: "12/08/2019 - 09:15 hrs",
-        instancia: "Juzgado Penal Unipersonal de Puno - Sede Central",
-        firmante: "Dra. Gladis Huanca Quispe (Jueza Titular)",
-        vistos: "La recepción material de los cuadernos de pruebas y requerimientos de las partes.",
-        considerando: [
-          "Que, corresponde ordenar y foliar la totalidad de actuados procesales recibidos de la etapa intermedia.",
-          "Que, la formación formal del expediente garantiza la trazabilidad y foliación legal."
-        ],
-        resuelve: [
-          "1. DAR POR FORMADO EL EXPEDIENTE JUDICIAL de juicio oral foliado en autos.",
-          "2. HABILITAR el acceso digital a través del Sistema Integrado Judicial (SIJ)."
-        ]
-      },
-      11: {
-        numero: "11",
-        fecha: "24/10/2019 - 10:50 hrs",
-        instancia: "Juzgado Penal Unipersonal de Puno - Sede Central",
-        firmante: "Dra. Gladis Huanca Quispe (Jueza Titular)",
-        vistos: "La inconcurrencia injustificada del acusado a la sesión de instalación de juicio oral.",
-        considerando: [
-          "Que, encontrándose debidamente notificado a su casilla electrónica y domicilio real, el acusado Edgar Raúl R**** C***** no concurrió a la audiencia ni justificó su inasistencia.",
-          "Que, conforme al Art. 79° del Código Procesal Penal, corresponde aplicar la medida de contumacia."
-        ],
-        resuelve: [
-          "1. DECLARAR AL IMPUTADO EDGAR RAÚL R**** C***** REO CONTUMAZ.",
-          "2. ORDENAR su inmediata ubicación y captura a nivel de la Policía Nacional del Perú (PNP), suspendiendo el proceso respecto a su persona."
-        ]
-      },
-      12: {
-        numero: "12",
+      6: {
+        numero: "RESOLUCIÓN N° 06",
         fecha: "15/01/2020 - 11:30 hrs",
         instancia: "Juzgado Penal Unipersonal de Puno - Sede Central",
         firmante: "Dra. Gladis Huanca Quispe (Jueza Titular)",
-        vistos: "El apersonamiento espontáneo del acusado y el informe de cese de orden de captura.",
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25206.pdf&embedded=true",
+        vistos: "La declaración previa de contumacia y el posterior apersonamiento espontáneo del acusado ante este despacho judicial.",
         considerando: [
-          "Que, el procesado se ha puesto a derecho y acreditó su disposición de someterse al proceso judicial.",
-          "Que, cesados los motivos de la contumacia, debe señalarse nueva fecha de audiencia."
+          "Que, habiéndose puesto a derecho el acusado Edgar Raúl R**** C*****, han cesado los motivos que originaron su declaración de contumacia.",
+          "Que, corresponde dejar sin efecto las requisitorias policiales y señalar fecha improrrogable de instalación de juicio oral."
         ],
         resuelve: [
-          "1. LEVANTAR la condición de reo contumaz y dejar sin efecto los oficios de captura policial.",
-          "2. SEÑALAR FECHA PARA LA INSTALACIÓN DE JUICIO ORAL con citación obligatoria de las partes."
+          "1. LEVANTAR la condición de reo contumaz y anular los oficios de captura policial.",
+          "2. SEÑALAR nueva fecha para la instalación del juicio oral con citación obligatoria de los sujetos procesales."
         ]
       },
-      13: {
-        numero: "13",
+      7: {
+        numero: "RESOLUCIÓN N° 07",
         fecha: "18/06/2020 - 15:00 hrs",
         instancia: "Juzgado Penal Unipersonal de Puno - Sede Central",
         firmante: "Dra. Gladis Huanca Quispe (Jueza Titular)",
-        vistos: "La inasistencia de los órganos de prueba testimoniales y periciales citados.",
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25207.pdf&embedded=true",
+        vistos: "La inconcurrencia de los órganos de prueba testimoniales y la necesidad de asegurar la actuación pericial en juicio.",
         considerando: [
-          "Que, los testigos Marcos Efraín T**** H***** y Lucía Beatriz M**** C***** no han comparecido al juzgado a pesar de encontrarse notificados.",
-          "Que, se requiere asegurar la presencia pericial y de los testigos para la actuación de pruebas."
+          "Que, los testigos Marcos Efraín T**** H***** y Lucía Beatriz M**** C***** no han comparecido pese a encontrarse notificados.",
+          "Que, resulta indispensable requerir al Ministerio Público la precisión de sus domicilios reales en el término perentorio de 24 horas."
         ],
         resuelve: [
-          "1. ORDENAR LA CONDUCCIÓN COMPULSIVA de los testigos Marcos Efraín T**** H***** y Lucía Beatriz M**** C***** a través de la Policía Nacional.",
-          "2. DISPONER la notificación directa a los peritos de tránsito.",
-          "3. CONCEDER 24 HORAS a la Fiscalía Provincial Penal para que señale el domicilio exacto y actualizado de los testigos."
+          "1. ORDENAR LA CONDUCCIÓN COMPULSIVA de los testigos Marcos Efraín T**** H***** y Lucía Beatriz M**** C***** con auxilio de la PNP.",
+          "2. DISPONER la notificación directa a los peritos de tránsito y CONCEDER 24 HORAS a la Fiscalía para señalar sus domicilios."
         ]
       },
-      14: {
-        numero: "14",
-        fecha: "25/08/2020 - 16:10 hrs",
-        instancia: "Juzgado Penal Unipersonal de Puno - Sede Central",
-        firmante: "Dra. Gladis Huanca Quispe (Jueza Titular)",
-        vistos: "El escrito presentado por el Representante del Ministerio Público informando sobre los domicilios y citaciones de los órganos de prueba.",
-        considerando: [
-          "Que, la Fiscalía ha cumplido con informar dentro del plazo legal los domicilios requeridos.",
-          "Que, corresponde proveer el escrito conforme al estado de la causa."
-        ],
-        resuelve: [
-          "1. TÉNGASE PRESENTE el escrito presentado por el Ministerio Público conforme a lo ordenado en la Resolución N° 13.",
-          "2. CONTINUAR con los apercibimientos correspondientes."
-        ]
-      },
-      15: {
-        numero: "15",
-        fecha: "14/10/2020 - 10:15 hrs",
-        instancia: "Juzgado Penal Unipersonal de Puno - Sede Central",
-        firmante: "Dra. Gladis Huanca Quispe (Jueza Titular)",
-        vistos: "La manifestación de las partes procesales respecto a la imposibilidad de concurrencia física de los peritos oficiales.",
-        considerando: [
-          "Que, los informes periciales corren agregados en autos y fueron sometidos a traslado.",
-          "Que, las partes convienen en no reiterar el examen presencial."
-        ],
-        resuelve: [
-          "1. PRESCINDIR DEL EXAMEN DE LOS PERITOS en juicio oral, procediendo a su incorporación por lectura.",
-          "2. DISPONER el paso a la siguiente etapa probatoria."
-        ]
-      },
-      16: {
-        numero: "16",
-        fecha: "03/11/2020 - 09:30 hrs",
-        instancia: "Juzgado Penal Unipersonal de Puno - Sede Central",
-        firmante: "Dra. Gladis Huanca Quispe (Jueza Titular)",
-        vistos: "La solicitud de reprogramación formulada por la defensa técnica del acusado.",
-        considerando: [
-          "Que, la causal alegada no constituye justificación de fuerza mayor debidamente acreditada conforme al NCPP.",
-          "Que, debe prevalecer el principio de celeridad procesal y concentración de audiencias."
-        ],
-        resuelve: [
-          "1. DECLARAR NO HA LUGAR LA SOLICITUD DE REPROGRAMACIÓN presentada por la defensa técnica.",
-          "2. CONTINUAR con la sesión de audiencia en la fecha programada."
-        ]
-      },
-      17: {
-        numero: "17",
+      89: {
+        numero: "RESOLUCIONES N° 08 Y N° 09 (ACTUADO UNIFICADO)",
         fecha: "20/11/2020 - 16:45 hrs",
         instancia: "Juzgado Penal Unipersonal de Puno - Sede Central",
         firmante: "Dra. Gladis Huanca Quispe (Jueza Titular)",
-        vistos: "La culminación del debate oral y la propuesta de pruebas documentales.",
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25208%2520Y%25209.pdf&embedded=true",
+        vistos: "El cumplimiento fiscal sobre domicilios, la conformidad de las partes sobre los informes periciales y la etapa de oralización documental.",
         considerando: [
-          "Que, corresponde la lectura y debate de las piezas documentales válidamente admitidas.",
-          "Que, obran en el expediente el Certificado Médico Legal, el Informe Pericial de Tránsito de la UPIAT-PNP y el Certificado de Defunción."
+          "Que, en la Resolución N° 08 se tuvo presente el escrito fiscal y, con anuencia expresa de las partes, se acordó prescindir del examen presencial de los peritos.",
+          "Que, en la Resolución N° 09 corresponde disponer la oralización pública de las piezas documentales válidamente admitidas antes de los alegatos de clausura."
         ],
         resuelve: [
-          "1. DISPONER QUE SE ORALICE: 1 Certificado Médico Legal, el Informe Pericial de Tránsito y el Certificado de Defunción del occiso.",
-          "2. CERRAR la etapa de actuación probatoria y citar para alegatos de clausura."
-        ]
-      },
-      18: {
-        numero: "18 (SENTENCIA ABSOLUTORIA N° 088-2020)",
-        fecha: "14/12/2020 - 16:30 hrs",
-        instancia: "Juzgado Penal Unipersonal de Puno - Sede Central",
-        firmante: "Dra. Gladis Huanca Quispe (Jueza Titular)",
-        vistos: "Sentencia Absolutoria N° 088-2020-JPU dictada en audiencia pública de juicio oral.",
-        considerando: [
-          "Que de la valoración conjunta de la prueba no se desvirtuó la presunción de inocencia por insuficiencia probatoria y duda insuperable.",
-          "Que procede la absolución y archivo definitivo de la causa conforme al Art. 398° del Código Procesal Penal."
-        ],
-        resuelve: [
-          "1. ABSOLVER a Edgar Raúl R**** C***** del delito de Homicidio Culposo (Art. 111° CP).",
-          "2. ORDENAR EL ARCHIVO DEFINITIVO del presente proceso penal una vez consentida.",
-          "3. ANULAR antecedentes y levantar toda medida impuesta en su contra."
+          "1. TENER PRESENTE el escrito fiscal y PRESCINDIR DEL EXAMEN PRESENCIAL DE LOS PERITOS conforme al Art. 383° del NCPP (Res. 08).",
+          "2. DISPONER QUE SE ORALICE: 1 Certificado Médico Legal, el Informe Pericial de Tránsito UPIAT-PNP y el Certificado de Defunción del occiso, cerrando el periodo probatorio (Res. 09)."
         ]
       }
     };
 
     function abrirModalResolucion(num) {
-      if (num === 18) {
+      if (num === 10) {
         abrirModalSentencia();
         return;
       }
 
       const res = bancoResolucionesJudiciales[num];
       if (!res) {
-        mostrarNotificacion(`Visualizando Resolución N° ${num < 10 ? '0' + num : num}.`);
+        mostrarNotificacion(`Visualizando Actuado N° ${num}.`);
         return;
       }
 
-      document.getElementById('detalle-res-numero').textContent = `RESOLUCIÓN N° ${res.numero}`;
+      document.getElementById('detalle-res-numero').textContent = res.numero;
       document.getElementById('detalle-res-instancia').textContent = res.instancia;
       document.getElementById('detalle-res-fecha').textContent = res.fecha;
-      document.getElementById('detalle-res-firmante').textContent = res.firmante;
-      document.getElementById('detalle-res-vistos').textContent = res.vistos;
 
-      const contConsiderando = document.getElementById('detalle-res-considerando');
-      contConsiderando.innerHTML = "";
-      res.considerando.forEach(p => {
-        const item = document.createElement('p');
-        item.textContent = p;
-        contConsiderando.appendChild(item);
-      });
-
-      const contResuelve = document.getElementById('detalle-res-resuelve');
-      contResuelve.innerHTML = "";
-      res.resuelve.forEach(r => {
-        const pRes = document.createElement('p');
-        pRes.innerHTML = `<strong>${r.split('.')[0]}.</strong> ${r.substring(r.indexOf('.') + 1)}`;
-        contResuelve.appendChild(pRes);
-      });
+      const iframePdf = document.getElementById('detalle-res-iframe-pdf');
+      if (iframePdf && res.pdfUrl) {
+        iframePdf.src = res.pdfUrl;
+      }
 
       document.getElementById('modal-resolucion-detalle').classList.remove('hidden');
-      if (talkbackActivo) narrarTexto(`Visualizando Resolución Judicial número ${res.numero}. Dictada por ${res.firmante}`);
+      if (talkbackActivo) narrarTexto(`Visualizando ${res.numero}. Emitido por ${res.firmante}`);
     }
 
     function cerrarModalResolucionDetalle() {
+      const iframePdf = document.getElementById('detalle-res-iframe-pdf');
+      if (iframePdf) iframePdf.src = "";
       document.getElementById('modal-resolucion-detalle').classList.add('hidden');
     }
 
@@ -2743,7 +2636,7 @@
 
     function abrirModalMigraciones() {
       document.getElementById('modal-migraciones').classList.remove('hidden');
-      if (talkbackActivo) narrarTexto("Ficha de control migratorio y alerta de arraigo judicial PIDE");
+      if (talkbackActivo) narrarTexto("Ficha de control migratorio y estado sin impedimento de salida PIDE");
     }
     function cerrarModalMigraciones() {
       document.getElementById('modal-migraciones').classList.add('hidden');
@@ -2785,7 +2678,7 @@
           <span>${sumilla}</span>
           <span class="text-slate-400">${fecha} • Cargo ${numCargo}</span>
         </div>
-        <p class="text-slate-300 font-sans">Presentante: ${parte} (Ingresado vía Registro Digital Art. 21 D. Leg. 1412).</p>
+        <p class="text-slate-300 font-sans">Presentante: ${parte} (Ingresado vía Registro Digital con Firma y Sellado de Tiempo).</p>
       `;
       lista.prepend(nuevoItem);
 
@@ -2814,7 +2707,7 @@
     const contenidoInstitucional = {
       mision: {
         titulo: "MISIÓN INSTITUCIONAL",
-        cuerpo: "<p>Administrar justicia en el Distrito Judicial de Puno garantizando la seguridad jurídica, la tutela jurisdiccional efectiva y el debido proceso, con estricto apego al Decreto Legislativo Nº 1412 (Ley de Gobierno Digital) para un servicio digital transparente, ágil y confiable.</p>"
+        cuerpo: "<p>Administrar justicia en el Distrito Judicial de Puno garantizando la seguridad jurídica, la tutela jurisdiccional efectiva y el debido proceso, operando bajo estándares de Gobierno Digital para un servicio transparente, ágil y confiable.</p>"
       },
       vision: {
         titulo: "VISIÓN INSTITUCIONAL",
@@ -2822,7 +2715,7 @@
       },
       transparencia: {
         titulo: "TRANSPARENCIA Y ACCESO PÚBLICO",
-        cuerpo: "<p>En observancia del principio de Datos Abiertos por Defecto (Art. 5 Numeral 5.9 del D. Leg. 1412), las actuaciones y resoluciones judiciales de causas públicas son accesibles para la fiscalización comunitaria y el control democrático.</p>"
+        cuerpo: "<p>En observancia del principio de Datos Abiertos por Defecto y Gobierno Abierto, las actuaciones y resoluciones judiciales de causas públicas son accesibles para la fiscalización comunitaria y el control democrático.</p>"
       },
       contacto: {
         titulo: "SEDE CENTRAL CORTE DE PUNO",
@@ -2870,7 +2763,7 @@
           <span class="text-base shrink-0 mt-0.5">🤖</span>
           <div class="bg-obsidian-950 border border-goldtech-500/30 rounded-2xl p-3 text-slate-200 space-y-1.5 leading-relaxed font-sans text-xs">
             <p class="font-bold text-goldtech-300 font-mono text-[11px]">Conversación reiniciada</p>
-            <p>Hola de nuevo. Soy Lexi. ¿En qué aspecto del expediente penal o del Decreto Legislativo 1412 puedo orientarte?</p>
+            <p>Hola de nuevo. Soy Lexi. ¿En qué aspecto del expediente penal o de los servicios digitales puedo orientarte?</p>
           </div>
         </div>
       `;
@@ -2956,33 +2849,28 @@
 
     // Consulta con Gemini 3 Flash Preview y Respuestas Contextuales Inteligentes
     async function obtenerRespuestaLexi(pregunta) {
-      const apiKey = "";
+      const apiKey = "AQ.Ab8RN6JQ6ExLY2s09lSCgWCZ1QgkSf5FdlSSm26RbXdACW1qOg";
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
 
-      const systemPrompt = `Eres Lexi, una asistente virtual legal e institucional de la plataforma 'Rastreador Judicial' para la Corte Superior de Justicia de Puno, enmarcada en el Decreto Legislativo Nº 1412 (Ley de Gobierno Digital).
+      const systemPrompt = `Eres Lexi, una asistente virtual legal e institucional de la plataforma 'Rastreador Judicial' para la Corte Superior de Justicia de Puno, operando bajo arquitectura de Gobierno Digital.
 El autor del proyecto académico es Negreiros Alvarez, Jersson Manuel, para el curso Gobierno Digital y Derecho Informático dictado por el docente Espinoza Coila, Michael.
 Datos clave que dominas con absoluta precisión:
 1. Causa: Expediente Penal N° 02766-2018-82-2101-JP-PE-02 tramitado ante el Juzgado Penal Unipersonal de Puno (Jueza Titular: Dra. Gladis Huanca Quispe, Especialista: Abg. Carlos M. Mamani Condori).
 2. Delito: Homicidio Culposo (Art. 111 del Código Penal) imputado a Edgar Raúl R**** C***** (DNI 4198****, casilla SINOE 61922-PUNO) en presunto agravio de Víctor Alfonso Q***** M*****.
-3. Iter procesal exacto (18 Resoluciones Judiciales):
-   - Res. 01 a 05: Etapa Preparatoria (Recepción de formalización, constitución en actor civil, incorporación de peritajes, conclusión y traslado de acusación).
-   - Res. 06: Saneamiento formal y validez de la acusación fiscal.
-   - Res. 07: Declara infundado el sobreseimiento de la defensa.
-   - Res. 08: Auto de Enjuiciamiento formal (Ministerio Público solicita 8 meses de pena privativa de libertad y S/ 25,000.00 de reparación civil).
-   - Res. 09: Convocatoria a juicio oral.
-   - Res. 10: Dar por formado el expediente judicial.
-   - Res. 11: Declara al imputado reo contumaz con orden de captura.
-   - Res. 12: Levanta contumacia al presentarse y señala fecha para instalación de juicio oral.
-   - Res. 13: Ordena conducción compulsiva de testigos (Marcos Efraín T**** H***** y Lucía Beatriz M**** C*****), notificación directa a peritos y 24 hrs a Fiscalía para señalar domicilio de testigos.
-   - Res. 14: Téngase presente escrito conforme a lo ordenado en la Resolución N° 13.
-   - Res. 15: Prescindir del examen de peritos.
-   - Res. 16: No ha lugar solicitud de reprogramación.
-   - Res. 17: Dispone que se oralice: 1 Certificado Médico Legal, Informe Pericial de Tránsito y Certificado de Defunción.
-   - Res. 18 (Sentencia N° 088-2020-JPU): Fallo judicial formal: ABSUELVE al acusado Edgar Raúl R**** C***** del delito de Homicidio Culposo y ORDENA EL ARCHIVO DEFINITIVO del proceso.
-4. Estado actual en la línea de tiempo: Sentencia Absolutoria dictada, en plazo de apelación ante Sala Penal de Apelaciones y mandato de archivo definitivo.
-5. Interoperabilidad PIDE (Art. 26 D. Leg. 1412): Ficha RENIEC, SINOE (Art. 22), MIGRACIONES y SIDPOL PNP.
-6. Mesa de Partes Electrónica (Art. 21) con cargo oficial y hash SHA-256 (Art. 19).
-Responde de forma concisa, educada, empática, profesional y en 2 o 3 párrafos como máximo.`;
+3. Iter procesal exacto (10 Actuados Correlativos):
+   - 01 (Fiscalía): Disposición Fiscal de Formalización de Investigación Preparatoria.
+   - 02 (Res. 01): Recepción de formalización y comparecencia simple.
+   - 03 (Res. 02): Admisión de constitución en actor civil.
+   - 04 (Res. 03): Incorporación de peritajes y conclusión de investigación preparatoria.
+   - 05 (Res. 04): Saneamiento formal de acusación y Auto de Enjuiciamiento.
+   - 06 (Res. 05): Avocamiento y convocatoria a juicio oral.
+   - 07 (Res. 06): Declaración de contumacia y posterior levantamiento al ponerse a derecho.
+   - 08 (Res. 07): Conducción compulsiva de testigos (Marcos Efraín T**** H***** y Lucía Beatriz M**** C*****), notificación directa a peritos y 24 hrs a Fiscalía para señalar domicilios.
+   - 09 (Res. 08 y Res. 09 unificadas en un solo apartado): Prescindencia del examen presencial de peritos y oralización pública del Certificado Médico Legal, Informe Pericial de Tránsito y Certificado de Defunción.
+   - 10 (Res. 10 - Sentencia N° 088-2020-JPU): Fallo judicial formal: ABSUELVE al acusado Edgar Raúl R**** C***** del delito de Homicidio Culposo y ORDENA EL ARCHIVO DEFINITIVO del proceso.
+4. Interoperabilidad PIDE: Ficha RENIEC, Casilla Única Electrónica SINOE, MIGRACIONES y SIDPOL PNP.
+5. Mesa Digital de Partes Electrónica con recepción 24 horas, sellado de tiempo, firma digital y hash SHA-256.
+Responde de forma concisa, educada, empática, profesional y en 2 o 3 párrafos como máximo, evitando citar artículos administrativos de gobierno digital salvo que el usuario lo pida explícitamente.`;
 
       const promptPayload = {
         contents: [
@@ -3021,42 +2909,38 @@ Responde de forma concisa, educada, empática, profesional y en 2 o 3 párrafos 
       const qNorm = q.toLowerCase();
 
       if (qNorm.includes('expediente') || qNorm.includes('caso') || qNorm.includes('resumen')) {
-        return "El expediente principal es el **N° 02766-2018-82-2101-JP-PE-02**, tramitado ante el Juzgado Penal Unipersonal de Puno (Jueza Titular: **Dra. Gladis Huanca Quispe**). En este proceso se imputó el presunto delito de **Homicidio Culposo** (Art. 111° CP) contra **Edgar Raúl R**** C*******, culminando con su **absolución y mandato de archivo definitivo** en la Resolución N° 18.";
+        return "El expediente principal es el **N° 02766-2018-82-2101-JP-PE-02**, tramitado ante el Juzgado Penal Unipersonal de Puno (Jueza Titular: **Dra. Gladis Huanca Quispe**). Cuenta con **10 actuados correlativos** (Formalización Fiscal + Resoluciones 01 a 10) y culminó con la **absolución y archivo definitivo** en la Resolución N° 10.";
       }
 
-      if (qNorm.includes('sentencia') || qNorm.includes('18') || qNorm.includes('absolv') || qNorm.includes('archivo') || qNorm.includes('088')) {
-        return "La **Resolución N° 18 (Sentencia Absolutoria N° 088-2020-JPU)** dictada por la Dra. Gladis Huanca Quispe resolvió: **ABSOLVER a Edgar Raúl R**** C***** del delito de Homicidio Culposo** por duda insuperable e insuficiencia probatoria, disponiendo además el **ARCHIVO DEFINITIVO** de la causa y la anulación de todo antecedente.";
+      if (qNorm.includes('sentencia') || qNorm.includes('10') || qNorm.includes('absolv') || qNorm.includes('archivo') || qNorm.includes('088')) {
+        return "La **Resolución N° 10 (Sentencia Absolutoria N° 088-2020-JPU)** dictada por la Dra. Gladis Huanca Quispe resolvió: **ABSOLVER a Edgar Raúl R**** C***** del delito de Homicidio Culposo** por duda insuperable e insuficiencia probatoria, disponiendo además el **ARCHIVO DEFINITIVO** de la causa y la anulación de todo antecedente.";
       }
 
-      if (qNorm.includes('8') || qNorm.includes('enjuiciamiento')) {
-        return "En la **Resolución N° 08** se dictó el **Auto de Enjuiciamiento Formal** contra Edgar Raúl R**** C***** (DNI 4198****, Casilla SINOE 61922-PUNO, abogado Dr. Néstor Pari Alanoca), donde el Ministerio Público solicitó formalmente **08 meses de pena privativa de libertad** y **S/ 25,000.00 de reparación civil** a favor de los deudos.";
+      if (qNorm.includes('8') || qNorm.includes('9') || qNorm.includes('unificad') || qNorm.includes('oraliz')) {
+        return "El apartado unificado de las **Resoluciones N° 08 y N° 09** recoge la prescindencia del examen presencial de los peritos con anuencia de las partes y dispone la **oralización pública** del Certificado Médico Legal, el Informe Técnico Pericial de Tránsito UPIAT-PNP y el Certificado de Defunción.";
       }
 
-      if (qNorm.includes('11') || qNorm.includes('contumaz')) {
-        return "En la **Resolución N° 11**, ante la inconcurrencia injustificada del acusado a la instalación del juicio oral, el juzgado lo declaró **REO CONTUMAZ**, suspendió el juicio y ordenó su inmediata captura a nivel policial hasta que se puso a derecho (Res. 12).";
+      if (qNorm.includes('7') || qNorm.includes('testigo') || qNorm.includes('perito') || qNorm.includes('compulsiv')) {
+        return "En la **Resolución N° 07**, se ordenó la **conducción compulsiva** de los testigos Marcos Efraín T**** H***** y Lucía Beatriz M**** C*****, la notificación directa a los peritos de tránsito y se concedió **24 horas a la Fiscalía** para señalar sus domicilios actuales.";
       }
 
-      if (qNorm.includes('13') || qNorm.includes('14') || qNorm.includes('testigo') || qNorm.includes('perito')) {
-        return "En la **Resolución N° 13**, se ordenó la **conducción compulsiva** de los testigos Marcos Efraín T**** H***** y Lucía Beatriz M**** C*****, la notificación directa a los peritos y se concedió **24 horas a la Fiscalía** para señalar sus domicilios actuales. La **Resolución N° 14** tuvo presente el escrito fiscal dando cumplimiento a dicho mandato, y en la **Resolución N° 15** se acordó prescindir del examen oral de peritos para dar paso a la oralización documental (Res. 17).";
-      }
-
-      if (qNorm.includes('17') || qNorm.includes('oraliz')) {
-        return "La **Resolución N° 17** dispuso que se oralice en juicio: (i) 1 Certificado Médico Legal, (ii) el Informe Pericial de Tránsito de la UPIAT-PNP y (iii) el Certificado de Defunción del agraviado.";
+      if (qNorm.includes('fiscal') || qNorm.includes('formaliz')) {
+        return "El cuaderno inicia con la **Disposición Fiscal de Formalización de Investigación Preparatoria** emitida por la 1° Fiscalía Provincial Penal Corporativa de Puno contra Edgar Raúl R**** C***** por el delito de Homicidio Culposo (Art. 111° CP).";
       }
 
       if (qNorm.includes('pide') || qNorm.includes('reniec') || qNorm.includes('sinoe') || qNorm.includes('migraciones') || qNorm.includes('sidpol')) {
-        return "Bajo el Art. 26 del D. Leg. 1412, la plataforma interoperabiliza con:\n• **RENIEC:** Biometría e identidad digital.\n• **SINOE:** Domicilio digital en casilla 61922-PUNO (Art. 22).\n• **MIGRACIONES:** Registro migratorio.\n• **SIDPOL:** Registro policial de la intervención inicial en Av. Floral.";
+        return "Bajo la arquitectura de interoperabilidad del Estado (Principio de Una Sola Vez), la plataforma se conecta con:\n• **RENIEC:** Biometría e identidad digital.\n• **SINOE:** Domicilio digital y Casilla Única Electrónica (61922-PUNO).\n• **MIGRACIONES:** Registro migratorio.\n• **SIDPOL:** Registro policial de la intervención inicial en Av. Floral.";
       }
 
       if (qNorm.includes('mesa de partes') || qNorm.includes('escrito') || qNorm.includes('cargo')) {
-        return "Mediante la **Mesa de Partes Electrónica** (Art. 21 del D. Leg. Nº 1412), los abogados pueden ingresar escritos en PDF con firma digital (Art. 19), generándose un cargo electrónico inmediato con fecha/hora oficial y hash **SHA-256**.";
+        return "Mediante la **Mesa Digital de Partes Electrónica** con atención las 24 horas, los abogados pueden ingresar escritos en PDF con firma digital y sellado de tiempo, generándose un cargo electrónico inmediato con hash criptográfico **SHA-256**.";
       }
 
       if (qNorm.includes('autor') || qNorm.includes('creador') || qNorm.includes('jersson')) {
         return "Este prototipo académico fue desarrollado por **Negreiros Alvarez, Jersson Manuel** para el curso de **Gobierno Digital y Derecho Informático** a cargo del docente **Espinoza Coila, Michael**.";
       }
 
-      return "Conforme al **Decreto Legislativo Nº 1412 (Ley de Gobierno Digital)**, la plataforma garantiza la publicidad procesal y trazabilidad del expediente. Puedes consultarme por cualquiera de las 18 resoluciones (como el auto de enjuiciamiento en la Res. 8 o la sentencia absolutoria y archivo en la Res. 18).";
+      return "Bajo estándares de **Gobierno Digital y Confianza Digital**, la plataforma garantiza la publicidad procesal, la interoperabilidad y la trazabilidad íntegra de los **10 actuados correlativos** del expediente. Puedes abrir cualquiera de los PDFs originales con el botón **«Ver PDF Original ↗»**.";
     }
 
     // Inicialización al cargar la ventana
