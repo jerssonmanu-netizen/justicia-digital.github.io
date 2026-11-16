@@ -205,7 +205,7 @@
       <!-- Controles de Accesibilidad, TalkBack y Bilingüe -->
       <div class="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0 relative">
         <!-- Botón Panel Integral de Accesibilidad -->
-        <button id="btn-accesibilidad-toggle" onclick="alternarPanelAccesibilidad()" class="flex items-center space-x-1 sm:space-x-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-cobalttech-500/50 bg-cobalttech-500/15 hover:bg-cobalttech-500/25 text-cobalttech-300 text-xs font-mono font-bold transition cursor-pointer shadow-sm" title="Opciones de Accesibilidad Universal (Contraste, Texto, Sonido)">
+        <button id="btn-accesibilidad-toggle" onclick="alternarPanelAccesibilidad()" class="flex items-center space-x-1 sm:space-x-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-cobalttech-500/50 bg-cobalttech-500/15 hover:bg-cobalttech-500/25 text-cobalttech-300 text-xs font-mono font-bold transition cursor-pointer shadow-sm" title="Opciones de Accesibilidad Universal (Contraste, Texto y Lectura)">
           <span class="text-sm">♿</span>
           <span class="hidden sm:inline" data-i18n="a11y_btn">Accesibilidad</span>
         </button>
@@ -273,31 +273,9 @@
             </div>
           </div>
 
-          <!-- 3. Sonido y Lectura de Voz -->
-          <div class="space-y-2 pt-2 border-t border-white/10">
-            <span class="block text-[10px] text-slate-400 uppercase font-bold">3. Sonido y Asistencia Auditiva:</span>
-            <div class="grid grid-cols-2 gap-1.5">
-              <button id="a11y-btn-sonido" onclick="alternarSonidoSistema()" class="py-2 px-2 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-bold text-[10px] flex items-center justify-center gap-1 cursor-pointer">
-                <span id="a11y-sonido-icono">🔊</span>
-                <span id="a11y-sonido-texto">Sonido: ACTIVO</span>
-              </button>
-              <button onclick="probarAudioAccesibilidad()" class="py-2 px-2 rounded-xl bg-obsidian-950 hover:bg-white/10 border border-white/15 text-goldtech-300 font-bold text-[10px] flex items-center justify-center gap-1 cursor-pointer">
-                <span>▶️</span>
-                <span>Probar Voz</span>
-              </button>
-            </div>
-            <div class="bg-obsidian-950 p-2 rounded-xl border border-white/10 space-y-1">
-              <div class="flex justify-between text-[10px] text-slate-400">
-                <span>Velocidad de Voz:</span>
-                <span id="a11y-velocidad-valor" class="text-goldtech-300 font-bold">0.9x (Normal)</span>
-              </div>
-              <input type="range" id="a11y-velocidad-slider" min="0.6" max="1.5" step="0.1" value="0.9" oninput="ajustarVelocidadVoz(this.value)" class="w-full accent-goldtech-400 cursor-pointer">
-            </div>
-          </div>
-
-          <!-- 4. Ayudas Cognitivas y Motoras -->
+          <!-- 3. Ayudas Cognitivas y Motoras -->
           <div class="space-y-1.5 pt-2 border-t border-white/10">
-            <span class="block text-[10px] text-slate-400 uppercase font-bold">4. Lectura y Navegación:</span>
+            <span class="block text-[10px] text-slate-400 uppercase font-bold">3. Lectura y Navegación:</span>
             <label class="flex items-center justify-between p-2 rounded-xl bg-obsidian-950 border border-white/10 cursor-pointer">
               <span class="text-[10px] text-slate-200">Tipografía Lectura Fácil</span>
               <input type="checkbox" id="chk-a11y-dyslexic" onchange="alternarClaseA11y('a11y-dyslexic', this.checked)" class="accent-goldtech-400 w-4 h-4 cursor-pointer">
@@ -329,15 +307,15 @@
       <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
       <span class="text-goldtech-300 font-bold">TalkBack Activo</span>
     </div>
-    <button onclick="leerPantallaCompleta()" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold cursor-pointer" title="Leer toda la pantalla">
-      ▶ Leer Pantalla
+    <button onclick="leerPantallaCompleta()" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold cursor-pointer" title="Leer todo el contenido visible">
+      ▶ Leer Todo
     </button>
     <button onclick="detenerVoz()" class="px-2.5 py-1 rounded-lg bg-rose-950/80 border border-rose-500/40 text-rose-300 hover:bg-rose-900 font-bold cursor-pointer" title="Detener voz">
       ⏹ Parar
     </button>
     <div class="w-full text-[10px] text-slate-400 pt-1 border-t border-white/5 flex justify-between">
-      <span>Toca o pasa el cursor para narrar</span>
-      <span class="text-goldtech-400">Inclusión Digital</span>
+      <span>Toca o enfoca cualquier elemento para leer</span>
+      <span class="text-goldtech-400">Lectura Total</span>
     </div>
   </div>
 
@@ -497,7 +475,7 @@
           <!-- Selector de Tipo de Documento de Identidad -->
           <div class="bg-obsidian-950 p-4 rounded-2xl border border-white/10 space-y-3.5 font-mono text-xs">
             <div>
-              <label class="block text-[11px] font-bold text-goldtech-300 uppercase mb-1.5" data-i18n="doc_type_lbl">
+              <label for="tipoDocumentoSelect" class="block text-[11px] font-bold text-goldtech-300 uppercase mb-1.5" data-i18n="doc_type_lbl">
                 Tipo de Documento de Identidad *
               </label>
               <select id="tipoDocumentoSelect" onchange="cambiarTipoDocumento()" class="w-full bg-obsidian-900 border border-goldtech-500/40 rounded-xl px-3 py-2.5 text-white font-bold focus:border-goldtech-500 outline-none cursor-pointer">
@@ -509,19 +487,19 @@
             <!-- Campos para Documento Nacional de Identidad (DNI) -->
             <div id="campos-documento-dni" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block text-[10px] text-slate-400 uppercase mb-1">Número de DNI *</label>
+                <label for="input-dni-numero" class="block text-[10px] text-slate-400 uppercase mb-1">Número de DNI *</label>
                 <input type="text" id="input-dni-numero" inputmode="numeric" maxlength="8" placeholder="Ej: 41985623" required class="w-full bg-obsidian-900 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-goldtech-500 outline-none">
               </div>
               <div>
-                <label class="block text-[10px] text-slate-400 uppercase mb-1">Código de Verificación *</label>
+                <label for="input-dni-verificacion" class="block text-[10px] text-slate-400 uppercase mb-1">Código de Verificación *</label>
                 <input type="text" id="input-dni-verificacion" maxlength="1" placeholder="Ej: 7" required class="w-full bg-obsidian-900 border border-white/15 rounded-xl px-3 py-2 text-goldtech-300 font-bold text-center uppercase font-mono focus:border-goldtech-500 outline-none">
               </div>
               <div>
-                <label class="block text-[10px] text-slate-400 uppercase mb-1">Fecha de Emisión *</label>
+                <label for="input-dni-emision" class="block text-[10px] text-slate-400 uppercase mb-1">Fecha de Emisión *</label>
                 <input type="date" id="input-dni-emision" required class="w-full bg-obsidian-900 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-goldtech-500 outline-none">
               </div>
               <div>
-                <label class="block text-[10px] text-slate-400 uppercase mb-1">Fecha de Nacimiento *</label>
+                <label for="input-dni-nacimiento" class="block text-[10px] text-slate-400 uppercase mb-1">Fecha de Nacimiento *</label>
                 <input type="date" id="input-dni-nacimiento" required class="w-full bg-obsidian-900 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-goldtech-500 outline-none">
               </div>
             </div>
@@ -529,15 +507,15 @@
             <!-- Campos para Carné de Extranjería (CE) -->
             <div id="campos-documento-ce" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div class="sm:col-span-2">
-                <label class="block text-[10px] text-slate-400 uppercase mb-1">Número de Documento (Carné de Extranjería) *</label>
+                <label for="input-ce-numero" class="block text-[10px] text-slate-400 uppercase mb-1">Número de Documento (Carné de Extranjería) *</label>
                 <input type="text" id="input-ce-numero" maxlength="12" placeholder="Ej: 001948572" class="w-full bg-obsidian-900 border border-white/15 rounded-xl px-3 py-2 text-white font-mono uppercase focus:border-goldtech-500 outline-none">
               </div>
               <div>
-                <label class="block text-[10px] text-slate-400 uppercase mb-1">Fecha de Emisión *</label>
+                <label for="input-ce-emision" class="block text-[10px] text-slate-400 uppercase mb-1">Fecha de Emisión *</label>
                 <input type="date" id="input-ce-emision" class="w-full bg-obsidian-900 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-goldtech-500 outline-none">
               </div>
               <div>
-                <label class="block text-[10px] text-slate-400 uppercase mb-1">Fecha de Nacimiento *</label>
+                <label for="input-ce-nacimiento" class="block text-[10px] text-slate-400 uppercase mb-1">Fecha de Nacimiento *</label>
                 <input type="date" id="input-ce-nacimiento" class="w-full bg-obsidian-900 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-goldtech-500 outline-none">
               </div>
             </div>
@@ -562,7 +540,7 @@
 
           <!-- Lienzo Canvas CAPTCHA -->
           <div class="bg-obsidian-950 p-4 rounded-2xl border border-white/10 flex flex-col items-center gap-3">
-            <canvas id="lienzoCaptcha" width="200" height="60" class="rounded-xl border border-goldtech-500/30 bg-black cursor-pointer shadow-inner" onclick="generarNuevoCaptcha()" title="Clic para generar nuevo"></canvas>
+            <canvas id="lienzoCaptcha" width="200" height="60" class="rounded-xl border border-goldtech-500/30 bg-black cursor-pointer shadow-inner" onclick="generarNuevoCaptcha()" title="Imagen de seguridad CAPTCHA. Clic para generar nuevo código"></canvas>
             
             <div class="flex items-center space-x-4 text-xs font-mono">
               <button type="button" onclick="generarNuevoCaptcha()" class="text-goldtech-300 hover:text-goldtech-400 flex items-center gap-1 cursor-pointer">
@@ -576,7 +554,7 @@
 
           <!-- Input para el código -->
           <div>
-            <label class="block text-xs font-mono font-bold text-slate-300 mb-1.5 uppercase tracking-wider text-center" data-i18n="cap_input_lbl">
+            <label for="campoCaptchaInput" class="block text-xs font-mono font-bold text-slate-300 mb-1.5 uppercase tracking-wider text-center" data-i18n="cap_input_lbl">
               DIGITE LOS 5 CARACTERES DE LA IMAGEN
             </label>
             <input type="text" id="campoCaptchaInput" maxlength="5" placeholder="EJ: 9M2K8" class="w-full text-center uppercase font-mono text-xl tracking-widest bg-obsidian-950 border border-white/20 rounded-xl px-4 py-3 text-goldtech-300 focus:border-goldtech-500 focus:ring-1 focus:ring-goldtech-500 outline-none transition" required autocomplete="off">
@@ -690,8 +668,8 @@
           <p class="text-xs text-slate-400 font-mono" data-i18n="lbl_general_desc">Consulta abierta por filtros de sede jurisdiccional, juzgado y especialidad procesal:</p>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 text-xs font-mono">
             <div>
-              <label class="block text-slate-400 mb-1" data-i18n="lbl_distrito">Distrito Judicial:</label>
-              <select class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-white">
+              <label for="sel-distrito" class="block text-slate-400 mb-1" data-i18n="lbl_distrito">Distrito Judicial:</label>
+              <select id="sel-distrito" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-white">
                 <option selected>Puno</option>
                 <option>Arequipa</option>
                 <option>Cusco</option>
@@ -699,32 +677,32 @@
               </select>
             </div>
             <div>
-              <label class="block text-slate-400 mb-1" data-i18n="lbl_provincia">Provincia:</label>
-              <select class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-white">
+              <label for="sel-provincia" class="block text-slate-400 mb-1" data-i18n="lbl_provincia">Provincia:</label>
+              <select id="sel-provincia" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-white">
                 <option selected>Puno</option>
                 <option>San Román (Juliaca)</option>
                 <option>Chucuito</option>
               </select>
             </div>
             <div>
-              <label class="block text-slate-400 mb-1" data-i18n="lbl_instancia">Instancia Jurisdiccional:</label>
-              <select class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-white">
+              <label for="sel-instancia" class="block text-slate-400 mb-1" data-i18n="lbl_instancia">Instancia Jurisdiccional:</label>
+              <select id="sel-instancia" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-white">
                 <option selected>Juz. Unipersonal - Sede Central</option>
                 <option>Juz. Investigación Preparatoria</option>
                 <option>Sala Penal de Apelaciones</option>
               </select>
             </div>
             <div>
-              <label class="block text-slate-400 mb-1" data-i18n="lbl_jueza">Jueza Titular a Cargo:</label>
-              <input type="text" value="Dra. Gladis Huanca Quispe" readonly class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-goldtech-300 font-bold truncate">
+              <label for="inp-jueza" class="block text-slate-400 mb-1" data-i18n="lbl_jueza">Jueza Titular a Cargo:</label>
+              <input id="inp-jueza" type="text" value="Dra. Gladis Huanca Quispe" readonly class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-goldtech-300 font-bold truncate">
             </div>
             <div>
-              <label class="block text-slate-400 mb-1" data-i18n="lbl_materia">Materia / Especialidad:</label>
-              <input type="text" value="Penal (NCPP) - Homicidio Culposo" readonly class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-rose-300 font-bold truncate">
+              <label for="inp-materia" class="block text-slate-400 mb-1" data-i18n="lbl_materia">Materia / Especialidad:</label>
+              <input id="inp-materia" type="text" value="Penal (NCPP) - Homicidio Culposo" readonly class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-rose-300 font-bold truncate">
             </div>
             <div>
-              <label class="block text-slate-400 mb-1" data-i18n="lbl_especialista">Especialista Legal:</label>
-              <input type="text" value="Abg. Carlos M. Mamani Condori" readonly class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-slate-300 truncate">
+              <label for="inp-especialista" class="block text-slate-400 mb-1" data-i18n="lbl_especialista">Especialista Legal:</label>
+              <input id="inp-especialista" type="text" value="Abg. Carlos M. Mamani Condori" readonly class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-slate-300 truncate">
             </div>
           </div>
         </div>
@@ -733,7 +711,7 @@
         <div id="modo-busqueda-codigo" class="hidden space-y-4">
           <p class="text-xs text-slate-400 font-mono" data-i18n="lbl_specific_desc">Consulta exacta por el Código Único de Expediente Judicial (CUE):</p>
           <div class="space-y-1.5">
-            <label class="block text-xs font-mono text-slate-400" data-i18n="lbl_code_input">
+            <label for="campoCodigoDirecto" class="block text-xs font-mono text-slate-400" data-i18n="lbl_code_input">
               Número de Expediente Formato Único (27 dígitos oficiales):
             </label>
             <input type="text" id="campoCodigoDirecto" value="02766-2018-82-2101-JP-PE-02" class="w-full bg-obsidian-950 border border-goldtech-500/40 rounded-xl p-3 font-mono text-base text-goldtech-300 focus:border-goldtech-500 focus:ring-1 focus:ring-goldtech-500 outline-none uppercase tracking-wider">
@@ -1321,7 +1299,7 @@
           <div class="p-3 bg-obsidian-950 rounded-xl border border-white/10 space-y-1">
             <span class="text-goldtech-300 font-bold">6. ACCESIBILIDAD UNIVERSAL E INCLUSIÓN DIGITAL</span>
             <p class="text-slate-400 font-sans">
-              Activa el menú de <strong>Accesibilidad</strong> o el lector <strong>Voz TalkBack</strong> desde la barra superior para ajustar contraste, tamaño de fuente y narración auditiva en tiempo real.
+              Activa el menú de <strong>Accesibilidad</strong> o el lector <strong>Voz TalkBack</strong> desde la barra superior para ajustar contraste, tamaño de fuente y narración auditiva completa en tiempo real.
             </p>
           </div>
         </div>
@@ -1579,7 +1557,7 @@
 
       <form onsubmit="procesarSubidaEscrito(event)" class="space-y-3 text-xs font-mono">
         <div>
-          <label class="block text-slate-400 mb-1">Parte Procesal Presentante:</label>
+          <label for="input-presentante" class="block text-slate-400 mb-1">Parte Procesal Presentante:</label>
           <select id="input-presentante" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-white">
             <option>Defensa del Imputado (Dr. Néstor Pari Alanoca)</option>
             <option>Actor Civil (Dra. Maritza Choque Cruz)</option>
@@ -1587,12 +1565,12 @@
           </select>
         </div>
         <div>
-          <label class="block text-slate-400 mb-1">Sumilla del Escrito:</label>
+          <label for="input-sumilla" class="block text-slate-400 mb-1">Sumilla del Escrito:</label>
           <input type="text" id="input-sumilla" required placeholder="EJ: SOLICITA DECLARAR CONSENTIDA SENTENCIA ABSOLUTORIA" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2.5 text-white uppercase">
         </div>
         <div>
-          <label class="block text-slate-400 mb-1">Adjuntar Archivo Foliado (PDF con Firma Digital):</label>
-          <input type="file" accept=".pdf" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2 text-slate-400 text-xs">
+          <label for="input-archivo-pdf" class="block text-slate-400 mb-1">Adjuntar Archivo Foliado (PDF con Firma Digital):</label>
+          <input id="input-archivo-pdf" type="file" accept=".pdf" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-2 text-slate-400 text-xs">
         </div>
         <button type="submit" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow">
           <span>Firmar Digitalmente y Registrar con Sellado de Tiempo</span>
@@ -1674,9 +1652,8 @@
     let timerSplash1 = null;
     let timerSplash2 = null;
     let talkbackActivo = false;
+    let talkbackListenersRegistrados = false;
     let historialChatLexi = [];
-    let sonidoHabilitado = true;
-    let velocidadVozActual = 0.9;
 
     // Cronómetro de Sesión: 10 minutos = 600 segundos (inicia a partir de Pantalla 3)
     let segundosRestantesSesion = 600;
@@ -1914,13 +1891,13 @@
       }
     }
 
-    // ==================== MOTOR DE ACCESIBILIDAD UNIVERSAL TALKBACK Y PANEL A11Y ====================
+    // ==================== MOTOR DE ACCESIBILIDAD UNIVERSAL Y LECTOR COMPLETO TALKBACK ====================
     function alternarPanelAccesibilidad() {
       const panel = document.getElementById('panel-accesibilidad');
       if (!panel) return;
       panel.classList.toggle('hidden');
       if (!panel.classList.contains('hidden') && talkbackActivo) {
-        narrarTexto("Menú de accesibilidad web abierto. Puede ajustar contraste, tamaño de texto y sonido.");
+        narrarTexto("Menú de accesibilidad web abierto. Puede ajustar contraste, tamaño de texto y opciones de lectura.");
       }
     }
 
@@ -1956,7 +1933,7 @@
       }
 
       mostrarNotificacion(descripcion);
-      narrarTexto(descripcion);
+      if (talkbackActivo) narrarTexto(descripcion);
     }
 
     function cambiarTamanoTexto(tam) {
@@ -1987,66 +1964,7 @@
       }
 
       mostrarNotificacion(desc);
-      narrarTexto(desc);
-    }
-
-    function alternarSonidoSistema() {
-      sonidoHabilitado = !sonidoHabilitado;
-      const btn = document.getElementById('a11y-btn-sonido');
-      const icono = document.getElementById('a11y-sonido-icono');
-      const texto = document.getElementById('a11y-sonido-texto');
-
-      if (sonidoHabilitado) {
-        if (btn) btn.className = "py-2 px-2 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-bold text-[10px] flex items-center justify-center gap-1 cursor-pointer";
-        if (icono) icono.textContent = "🔊";
-        if (texto) texto.textContent = "Sonido: ACTIVO";
-        mostrarNotificacion("Audio y narración por voz habilitados");
-        narrarTexto("Sonido del sistema habilitado");
-      } else {
-        detenerVoz();
-        if (btn) btn.className = "py-2 px-2 rounded-xl bg-rose-950/80 border border-rose-500/40 text-rose-300 font-bold text-[10px] flex items-center justify-center gap-1 cursor-pointer";
-        if (icono) icono.textContent = "🔇";
-        if (texto) texto.textContent = "Sonido: MUDO";
-        mostrarNotificacion("Sonido del sistema silenciado");
-      }
-    }
-
-    function ajustarVelocidadVoz(valor) {
-      velocidadVozActual = parseFloat(valor);
-      const etiqueta = document.getElementById('a11y-velocidad-valor');
-      if (etiqueta) {
-        let etiquetaTexto = `${velocidadVozActual.toFixed(1)}x`;
-        if (velocidadVozActual <= 0.7) etiquetaTexto += " (Lenta)";
-        else if (velocidadVozActual <= 1.0) etiquetaTexto += " (Normal)";
-        else etiquetaTexto += " (Rápida)";
-        etiqueta.textContent = etiquetaTexto;
-      }
-    }
-
-    function probarAudioAccesibilidad() {
-      if (!sonidoHabilitado) {
-        alternarSonidoSistema();
-      }
-      reproducirTonoConfirmacion();
-      narrarTexto("Prueba de audio verificada. Sistema accesible conforme a estándares de inclusión digital.");
-    }
-
-    function reproducirTonoConfirmacion() {
-      if (!sonidoHabilitado) return;
-      try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        const ctx = new AudioCtx();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(587.33, ctx.currentTime);
-        gain.gain.setValueAtTime(0.08, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.25);
-      } catch (e) {}
+      if (talkbackActivo) narrarTexto(desc);
     }
 
     function alternarClaseA11y(clase, activo) {
@@ -2060,9 +1978,6 @@
     function restablecerAccesibilidad() {
       cambiarContraste('normal');
       cambiarTamanoTexto('normal');
-      ajustarVelocidadVoz(0.9);
-      const slider = document.getElementById('a11y-velocidad-slider');
-      if (slider) slider.value = 0.9;
 
       const chks = ['chk-a11y-dyslexic', 'chk-a11y-links', 'chk-a11y-motion'];
       chks.forEach(id => {
@@ -2071,24 +1986,24 @@
       });
       document.documentElement.classList.remove('a11y-dyslexic', 'a11y-highlight-links', 'a11y-no-motion');
 
-      if (!sonidoHabilitado) alternarSonidoSistema();
       mostrarNotificacion("Preferencias de accesibilidad restablecidas");
+      if (talkbackActivo) narrarTexto("Preferencias de accesibilidad restablecidas");
     }
 
+    // ==================== MOTOR MEJORADO TALKBACK (LEE ABSOLUTAMENTE TODO) ====================
     function conmutarTalkBack() {
       talkbackActivo = !talkbackActivo;
       const badge = document.getElementById('talkback-badge');
       const barraControl = document.getElementById('barra-control-talkback');
 
       if (talkbackActivo) {
-        if (!sonidoHabilitado) alternarSonidoSistema();
         badge.textContent = "ON";
         badge.className = "px-1.5 py-0.2 rounded text-[9px] bg-emerald-500 text-obsidian-950 font-bold animate-pulse";
         barraControl.classList.remove('hidden');
-        narrarTexto(idiomaActual === 'es' 
-          ? "Portal Inclusivo TalkBack activado. Toca cualquier elemento para escucharlo o presiona Leer Pantalla."
-          : "TalkBack Inclusive Voice Reader activated under Digital Government accessibility standards.");
         habilitarTalkBackInteractivo();
+        narrarTexto(idiomaActual === 'es' 
+          ? "Lector universal TalkBack activado. Toca cualquier botón, campo, selector, ventana o texto para escucharlo, o presiona Leer Todo."
+          : "TalkBack Universal Reader activated. Touch or focus any element to hear it, or press Read All.");
       } else {
         badge.textContent = "OFF";
         badge.className = "px-1.5 py-0.2 rounded text-[9px] bg-slate-800 text-slate-300 border border-white/10 font-bold";
@@ -2098,13 +2013,18 @@
     }
 
     function narrarTexto(texto) {
-      if (!sonidoHabilitado) return;
+      if (!texto || !texto.trim()) return;
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
-        const locucion = new SpeechSynthesisUtterance(texto);
-        locucion.lang = idiomaActual === 'es' ? 'es-PE' : 'en-US';
-        locucion.rate = velocidadVozActual;
-        window.speechSynthesis.speak(locucion);
+        const textoLimpio = texto.replace(/[*•→←↑↓✓●○✕↺]/g, ' ').replace(/\s+/g, ' ').trim();
+        // Dividir en fragmentos si el texto es muy largo para evitar cortes del navegador
+        const fragmentos = textoLimpio.match(/.{1,220}(\s|$)/g) || [textoLimpio];
+        fragmentos.forEach((frag) => {
+          const locucion = new SpeechSynthesisUtterance(frag.trim());
+          locucion.lang = idiomaActual === 'es' ? 'es-PE' : 'en-US';
+          locucion.rate = 0.95;
+          window.speechSynthesis.speak(locucion);
+        });
       }
     }
 
@@ -2114,25 +2034,119 @@
       }
     }
 
+    function extraerDescripcionElemento(el) {
+      if (!el) return "";
+      const tag = el.tagName.toLowerCase();
+
+      if (tag === 'input') {
+        const tipo = el.type || 'text';
+        const etiqueta = el.id ? document.querySelector(`label[for="${el.id}"]`) : null;
+        const nombreCampo = etiqueta ? etiqueta.innerText : (el.placeholder || el.getAttribute('aria-label') || 'Campo de entrada');
+
+        if (tipo === 'checkbox') {
+          const estado = el.checked ? 'Marcado' : 'Sin marcar';
+          const textoPadre = el.closest('label') ? el.closest('label').innerText : nombreCampo;
+          return `Casilla de verificación: ${textoPadre}. Estado: ${estado}.`;
+        }
+        if (tipo === 'date') {
+          const valFecha = el.value ? el.value : 'Sin fecha seleccionada';
+          return `Selector de fecha: ${nombreCampo}. Valor actual: ${valFecha}.`;
+        }
+        if (tipo === 'file') {
+          const archivo = el.files && el.files.length > 0 ? el.files[0].name : 'Ningún archivo seleccionado';
+          return `Adjuntar archivo: ${nombreCampo}. ${archivo}.`;
+        }
+        const valor = el.value ? `Contenido actual: ${el.value}` : 'Campo vacío';
+        return `${nombreCampo}. ${valor}.`;
+      }
+
+      if (tag === 'select') {
+        const etiqueta = el.id ? document.querySelector(`label[for="${el.id}"]`) : null;
+        const nombreSel = etiqueta ? etiqueta.innerText : 'Lista desplegable';
+        const opcionActual = el.options[el.selectedIndex] ? el.options[el.selectedIndex].text : '';
+        return `Selector ${nombreSel}. Opción elegida: ${opcionActual}.`;
+      }
+
+      if (tag === 'canvas') {
+        return el.title || "Imagen de verificación de seguridad CAPTCHA.";
+      }
+
+      if (tag === 'iframe') {
+        return el.title || "Visor de documento PDF incrustado en pantalla.";
+      }
+
+      if (tag === 'button' || tag === 'a') {
+        const txt = el.innerText || el.title || el.getAttribute('aria-label') || '';
+        return txt ? `Botón: ${txt}` : '';
+      }
+
+      return el.innerText || el.title || '';
+    }
+
     function leerPantallaCompleta() {
-      const pantallaVisible = document.querySelector('section:not(.hidden)');
-      if (!pantallaVisible) return;
-      const texto = pantallaVisible.innerText.replace(/\s+/g, ' ').trim();
-      narrarTexto(texto);
+      // Si hay un modal abierto visible, lee primero todo el contenido del modal activo
+      const modalesIds = [
+        'modal-instructivo', 'modal-sentencia', 'modal-resolucion-detalle',
+        'modal-reniec', 'modal-sinoe-imputado', 'modal-migraciones',
+        'modal-sidpol', 'modal-mesa-partes', 'modal-cargo',
+        'modal-cedula', 'modal-institucional'
+      ];
+      for (const idModal of modalesIds) {
+        const mod = document.getElementById(idModal);
+        if (mod && !mod.classList.contains('hidden')) {
+          const textoModal = mod.innerText.replace(/\s+/g, ' ').trim();
+          narrarTexto("Ventana emergente activa: " + textoModal);
+          return;
+        }
+      }
+
+      // Si no hay modal, lee el encabezado + aviso + pantalla principal visible
+      let lecturaTotal = [];
+      const franja = document.getElementById('franja-advertencia-academica');
+      if (franja && !franja.classList.contains('hidden')) {
+        lecturaTotal.push(franja.innerText);
+      }
+
+      const pantallaVisible = document.querySelector('main section:not(.hidden)');
+      if (pantallaVisible) {
+        lecturaTotal.push(pantallaVisible.innerText);
+      }
+
+      const pie = document.querySelector('footer');
+      if (pie) {
+        lecturaTotal.push(pie.innerText);
+      }
+
+      const textoFinal = lecturaTotal.join('. ').replace(/\s+/g, ' ').trim();
+      narrarTexto(textoFinal);
     }
 
     function habilitarTalkBackInteractivo() {
-      document.body.addEventListener('click', (e) => {
-        if (!talkbackActivo) return;
-        if (e.target.closest('#barra-control-talkback') || e.target.closest('#btn-talkback-toggle') || e.target.closest('#btn-abrir-lexi') || e.target.closest('#ventana-chat-lexi')) return;
+      if (talkbackListenersRegistrados) return;
+      talkbackListenersRegistrados = true;
 
-        const el = e.target.closest('button, p, h1, h2, h3, h4, h5, span, strong, a, label, blockquote');
-        if (el && el.innerText) {
-          el.classList.add('talkback-highlight');
-          setTimeout(() => el.classList.remove('talkback-highlight'), 1200);
-          narrarTexto(el.innerText);
+      const procesarInteraccionTalkBack = (e) => {
+        if (!talkbackActivo) return;
+        if (e.target.closest('#barra-control-talkback') || e.target.closest('#btn-talkback-toggle')) return;
+
+        const el = e.target.closest('input, select, textarea, canvas, iframe, button, a, label, blockquote, p, h1, h2, h3, h4, h5, span, strong, li');
+        if (el) {
+          const descripcion = extraerDescripcionElemento(el);
+          if (descripcion) {
+            el.classList.add('talkback-highlight');
+            setTimeout(() => el.classList.remove('talkback-highlight'), 1200);
+            narrarTexto(descripcion);
+          }
         }
-      });
+      };
+
+      document.body.addEventListener('click', procesarInteraccionTalkBack, true);
+      document.body.addEventListener('focusin', procesarInteraccionTalkBack, true);
+      document.body.addEventListener('change', (e) => {
+        if (!talkbackActivo) return;
+        const descripcion = extraerDescripcionElemento(e.target);
+        if (descripcion) narrarTexto(descripcion);
+      }, true);
     }
 
     // Control de Visualización de la Franja de Advertencia en pantallas 0, 2, 4 y 5
@@ -2388,7 +2402,6 @@
       const chkRobot = document.getElementById("chk-no-robot").checked;
       const alerta = document.getElementById("alertaErrorCaptcha");
 
-      // Validar campos obligatorios según el tipo de documento elegido
       if (tipoDoc === "DNI") {
         const dniNum = document.getElementById("input-dni-numero").value.trim();
         const dniVer = document.getElementById("input-dni-verificacion").value.trim();
@@ -2400,6 +2413,7 @@
             ? "Debe completar todos los campos obligatorios del DNI (Número, Código de Verificación, Emisión y Nacimiento)."
             : "Please complete all required National ID fields.";
           alerta.classList.remove("hidden");
+          if (talkbackActivo) narrarTexto(alerta.textContent);
           return;
         }
       } else {
@@ -2412,6 +2426,7 @@
             ? "Debe completar todos los campos obligatorios del Carné de Extranjería (Número, Emisión y Nacimiento)."
             : "Please complete all required Foreigner ID Card fields.";
           alerta.classList.remove("hidden");
+          if (talkbackActivo) narrarTexto(alerta.textContent);
           return;
         }
       }
@@ -2421,6 +2436,7 @@
           ? "Por favor, marque la casilla 'No soy un robot' para continuar."
           : "Please check the 'I'm not a robot' box to continue.";
         alerta.classList.remove("hidden");
+        if (talkbackActivo) narrarTexto(alerta.textContent);
         return;
       }
 
@@ -2429,6 +2445,7 @@
           ? "Código de imagen incorrecto. Intente nuevamente con los nuevos caracteres."
           : "Incorrect security image code. Please try again with new characters.";
         alerta.classList.remove("hidden");
+        if (talkbackActivo) narrarTexto(alerta.textContent);
         generarNuevoCaptcha();
         document.getElementById("campoCaptchaInput").value = "";
         return;
@@ -2887,7 +2904,7 @@
 
     // Consulta con Gemini 3 Flash Preview y Respuestas Contextuales Inteligentes
     async function obtenerRespuestaLexi(pregunta) {
-      const apiKey = "AQ.Ab8RN6JQ6ExLY2s09lSCgWCZ1QgkSf5FdlSSm26RbXdACW1qOg";
+      const apiKey = "";
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
 
       const systemPrompt = `Eres Lexi, una asistente virtual legal e institucional de la plataforma 'Rastreador Judicial' para la Corte Superior de Justicia de Puno, operando bajo arquitectura de Gobierno Digital.
