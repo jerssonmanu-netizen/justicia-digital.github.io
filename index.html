@@ -467,8 +467,8 @@
       </div>
     </section>
 
-    <!-- ==================== PANTALLA 2: VALIDACIÓN PERIMÉTRICA CAPTCHA + "NO SOY UN ROBOT" ==================== -->
-    <section id="pantalla-2" class="hidden w-full max-w-md mx-auto my-auto py-6 space-y-6">
+    <!-- ==================== PANTALLA 2: VALIDACIÓN PERIMÉTRICA E IDENTIDAD DIGITAL ==================== -->
+    <section id="pantalla-2" class="hidden w-full max-w-lg mx-auto my-auto py-6 space-y-6">
 
       <!-- Barra Horizontal Institucional (Pantallas 2, 4 y 5) -->
       <nav class="bg-obsidian-900/90 border border-white/10 rounded-2xl p-2 sm:p-2.5 shadow-xl flex items-center justify-between gap-2 text-xs font-mono overflow-x-auto custom-scrollbar whitespace-nowrap">
@@ -485,14 +485,64 @@
         </div>
       </nav>
 
-      <!-- Tarjeta del CAPTCHA y "No soy un robot" -->
-      <div class="bg-obsidian-900 border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+      <!-- Tarjeta del Filtro de Seguridad Digital -->
+      <div class="bg-obsidian-900 border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5">
         <div class="text-center space-y-1">
           <h3 class="text-lg font-display font-bold text-white tracking-wider uppercase" data-i18n="cap_title">FILTRO DE SEGURIDAD DIGITAL</h3>
           <p class="text-xs text-slate-400 font-mono" data-i18n="cap_sub">Control de identidad digital y nivel de seguridad perimétrica</p>
         </div>
 
         <form id="formularioCaptcha" onsubmit="validarCaptcha(event)" class="space-y-4">
+          
+          <!-- Selector de Tipo de Documento de Identidad -->
+          <div class="bg-obsidian-950 p-4 rounded-2xl border border-white/10 space-y-3.5 font-mono text-xs">
+            <div>
+              <label class="block text-[11px] font-bold text-goldtech-300 uppercase mb-1.5" data-i18n="doc_type_lbl">
+                Tipo de Documento de Identidad *
+              </label>
+              <select id="tipoDocumentoSelect" onchange="cambiarTipoDocumento()" class="w-full bg-obsidian-900 border border-goldtech-500/40 rounded-xl px-3 py-2.5 text-white font-bold focus:border-goldtech-500 outline-none cursor-pointer">
+                <option value="DNI">Documento Nacional de Identidad (DNI)</option>
+                <option value="CE">Carné de Extranjería (CE)</option>
+              </select>
+            </div>
+
+            <!-- Campos para Documento Nacional de Identidad (DNI) -->
+            <div id="campos-documento-dni" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[10px] text-slate-400 uppercase mb-1">Número de DNI *</label>
+                <input type="text" id="input-dni-numero" inputmode="numeric" maxlength="8" placeholder="Ej: 41985623" required class="w-full bg-obsidian-900 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-goldtech-500 outline-none">
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 uppercase mb-1">Código de Verificación *</label>
+                <input type="text" id="input-dni-verificacion" maxlength="1" placeholder="Ej: 7" required class="w-full bg-obsidian-900 border border-white/15 rounded-xl px-3 py-2 text-goldtech-300 font-bold text-center uppercase font-mono focus:border-goldtech-500 outline-none">
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 uppercase mb-1">Fecha de Emisión *</label>
+                <input type="date" id="input-dni-emision" required class="w-full bg-obsidian-900 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-goldtech-500 outline-none">
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 uppercase mb-1">Fecha de Nacimiento *</label>
+                <input type="date" id="input-dni-nacimiento" required class="w-full bg-obsidian-900 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-goldtech-500 outline-none">
+              </div>
+            </div>
+
+            <!-- Campos para Carné de Extranjería (CE) -->
+            <div id="campos-documento-ce" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="sm:col-span-2">
+                <label class="block text-[10px] text-slate-400 uppercase mb-1">Número de Documento (Carné de Extranjería) *</label>
+                <input type="text" id="input-ce-numero" maxlength="12" placeholder="Ej: 001948572" class="w-full bg-obsidian-900 border border-white/15 rounded-xl px-3 py-2 text-white font-mono uppercase focus:border-goldtech-500 outline-none">
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 uppercase mb-1">Fecha de Emisión *</label>
+                <input type="date" id="input-ce-emision" class="w-full bg-obsidian-900 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-goldtech-500 outline-none">
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 uppercase mb-1">Fecha de Nacimiento *</label>
+                <input type="date" id="input-ce-nacimiento" class="w-full bg-obsidian-900 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-goldtech-500 outline-none">
+              </div>
+            </div>
+          </div>
+
           <!-- Casilla "No soy un robot" -->
           <div class="p-3.5 bg-obsidian-950 border border-white/10 rounded-2xl flex items-center justify-between">
             <label class="flex items-center space-x-3 cursor-pointer select-none">
@@ -1235,7 +1285,7 @@
           <div class="p-3 bg-obsidian-950 rounded-xl border border-white/10 space-y-1">
             <span class="text-goldtech-300 font-bold">1. IDENTIDAD DIGITAL Y FILTRO PERIMÉTRICO</span>
             <p class="text-slate-400 font-sans">
-              La verificación perimétrica (CAPTCHA + "No soy un robot") garantiza que el servicio esté protegido contra accesos automatizados no autorizados, asegurando disponibilidad continua y niveles de autenticación segura.
+              La validación del documento de identidad (DNI o Carné de Extranjería) junto con la verificación perimétrica (CAPTCHA + "No soy un robot") garantiza la autenticación del usuario y protege el servicio contra accesos automatizados no autorizados.
             </p>
           </div>
 
@@ -1660,6 +1710,7 @@
         nav_instructions: "Instrucciones de Uso",
         cap_title: "FILTRO DE SEGURIDAD DIGITAL",
         cap_sub: "Control de identidad digital y nivel de seguridad perimétrica",
+        doc_type_lbl: "Tipo de Documento de Identidad *",
         cap_not_robot: "No soy un robot",
         cap_refresh: "Regenerar",
         cap_voice: "Escuchar (Voz)",
@@ -1727,6 +1778,7 @@
         nav_instructions: "User Instructions",
         cap_title: "DIGITAL SECURITY FILTER",
         cap_sub: "Digital identity control and perimeter security level",
+        doc_type_lbl: "Identity Document Type *",
         cap_not_robot: "I'm not a robot",
         cap_refresh: "Regenerate",
         cap_voice: "Listen (Audio)",
@@ -2143,6 +2195,7 @@
       }
 
       if (num === 2) {
+        cambiarTipoDocumento();
         generarNuevoCaptcha();
       }
 
@@ -2152,7 +2205,7 @@
             'pre-0': "Carga inicial del sistema",
             0: "Pantalla inicial de bienvenida a Rastreador Judicial",
             1: "Carga perimétrica de seguridad",
-            2: "Filtro de seguridad digital. Verifique que no es un robot y digite el código",
+            2: "Filtro de seguridad digital. Seleccione su documento de identidad, complete los datos requeridos y digite el código",
             3: "Sincronización con nodo de interoperabilidad PIDE de Puno",
             4: "Módulo de búsqueda. Elija entre búsqueda general y búsqueda específica",
             5: "Dossier completo del expediente penal 02766 de Puno con sentencia absolutoria y archivo"
@@ -2238,6 +2291,43 @@
       }, 200);
     }
 
+    // Pantalla 2: Cambio dinámico entre DNI y Carné de Extranjería
+    function cambiarTipoDocumento() {
+      const select = document.getElementById("tipoDocumentoSelect");
+      if (!select) return;
+      const tipo = select.value;
+
+      const bloqueDni = document.getElementById("campos-documento-dni");
+      const bloqueCe = document.getElementById("campos-documento-ce");
+
+      const dniInputs = [
+        document.getElementById("input-dni-numero"),
+        document.getElementById("input-dni-verificacion"),
+        document.getElementById("input-dni-emision"),
+        document.getElementById("input-dni-nacimiento")
+      ];
+
+      const ceInputs = [
+        document.getElementById("input-ce-numero"),
+        document.getElementById("input-ce-emision"),
+        document.getElementById("input-ce-nacimiento")
+      ];
+
+      if (tipo === "DNI") {
+        bloqueDni.classList.remove("hidden");
+        bloqueCe.classList.add("hidden");
+        dniInputs.forEach(inp => { if (inp) inp.required = true; });
+        ceInputs.forEach(inp => { if (inp) inp.required = false; });
+        if (talkbackActivo) narrarTexto("Documento Nacional de Identidad seleccionado. Complete número de DNI, código de verificación, fecha de emisión y fecha de nacimiento.");
+      } else {
+        bloqueDni.classList.add("hidden");
+        bloqueCe.classList.remove("hidden");
+        dniInputs.forEach(inp => { if (inp) inp.required = false; });
+        ceInputs.forEach(inp => { if (inp) inp.required = true; });
+        if (talkbackActivo) narrarTexto("Carné de Extranjería seleccionado. Complete número de documento, fecha de emisión y fecha de nacimiento.");
+      }
+    }
+
     // Pantalla 2: Generación de CAPTCHA en Canvas
     function generarNuevoCaptcha() {
       const caracteres = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -2293,9 +2383,38 @@
 
     function validarCaptcha(e) {
       e.preventDefault();
+      const tipoDoc = document.getElementById("tipoDocumentoSelect").value;
       const input = document.getElementById("campoCaptchaInput").value.trim().toUpperCase();
       const chkRobot = document.getElementById("chk-no-robot").checked;
       const alerta = document.getElementById("alertaErrorCaptcha");
+
+      // Validar campos obligatorios según el tipo de documento elegido
+      if (tipoDoc === "DNI") {
+        const dniNum = document.getElementById("input-dni-numero").value.trim();
+        const dniVer = document.getElementById("input-dni-verificacion").value.trim();
+        const dniEmi = document.getElementById("input-dni-emision").value.trim();
+        const dniNac = document.getElementById("input-dni-nacimiento").value.trim();
+
+        if (!dniNum || !dniVer || !dniEmi || !dniNac) {
+          alerta.textContent = idiomaActual === 'es'
+            ? "Debe completar todos los campos obligatorios del DNI (Número, Código de Verificación, Emisión y Nacimiento)."
+            : "Please complete all required National ID fields.";
+          alerta.classList.remove("hidden");
+          return;
+        }
+      } else {
+        const ceNum = document.getElementById("input-ce-numero").value.trim();
+        const ceEmi = document.getElementById("input-ce-emision").value.trim();
+        const ceNac = document.getElementById("input-ce-nacimiento").value.trim();
+
+        if (!ceNum || !ceEmi || !ceNac) {
+          alerta.textContent = idiomaActual === 'es'
+            ? "Debe completar todos los campos obligatorios del Carné de Extranjería (Número, Emisión y Nacimiento)."
+            : "Please complete all required Foreigner ID Card fields.";
+          alerta.classList.remove("hidden");
+          return;
+        }
+      }
 
       if (!chkRobot) {
         alerta.textContent = idiomaActual === 'es'
@@ -2446,144 +2565,63 @@
         fecha: "28/05/2018 - 11:00 hrs",
         instancia: "1° Fiscalía Provincial Penal Corporativa de Puno",
         firmante: "Dr. Roberto Valdivia Cari (Fiscal Provincial)",
-        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/FISCAL.pdf&embedded=true",
-        vistos: "Los actuados preliminares remitidos por la Comisaría Sectorial Central de Puno y la Unidad de Prevención e Investigación de Accidentes de Tránsito (UPIAT-PNP) respecto al accidente de tránsito acaecido en la Av. Floral con Jr. El Sol de Puno.",
-        considerando: [
-          "Que, de los recaudos preliminares emergen indicios reveladores de la presunta comisión del delito contra la Vida, el Cuerpo y la Salud en la modalidad de Homicidio Culposo previsto en el Art. 111° del Código Penal.",
-          "Que, se ha cumplido con individualizar plenamente al investigado Edgar Raúl R**** C***** y al agraviado occiso Víctor Alfonso Q***** M*****."
-        ],
-        resuelve: [
-          "1. FORMALIZAR Y CONTINUAR LA INVESTIGACIÓN PREPARATORIA contra EDGAR RAÚL R**** C***** como presunto autor del delito de Homicidio Culposo (Art. 111° CP).",
-          "2. COMUNICAR la presente Disposición al Juez de la Investigación Preparatoria de Puno conforme al Art. 336° del Código Procesal Penal."
-        ]
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/FISCAL.pdf&embedded=true"
       },
       1: {
         numero: "RESOLUCIÓN N° 01",
         fecha: "05/06/2018 - 09:30 hrs",
         instancia: "1° Juzgado de Investigación Preparatoria de Puno",
         firmante: "Dr. Mario Cárdenas Silva (Juez de IP)",
-        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25201.pdf&embedded=true",
-        vistos: "La Disposición Fiscal remitida por la 1° Fiscalía Provincial Penal Corporativa de Puno mediante la cual comunica la Formalización y Continuación de la Investigación Preparatoria contra Edgar Raúl R**** C*****.",
-        considerando: [
-          "Que, conforme al Art. 3° del Código Procesal Penal, el Juez de la Investigación Preparatoria es competente para tutelar las garantías del proceso y supervisar el plazo legal de la investigación.",
-          "Que, no habiéndose solicitado medida coercitiva gravosa de prisión preventiva, corresponde imponer la medida de comparecencia simple."
-        ],
-        resuelve: [
-          "1. TENER POR COMUNICADA la Disposición de Formalización y Continuación de la Investigación Preparatoria contra Edgar Raúl R**** C*****.",
-          "2. DICTAR mandato de COMPARECENCIA SIMPLE y habilitar las casillas electrónicas SINOE de las partes."
-        ]
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25201.pdf&embedded=true"
       },
       2: {
         numero: "RESOLUCIÓN N° 02",
         fecha: "18/07/2018 - 11:15 hrs",
         instancia: "1° Juzgado de Investigación Preparatoria de Puno",
         firmante: "Dr. Mario Cárdenas Silva (Juez de IP)",
-        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25202.pdf&embedded=true",
-        vistos: "El escrito presentado por doña Elena F***** T*****, en calidad de cónyuge supérstite del agraviado Víctor Alfonso Q***** M*****, solicitando su constitución en Actor Civil.",
-        considerando: [
-          "Que, los Arts. 98° a 102° del NCPP facultan a los sucesores legales a constituirse en actor civil para deducir la pretensión indemnizatoria.",
-          "Que, la solicitante acredita su entroncamiento familiar y legítimo interés conforme a ley."
-        ],
-        resuelve: [
-          "1. DECLARAR FUNDADA la solicitud de constitución en ACTOR CIVIL promovida por doña Elena F***** T*****.",
-          "2. TENER por señalada su Casilla Electrónica SINOE N° 73041-PUNO con el patrocinio de la Dra. Maritza Choque Cruz."
-        ]
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25202.pdf&embedded=true"
       },
       3: {
         numero: "RESOLUCIÓN N° 03",
         fecha: "10/11/2018 - 12:30 hrs",
         instancia: "1° Juzgado de Investigación Preparatoria de Puno",
         firmante: "Dr. Mario Cárdenas Silva (Juez de IP)",
-        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25203.pdf&embedded=true",
-        vistos: "Los informes periciales incorporados de la UPIAT-PNP Puno, Instituto de Medicina Legal y el vencimiento del plazo de investigación preparatoria.",
-        considerando: [
-          "Que, se encuentran agregados en autos el Certificado de Dosaje Etílico, el Informe Técnico Pericial de Ingeniería Vial y el Protocolo de Necropsia.",
-          "Que, vencido el término legal corresponde declarar concluida la etapa preparatoria y correr traslado del requerimiento acusatorio."
-        ],
-        resuelve: [
-          "1. TENER POR INCORPORADOS los informes periciales y DECLARAR CONCLUIDA la Etapa de Investigación Preparatoria.",
-          "2. CORRER TRASLADO del requerimiento acusatorio fiscal a los sujetos procesales por el plazo de ley."
-        ]
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25203.pdf&embedded=true"
       },
       4: {
         numero: "RESOLUCIÓN N° 04 (AUTO DE ENJUICIAMIENTO)",
         fecha: "20/05/2019 - 14:00 hrs",
         instancia: "1° Juzgado de Investigación Preparatoria de Puno",
         firmante: "Dr. Mario Cárdenas Silva (Juez de IP)",
-        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25204.pdf&embedded=true",
-        vistos: "El debate de control formal y sustancial de la acusación fiscal y calificación de medios probatorios.",
-        considerando: [
-          "Que, saneada formalmente la acusación y desestimado el pedido de sobreseimiento de la defensa, concurren los presupuestos para emitir el Auto de Enjuiciamiento conforme al Art. 353° del NCPP.",
-          "Que, se admiten los medios de prueba testimoniales, periciales y documentales ofrecidos por las partes."
-        ],
-        resuelve: [
-          "1. DICTAR AUTO DE ENJUICIAMIENTO en contra de EDGAR RAÚL R**** C***** como presunto autor del delito de Homicidio Culposo (Art. 111° CP).",
-          "2. REMITIR los actuados al Juzgado Penal Unipersonal de Puno para el juzgamiento oral."
-        ]
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25204.pdf&embedded=true"
       },
       5: {
         numero: "RESOLUCIÓN N° 05",
         fecha: "28/05/2019 - 08:45 hrs",
         instancia: "Juzgado Penal Unipersonal de Puno - Sede Central",
         firmante: "Dra. Gladis Huanca Quispe (Jueza Titular)",
-        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25205.pdf&embedded=true",
-        vistos: "El expediente penal remitido con el Auto de Enjuiciamiento para la etapa de juzgamiento.",
-        considerando: [
-          "Que, asume competencia esta judicatura conforme al Art. 355° del Código Procesal Penal.",
-          "Que, corresponde dar por formado el expediente judicial foliado y convocar formalmente a juicio oral."
-        ],
-        resuelve: [
-          "1. AVOCAR conocimiento y DAR POR FORMADO el expediente judicial foliado en autos.",
-          "2. CONVOCAR A JUICIO ORAL contra el acusado Edgar Raúl R**** C*****, emplazando a las partes a sus casillas SINOE."
-        ]
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25205.pdf&embedded=true"
       },
       6: {
         numero: "RESOLUCIÓN N° 06",
         fecha: "15/01/2020 - 11:30 hrs",
         instancia: "Juzgado Penal Unipersonal de Puno - Sede Central",
         firmante: "Dra. Gladis Huanca Quispe (Jueza Titular)",
-        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25206.pdf&embedded=true",
-        vistos: "La declaración previa de contumacia y el posterior apersonamiento espontáneo del acusado ante este despacho judicial.",
-        considerando: [
-          "Que, habiéndose puesto a derecho el acusado Edgar Raúl R**** C*****, han cesado los motivos que originaron su declaración de contumacia.",
-          "Que, corresponde dejar sin efecto las requisitorias policiales y señalar fecha improrrogable de instalación de juicio oral."
-        ],
-        resuelve: [
-          "1. LEVANTAR la condición de reo contumaz y anular los oficios de captura policial.",
-          "2. SEÑALAR nueva fecha para la instalación del juicio oral con citación obligatoria de los sujetos procesales."
-        ]
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25206.pdf&embedded=true"
       },
       7: {
         numero: "RESOLUCIÓN N° 07",
         fecha: "18/06/2020 - 15:00 hrs",
         instancia: "Juzgado Penal Unipersonal de Puno - Sede Central",
         firmante: "Dra. Gladis Huanca Quispe (Jueza Titular)",
-        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25207.pdf&embedded=true",
-        vistos: "La inconcurrencia de los órganos de prueba testimoniales y la necesidad de asegurar la actuación pericial en juicio.",
-        considerando: [
-          "Que, los testigos Marcos Efraín T**** H***** y Lucía Beatriz M**** C***** no han comparecido pese a encontrarse notificados.",
-          "Que, resulta indispensable requerir al Ministerio Público la precisión de sus domicilios reales en el término perentorio de 24 horas."
-        ],
-        resuelve: [
-          "1. ORDENAR LA CONDUCCIÓN COMPULSIVA de los testigos Marcos Efraín T**** H***** y Lucía Beatriz M**** C***** con auxilio de la PNP.",
-          "2. DISPONER la notificación directa a los peritos de tránsito y CONCEDER 24 HORAS a la Fiscalía para señalar sus domicilios."
-        ]
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25207.pdf&embedded=true"
       },
       89: {
         numero: "RESOLUCIONES N° 08 Y N° 09 (ACTUADO UNIFICADO)",
         fecha: "20/11/2020 - 16:45 hrs",
         instancia: "Juzgado Penal Unipersonal de Puno - Sede Central",
         firmante: "Dra. Gladis Huanca Quispe (Jueza Titular)",
-        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25208%2520Y%25209.pdf&embedded=true",
-        vistos: "El cumplimiento fiscal sobre domicilios, la conformidad de las partes sobre los informes periciales y la etapa de oralización documental.",
-        considerando: [
-          "Que, en la Resolución N° 08 se tuvo presente el escrito fiscal y, con anuencia expresa de las partes, se acordó prescindir del examen presencial de los peritos.",
-          "Que, en la Resolución N° 09 corresponde disponer la oralización pública de las piezas documentales válidamente admitidas antes de los alegatos de clausura."
-        ],
-        resuelve: [
-          "1. TENER PRESENTE el escrito fiscal y PRESCINDIR DEL EXAMEN PRESENCIAL DE LOS PERITOS conforme al Art. 383° del NCPP (Res. 08).",
-          "2. DISPONER QUE SE ORALICE: 1 Certificado Médico Legal, el Informe Pericial de Tránsito UPIAT-PNP y el Certificado de Defunción del occiso, cerrando el periodo probatorio (Res. 09)."
-        ]
+        pdfUrl: "https://docs.google.com/gview?url=https://raw.githubusercontent.com/jerssonmanu-netizen/justicia-digital.github.io/9f31da0d7b4eb633e711dcaa0141b5395bf7643d/RES%25208%2520Y%25209.pdf&embedded=true"
       }
     };
 
@@ -2940,7 +2978,7 @@ Responde de forma concisa, educada, empática, profesional y en 2 o 3 párrafos 
         return "Este prototipo académico fue desarrollado por **Negreiros Alvarez, Jersson Manuel** para el curso de **Gobierno Digital y Derecho Informático** a cargo del docente **Espinoza Coila, Michael**.";
       }
 
-      return "Bajo estándares de **Gobierno Digital y Confianza Digital**, la plataforma garantiza la publicidad procesal, la interoperabilidad y la trazabilidad íntegra de los **10 actuados correlativos** del expediente. Puedes abrir cualquiera de los PDFs originales con el botón **«Ver PDF Original ↗»**.";
+      return "Bajo estándares de **Gobierno Digital y Confianza Digital**, la plataforma garantiza la publicidad procesal, la interoperabilidad y la trazabilidad íntegra de los **10 actuados correlativos** del expediente. Puedes abrir cualquiera de los PDFs originales con el botón **«Visualizar»**.";
     }
 
     // Inicialización al cargar la ventana
